@@ -23,7 +23,7 @@ class Space {
   void draw(int selectedType, int selectedRotation) {
     for (int x = 0; x < size; x++) {
       for (int y = 0; y < size; y++) {
-        blocks[x][y].updaters = new ArrayList<Position>();
+        blocks[x][y].updated = false;
         if (blocks[x][y].mouseOver() && mousePressed && mouseButton == LEFT) {
           blocks[x][y].lock = true;
           
