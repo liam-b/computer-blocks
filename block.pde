@@ -69,21 +69,23 @@ class Block {
     }
   }
   
-  void place(int selectedType, int selectedRotation, Block[][] blocks) {
-    if (type != selectedType) type = selectedType;
-    rotation = selectedRotation;
-    
-    charge = false;
-    lock = false;
-    updated = false;
-    lastCharge = false;
-    
-    inputs = new ArrayList<Position>();
-    
-    update(blocks);
+  void place(int selectedType, int selectedRotation, Block[][][] blocks) {
+    if (type != selectedType) {
+      type = selectedType;
+      rotation = selectedRotation;
+      
+      charge = false;
+      lock = false;
+      updated = false;
+      lastCharge = false;
+      
+      inputs = new ArrayList<Position>();
+      
+      update(blocks);
+    }
   }
   
-  void erase(Block[][] blocks) {
+  void erase(Block[][][] blocks) {
     type = EMPTY;
     charge = false;
     lock = false;
@@ -97,7 +99,7 @@ class Block {
     draw();
   }
   
-  void update(Block[][] blocks) {
+  void update(Block[][][] blocks) {
     updated = true;
     if (type != EMPTY) {
       inputs = new ArrayList<Position>();
@@ -106,7 +108,7 @@ class Block {
       
       for (int i = 0; i < surroundingBlocks.size(); i++) {
         Position currentSurroundingBlockPosition = surroundingBlocks.get(i);
-        Block currentSurroundingBlock = blocks[currentSurroundingBlockPosition.x][currentSurroundingBlockPosition.y];
+        Block currentSurroundingBlock = blocks[currentSurroundingBlockPosition.l][currentSurroundingBlockPosition.x][currentSurroundingBlockPosition.y];
         
         if (type == INVERTER) {
           if ((!isFacing(position, currentSurroundingBlockPosition, rotation) && currentSurroundingBlock.charge) || currentSurroundingBlock.type == SOURCE) inputs.add(currentSurroundingBlock.position);
@@ -143,21 +145,22 @@ class Block {
            mouseY < drawOffset + sizeRatio * position.y + drawSize / 2;
   }
   
-  ArrayList<Position> getSurroundingBlocks(Block[][] blocks) {
+  ArrayList<Position> getSurroundingBlocks(Block[][][] blocks) {
     ArrayList<Position> foundBlocks = new ArrayList<Position>();
-    if (position.x + 1 < size - 1) { if (blocks[position.x + 1][position.y].type != EMPTY) foundBlocks.add(new Position(position.x + 1, position.y)); };
-    if (position.x - 1 > 0) { if (blocks[position.x - 1][position.y].type != EMPTY) foundBlocks.add(new Position(position.x - 1, position.y)); };
-    if (position.y + 1 < size - 1) { if (blocks[position.x][position.y + 1].type != EMPTY) foundBlocks.add(new Position(position.x, position.y + 1)); };
-    if (position.y - 1 > 0) { if (blocks[position.x][position.y - 1].type != EMPTY) foundBlocks.add(new Position(position.x, position.y - 1)); };
+    if (position.x + 1 < size - 1) { if (blocks[position.l][position.x + 1][position.y].type != EMPTY) foundBlocks.add(new Position(position.x + 1, position.y, position.l)); };
+    if (position.x - 1 > 0) { if (blocks[position.l][position.x - 1][position.y].type != EMPTY) foundBlocks.add(new Position(position.x - 1, position.y, position.l)); };
+    if (position.y + 1 < size - 1) { if (blocks[position.l][position.x][position.y + 1].type != EMPTY) foundBlocks.add(new Position(position.x, position.y + 1, position.l)); };
+    if (position.y - 1 > 0) { if (blocks[position.l][position.x][position.y - 1].type != EMPTY) foundBlocks.add(new Position(position.x, position.y - 1, position.l)); };
     return foundBlocks;
   }
   
-  void updateSurroundingBlocks(ArrayList<Position> surroundingBlocks, Block[][] blocks) {
+  void updateSurroundingBlocks(ArrayList<Position> surroundingBlocks, Block[][][] blocks) {
     for (int i = 0; i < surroundingBlocks.size(); i++) {
       Position currentSurroundingBlockPosition = surroundingBlocks.get(i);
-      if (!blocks[currentSurroundingBlockPosition.x][currentSurroundingBlockPosition.y].updated || (blocks[currentSurroundingBlockPosition.x][currentSurroundingBlockPosition.y].charge == false && charge == true)) {
-        if (i != surroundingBlocks.size() - 1 && surroundingBlocks.size() > 1) blocks[currentSurroundingBlockPosition.x][currentSurroundingBlockPosition.y].update(blocks);
-        else blocks[currentSurroundingBlockPosition.x][currentSurroundingBlockPosition.y].update(blocks);
+      Block currentSurroundingBlock = blocks[currentSurroundingBlockPosition.l][currentSurroundingBlockPosition.x][currentSurroundingBlockPosition.y];
+      if (!currentSurroundingBlock.updated || (currentSurroundingBlock.charge == false && charge == true)) {
+        if (i != surroundingBlocks.size() - 1 && surroundingBlocks.size() > 1) currentSurroundingBlock.update(blocks);
+        else currentSurroundingBlock.update(blocks);
       }
     }
   }

@@ -12,10 +12,12 @@ color COLOR_INVERTER_ON;
 class Position {
   int x;
   int y;
+  int l;
   
-  Position(int x_, int y_) {
+  Position(int x_, int y_, int l_) {
     x = x_;
     y = y_;
+    l = l_;
   }
 }
 
@@ -39,12 +41,12 @@ void setup() {
   
   player = new Player();
   
-  space = new Space(20, 3);
-  space.setup();
+  space = new Space(20, 2, 3);
+  space.setup(player.selectedLayer);
 }
 
 void draw() {
-  space.draw(player.selectedType, player.selectedRotation);
+  space.draw(player.selectedType, player.selectedRotation, player.selectedLayer);
 }
 
 void mouseReleased() {
@@ -52,5 +54,5 @@ void mouseReleased() {
 }
 
 void keyPressed() {
-  player.updateSelectedType();
+  player.update(space);
 }
