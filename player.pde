@@ -14,12 +14,12 @@ class Player {
     if (key == '2') selectedType = CABLE;
     if (key == '3') selectedType = SOURCE;
     if (key == '4') selectedType = INVERTER;
+    if (key == '5') selectedType = VIA;
     
     if (key == '0') selectedLayer = 0;
     if (key == '9') selectedLayer = 1;
     
     if (key == 'r') selectedRotation += 1;
-    //if (key == '4') selectedType = TRIGGER;
     
     if (selectedRotation > 3) selectedRotation = 0;
     

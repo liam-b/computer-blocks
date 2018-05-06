@@ -8,6 +8,8 @@ color COLOR_CABLE_ON;
 color COLOR_SOURCE;
 color COLOR_INVERTER_OFF;
 color COLOR_INVERTER_ON;
+color COLOR_VIA_OFF;
+color COLOR_VIA_ON;
 
 class Position {
   int x;
@@ -36,12 +38,14 @@ void setup() {
   COLOR_SOURCE = color(15, 55, 88);
   COLOR_INVERTER_OFF = color(0, 55, 74);
   COLOR_INVERTER_ON = color(0, 55, 88);
+  COLOR_VIA_OFF = color(55, 55, 74);
+  COLOR_VIA_ON = color(55, 55, 88);
   
   background(COLOR_BACKGROUND);
   
   player = new Player();
   
-  space = new Space(20, 2, 3);
+  space = new Space(22, 2, 3);
   space.setup(player.selectedLayer);
 }
 

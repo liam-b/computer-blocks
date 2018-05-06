@@ -2,6 +2,7 @@ int EMPTY = 0;
 int CABLE = 1;
 int SOURCE = 2;
 int INVERTER = 3;
+int VIA = 4;
 
 class Block {
   int type;
@@ -16,12 +17,13 @@ class Block {
   int drawSize;
   int size;
   int spacing;
+  int layers;
   
   Position position;
   
   ArrayList<Position> inputs;
   
-  Block(Position position_, int size_, int spacing_) {
+  Block(Position position_, int size_, int spacing_, int layers_) {
     type = EMPTY;
     lock = false;
     updated = false;
@@ -34,23 +36,27 @@ class Block {
     drawOffset = sizeRatio / 2;
     drawSize = sizeRatio - spacing_;
     spacing = spacing_;
+    layers = layers_;
     
     position = position_;
     
     inputs = new ArrayList<Position>();
   }
   
-  void draw() {
-    if (type != EMPTY) {
+  void draw(int selectedLayer) {
+    if (position.l == selectedLayer) {
+      if (type != EMPTY) {
       if (charge == true) {
         if (type == CABLE) fill(COLOR_CABLE_ON);
         if (type == SOURCE) fill(COLOR_SOURCE);
         if (type == INVERTER) fill(COLOR_INVERTER_ON);
+        if (type == VIA) fill(COLOR_VIA_ON);
       }
       else {
         if (type == CABLE) fill(COLOR_CABLE_OFF);
         if (type == SOURCE) fill(COLOR_SOURCE);
         if (type == INVERTER) fill(COLOR_INVERTER_OFF);
+        if (type == VIA) fill(COLOR_VIA_OFF);
       }
     }
     else fill(COLOR_EMPTY);
@@ -67,9 +73,10 @@ class Block {
       if (rotation == 1) rect(drawOffset + sizeRatio * position.x + barOffset, drawOffset + sizeRatio * position.y, drawSize / 15, drawSize / 2);
       if (rotation == 0) rect(drawOffset + sizeRatio * position.x, drawOffset + sizeRatio * position.y - barOffset, drawSize / 2, drawSize / 15);
     }
+    }
   }
   
-  void place(int selectedType, int selectedRotation, Block[][][] blocks) {
+  void place(int selectedType, int selectedRotation, int selectedLayer, Block[][][] blocks) {
     if (type != selectedType) {
       type = selectedType;
       rotation = selectedRotation;
@@ -81,11 +88,11 @@ class Block {
       
       inputs = new ArrayList<Position>();
       
-      update(blocks);
+      update(blocks, selectedLayer);
     }
   }
   
-  void erase(Block[][][] blocks) {
+  void erase(Block[][][] blocks, int selectedLayer) {
     type = EMPTY;
     charge = false;
     lock = false;
@@ -94,17 +101,18 @@ class Block {
     
     inputs = new ArrayList<Position>();
     
-    updateSurroundingBlocks(getSurroundingBlocks(blocks), blocks);
+    updateSurroundingBlocks(getSurroundingBlocks(blocks), blocks, selectedLayer);
     
-    draw();
+    draw(selectedLayer);
   }
   
-  void update(Block[][][] blocks) {
+  void update(Block[][][] blocks, int selectedLayer) {
     updated = true;
     if (type != EMPTY) {
       inputs = new ArrayList<Position>();
       
       ArrayList<Position> surroundingBlocks = getSurroundingBlocks(blocks);
+      if (type == VIA) surroundingBlocks = appendViasToList(surroundingBlocks, blocks);
       
       for (int i = 0; i < surroundingBlocks.size(); i++) {
         Position currentSurroundingBlockPosition = surroundingBlocks.get(i);
@@ -121,6 +129,7 @@ class Block {
       
       charge = true;
       if (inputs.size() == 0) charge = false;
+      
       if (type == SOURCE) charge = true;
       
       if (type == INVERTER) {
@@ -128,13 +137,13 @@ class Block {
         else charge = false;
       }
       
-      if (type != INVERTER) updateSurroundingBlocks(surroundingBlocks, blocks);
+      if (type != INVERTER) updateSurroundingBlocks(surroundingBlocks, blocks, selectedLayer);
       else {
-        if (charge != lastCharge) updateSurroundingBlocks(surroundingBlocks, blocks);
+        if (charge != lastCharge) updateSurroundingBlocks(surroundingBlocks, blocks, selectedLayer);
         lastCharge = charge;
       }
       
-      draw();
+      draw(selectedLayer);
     }
   }
   
@@ -154,13 +163,13 @@ class Block {
     return foundBlocks;
   }
   
-  void updateSurroundingBlocks(ArrayList<Position> surroundingBlocks, Block[][][] blocks) {
+  void updateSurroundingBlocks(ArrayList<Position> surroundingBlocks, Block[][][] blocks, int selectedLayer) {
     for (int i = 0; i < surroundingBlocks.size(); i++) {
       Position currentSurroundingBlockPosition = surroundingBlocks.get(i);
       Block currentSurroundingBlock = blocks[currentSurroundingBlockPosition.l][currentSurroundingBlockPosition.x][currentSurroundingBlockPosition.y];
       if (!currentSurroundingBlock.updated || (currentSurroundingBlock.charge == false && charge == true)) {
-        if (i != surroundingBlocks.size() - 1 && surroundingBlocks.size() > 1) currentSurroundingBlock.update(blocks);
-        else currentSurroundingBlock.update(blocks);
+        if (i != surroundingBlocks.size() - 1 && surroundingBlocks.size() > 1) currentSurroundingBlock.update(blocks, selectedLayer);
+        else currentSurroundingBlock.update(blocks, selectedLayer);
       }
     }
   }
@@ -183,5 +192,13 @@ class Block {
     
     if (b.x == x && b.y == y) return true;
     return false;
+  }
+  
+  ArrayList<Position> appendViasToList(ArrayList<Position> list, Block[][][] blocks) {
+    ArrayList<Position> foundVias = list;
+    for (int l = 0; l < layers; l++) {
+      if (blocks[l][position.x][position.y].type == VIA && blocks[l][position.x][position.y].position.l != position.l) foundVias.add(blocks[l][position.x][position.y].position);
+    }
+    return foundVias;
   }
 }
