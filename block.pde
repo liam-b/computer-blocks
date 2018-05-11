@@ -88,7 +88,7 @@ class Block {
       
       inputs = new ArrayList<Position>();
       
-      update(blocks, selectedLayer);
+      update(blocks, selectedLayer, position);
     }
   }
   
@@ -101,22 +101,28 @@ class Block {
     
     inputs = new ArrayList<Position>();
     
-    updateSurroundingBlocks(getSurroundingBlocks(blocks), blocks, selectedLayer);
+    updateSurroundingBlocks(getSurroundingBlocks(blocks), blocks, selectedLayer, position);
     
     draw(selectedLayer);
   }
   
-  void update(Block[][][] blocks, int selectedLayer) {
-    updated = true;
+  void update(Block[][][] blocks, int selectedLayer, Position updater) {
     if (type != EMPTY) {
       inputs = new ArrayList<Position>();
+      
+      //println(position.x);
+      //println(position.y);
+      //println("----");
       
       ArrayList<Position> surroundingBlocks = getSurroundingBlocks(blocks);
       if (type == VIA) surroundingBlocks = appendViasToList(surroundingBlocks, blocks);
       
+      int updaterIndex = -1;
       for (int i = 0; i < surroundingBlocks.size(); i++) {
         Position currentSurroundingBlockPosition = surroundingBlocks.get(i);
         Block currentSurroundingBlock = blocks[currentSurroundingBlockPosition.l][currentSurroundingBlockPosition.x][currentSurroundingBlockPosition.y];
+        
+        if (updater.x == currentSurroundingBlockPosition.x && updater.y == currentSurroundingBlockPosition.y) updaterIndex = i;
         
         if (type == INVERTER) {
           if ((!isFacing(position, currentSurroundingBlockPosition, rotation) && currentSurroundingBlock.charge) || currentSurroundingBlock.type == SOURCE) inputs.add(currentSurroundingBlock.position);
@@ -126,6 +132,8 @@ class Block {
         }
         else if (currentSurroundingBlock.charge && ((notOnlyItemInList(currentSurroundingBlock.inputs, position)) || currentSurroundingBlock.type == SOURCE)) inputs.add(currentSurroundingBlock.position);
       }
+      
+      if (updaterIndex != -1) surroundingBlocks.remove(updaterIndex);
       
       charge = true;
       if (inputs.size() == 0) charge = false;
@@ -137,9 +145,9 @@ class Block {
         else charge = false;
       }
       
-      if (type != INVERTER) updateSurroundingBlocks(surroundingBlocks, blocks, selectedLayer);
+      if (type != INVERTER) updateSurroundingBlocks(surroundingBlocks, blocks, selectedLayer, position);
       else {
-        if (charge != lastCharge) updateSurroundingBlocks(surroundingBlocks, blocks, selectedLayer);
+        if (charge != lastCharge) updateSurroundingBlocks(surroundingBlocks, blocks, selectedLayer, position);
         lastCharge = charge;
       }
       
@@ -163,13 +171,14 @@ class Block {
     return foundBlocks;
   }
   
-  void updateSurroundingBlocks(ArrayList<Position> surroundingBlocks, Block[][][] blocks, int selectedLayer) {
+  void updateSurroundingBlocks(ArrayList<Position> surroundingBlocks, Block[][][] blocks, int selectedLayer, Position updater) {
     for (int i = 0; i < surroundingBlocks.size(); i++) {
       Position currentSurroundingBlockPosition = surroundingBlocks.get(i);
       Block currentSurroundingBlock = blocks[currentSurroundingBlockPosition.l][currentSurroundingBlockPosition.x][currentSurroundingBlockPosition.y];
-      if (!currentSurroundingBlock.updated || (currentSurroundingBlock.charge == false && charge == true)) {
-        if (i != surroundingBlocks.size() - 1 && surroundingBlocks.size() > 1) currentSurroundingBlock.update(blocks, selectedLayer);
-        else currentSurroundingBlock.update(blocks, selectedLayer);
+      if (currentSurroundingBlock.type == INVERTER && isFacing(currentSurroundingBlockPosition, position, currentSurroundingBlock.rotation)) continue;
+      if (!currentSurroundingBlock.updated) {
+        if (i != surroundingBlocks.size() - 1 && surroundingBlocks.size() > 1) currentSurroundingBlock.update(blocks, selectedLayer, updater);
+        else currentSurroundingBlock.update(blocks, selectedLayer, updater);
       }
     }
   }

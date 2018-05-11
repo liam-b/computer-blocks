@@ -45,7 +45,7 @@ void setup() {
   
   player = new Player();
   
-  space = new Space(22, 2, 3);
+  space = new Space(24, 2, 3);
   space.setup(player.selectedLayer);
 }
 
