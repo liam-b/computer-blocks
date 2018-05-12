@@ -110,10 +110,6 @@ class Block {
     if (type != EMPTY) {
       inputs = new ArrayList<Position>();
       
-      //println(position.x);
-      //println(position.y);
-      //println("----");
-      
       ArrayList<Position> surroundingBlocks = getSurroundingBlocks(blocks);
       if (type == VIA) surroundingBlocks = appendViasToList(surroundingBlocks, blocks);
       
@@ -147,8 +143,10 @@ class Block {
       
       if (type != INVERTER) updateSurroundingBlocks(surroundingBlocks, blocks, selectedLayer, position);
       else {
-        if (charge != lastCharge) updateSurroundingBlocks(surroundingBlocks, blocks, selectedLayer, position);
-        lastCharge = charge;
+        boolean willUpdateSurroundingBlocks = false;
+        if (charge != lastCharge) willUpdateSurroundingBlocks = true;
+        lastCharge = charge;     
+        if (willUpdateSurroundingBlocks) updateSurroundingBlocks(surroundingBlocks, blocks, selectedLayer, position);
       }
       
       draw(selectedLayer);
@@ -161,6 +159,7 @@ class Block {
            mouseY > drawOffset + sizeRatio * position.y - drawSize / 2 && 
            mouseY < drawOffset + sizeRatio * position.y + drawSize / 2;
   }
+  
   
   ArrayList<Position> getSurroundingBlocks(Block[][][] blocks) {
     ArrayList<Position> foundBlocks = new ArrayList<Position>();
