@@ -12,18 +12,18 @@ class Block {
   boolean lastCharge;
   int rotation;
   
-  int drawOffset;
-  int sizeRatio;
-  int drawSize;
-  int size;
-  int spacing;
+  float drawOffset;
+  float sizeRatio;
+  float drawSize;
+  float size;
+  float spacing;
   int layers;
   
   Position position;
   
   ArrayList<Position> inputs;
   
-  Block(Position position_, int size_, int spacing_, int layers_) {
+  Block(Position position_, int size_, float spacing_, int layers_) {
     type = EMPTY;
     lock = false;
     updated = false;
@@ -35,7 +35,7 @@ class Block {
     sizeRatio = width / size;
     drawOffset = sizeRatio / 2;
     drawSize = sizeRatio - spacing_;
-    spacing = spacing_;
+    spacing = spacing_ / 100 * drawSize;
     layers = layers_;
     
     position = position_;
@@ -43,8 +43,8 @@ class Block {
     inputs = new ArrayList<Position>();
   }
   
-  void draw(int selectedLayer) {
-    if (position.l == selectedLayer) {
+  void draw(Player player) {
+    if (position.l == player.selectedLayer) {
       if (type != EMPTY) {
       if (charge == true) {
         if (type == CABLE) fill(COLOR_CABLE_ON);
@@ -61,12 +61,12 @@ class Block {
     }
     else fill(COLOR_EMPTY);
     
-    rect(drawOffset + sizeRatio * position.x, drawOffset + sizeRatio * position.y, drawSize, drawSize);
+    rect(drawOffset + player.translateX + sizeRatio * position.x, drawOffset + player.translateY + sizeRatio * position.y, drawSize, drawSize);
     
     if (type == INVERTER) {
       fill(COLOR_SOURCE);
       
-      int barOffset = sizeRatio / 2 - drawSize + drawSize / 15 / 2;
+      float barOffset = sizeRatio / 2 - drawSize + drawSize / 15 / 2;
       
       if (rotation == 3) rect(drawOffset + sizeRatio * position.x - barOffset, drawOffset + sizeRatio * position.y, drawSize / 15, drawSize / 2);
       if (rotation == 2) rect(drawOffset + sizeRatio * position.x, drawOffset + sizeRatio * position.y + barOffset, drawSize / 2, drawSize / 15);
@@ -76,10 +76,10 @@ class Block {
     }
   }
   
-  void place(int selectedType, int selectedRotation, int selectedLayer, Block[][][] blocks) {
-    if (type != selectedType) {
-      type = selectedType;
-      rotation = selectedRotation;
+  void place(Player player, Block[][][] blocks) {
+    if (type != player.selectedType) {
+      type = player.selectedType;
+      rotation = player.selectedRotation;
       
       charge = false;
       lock = false;
@@ -88,11 +88,11 @@ class Block {
       
       inputs = new ArrayList<Position>();
       
-      update(blocks, selectedLayer, position);
+      update(player, blocks, position);
     }
   }
   
-  void erase(Block[][][] blocks, int selectedLayer) {
+  void erase(Player player, Block[][][] blocks) {
     type = EMPTY;
     charge = false;
     lock = false;
@@ -101,12 +101,12 @@ class Block {
     
     inputs = new ArrayList<Position>();
     
-    updateSurroundingBlocks(getSurroundingBlocks(blocks), blocks, selectedLayer, position);
+    updateSurroundingBlocks(getSurroundingBlocks(blocks), blocks, player, position);
     
-    draw(selectedLayer);
+    draw(player);
   }
   
-  void update(Block[][][] blocks, int selectedLayer, Position updater) {
+  void update(Player player, Block[][][] blocks, Position updater) {
     if (type != EMPTY) {
       inputs = new ArrayList<Position>();
       
@@ -141,23 +141,23 @@ class Block {
         else charge = false;
       }
       
-      if (type != INVERTER) updateSurroundingBlocks(surroundingBlocks, blocks, selectedLayer, position);
+      if (type != INVERTER) updateSurroundingBlocks(surroundingBlocks, blocks, player, position);
       else {
         boolean willUpdateSurroundingBlocks = false;
         if (charge != lastCharge) willUpdateSurroundingBlocks = true;
         lastCharge = charge;     
-        if (willUpdateSurroundingBlocks) updateSurroundingBlocks(surroundingBlocks, blocks, selectedLayer, position);
+        if (willUpdateSurroundingBlocks) updateSurroundingBlocks(surroundingBlocks, blocks, player, position);
       }
       
-      draw(selectedLayer);
+      draw(player);
     }
   }
   
-  boolean mouseOver() {
-    return mouseX > drawOffset + sizeRatio * position.x - drawSize / 2 && 
-           mouseX < drawOffset + sizeRatio * position.x + drawSize / 2 && 
-           mouseY > drawOffset + sizeRatio * position.y - drawSize / 2 && 
-           mouseY < drawOffset + sizeRatio * position.y + drawSize / 2;
+  boolean mouseOver(Player player) {
+    return mouseX > drawOffset + player.translateX + sizeRatio * position.x - drawSize / 2 && 
+           mouseX < drawOffset + player.translateX + sizeRatio * position.x + drawSize / 2 && 
+           mouseY > drawOffset + player.translateY + sizeRatio * position.y - drawSize / 2 && 
+           mouseY < drawOffset + player.translateY + sizeRatio * position.y + drawSize / 2;
   }
   
   
@@ -170,14 +170,14 @@ class Block {
     return foundBlocks;
   }
   
-  void updateSurroundingBlocks(ArrayList<Position> surroundingBlocks, Block[][][] blocks, int selectedLayer, Position updater) {
+  void updateSurroundingBlocks(ArrayList<Position> surroundingBlocks, Block[][][] blocks, Player player, Position updater) {
     for (int i = 0; i < surroundingBlocks.size(); i++) {
       Position currentSurroundingBlockPosition = surroundingBlocks.get(i);
       Block currentSurroundingBlock = blocks[currentSurroundingBlockPosition.l][currentSurroundingBlockPosition.x][currentSurroundingBlockPosition.y];
       if (currentSurroundingBlock.type == INVERTER && isFacing(currentSurroundingBlockPosition, position, currentSurroundingBlock.rotation)) continue;
       if (!currentSurroundingBlock.updated) {
-        if (i != surroundingBlocks.size() - 1 && surroundingBlocks.size() > 1) currentSurroundingBlock.update(blocks, selectedLayer, updater);
-        else currentSurroundingBlock.update(blocks, selectedLayer, updater);
+        if (i != surroundingBlocks.size() - 1 && surroundingBlocks.size() > 1) currentSurroundingBlock.update(player, blocks, updater);
+        else currentSurroundingBlock.update(player, blocks, updater);
       }
     }
   }

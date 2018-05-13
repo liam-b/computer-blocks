@@ -2,11 +2,25 @@ class Player {
   int selectedType;
   int selectedRotation;
   int selectedLayer;
+  int size;
   
-  Player() {
+  float translateX;
+  float translateY;
+  
+  float oldTranslateX;
+  float oldTranslateY;
+  
+  Player(int size_) {
     selectedType = CABLE;
     selectedRotation = 0;
     selectedLayer = 0;
+    size = size_;
+    
+    translateX = 0;
+    translateX = 0;
+    
+    oldTranslateX = 0;
+    oldTranslateX = 0;
   }
   
   void update(Space space) {
@@ -25,7 +39,27 @@ class Player {
     
     if (key == '0' || key == '9') {
       background(COLOR_BACKGROUND);
-      space.drawAllBlocks(selectedLayer);
+      space.drawAllBlocks(player);
     }
+  }
+  
+  void cameraUpdate() {
+    if (mousePressed && mouseButton == RIGHT) {
+      translateX = mouseX - oldTranslateX;
+      translateY = mouseY - oldTranslateY;
+      
+      background(COLOR_BACKGROUND);
+      space.drawAllBlocks(player);
+    }
+  }
+  
+  void cameraRelease() {
+    oldTranslateX = mouseX - oldTranslateX;
+    oldTranslateY = mouseY - oldTranslateY;
+  }
+  
+  void cameraPress() {
+    oldTranslateX = mouseX - oldTranslateX;
+    oldTranslateY = mouseY - oldTranslateY;
   }
 }

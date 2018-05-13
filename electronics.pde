@@ -43,18 +43,24 @@ void setup() {
   
   background(COLOR_BACKGROUND);
   
-  player = new Player();
-  
   space = new Space(24, 2, 3);
-  space.setup(player.selectedLayer);
+  player = new Player(space.size);
+  
+  space.setup(player);
 }
 
 void draw() {
-  space.draw(player.selectedType, player.selectedRotation, player.selectedLayer);
+  space.draw(player);
+  player.cameraUpdate();
+}
+
+void mousePressed() {
+  player.cameraPress();
 }
 
 void mouseReleased() {
   space.unlockAllBlocks();
+  player.cameraRelease();
 }
 
 void keyPressed() {
