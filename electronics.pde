@@ -43,8 +43,8 @@ void setup() {
   
   background(COLOR_BACKGROUND);
   
-  space = new Space(24, 2, 3);
-  player = new Player(space.size);
+  space = new Space(100, 3, 1);
+  player = new Player(space.size, space.layers);
   
   space.setup(player);
 }
@@ -66,3 +66,9 @@ void mouseReleased() {
 void keyPressed() {
   player.update(space);
 }
+
+//void mouseWheel(MouseEvent event) {
+//  float e = event.getCount();
+//  player.scrollValue += - e / 1000;
+//  player.scrollUpdate();
+//}

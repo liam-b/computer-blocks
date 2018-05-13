@@ -16,6 +16,7 @@ class Block {
   float sizeRatio;
   float drawSize;
   float size;
+  float spacingPercent;
   float spacing;
   int layers;
   
@@ -35,6 +36,7 @@ class Block {
     sizeRatio = width / size;
     drawOffset = sizeRatio / 2;
     drawSize = sizeRatio - spacing_;
+    spacingPercent = spacing_;
     spacing = spacing_ / 100 * drawSize;
     layers = layers_;
     
@@ -61,17 +63,17 @@ class Block {
     }
     else fill(COLOR_EMPTY);
     
-    rect(drawOffset + player.translateX + sizeRatio * position.x, drawOffset + player.translateY + sizeRatio * position.y, drawSize, drawSize);
+    rect(drawOffset + player.translateX + sizeRatio * position.x * player.scrollValue, drawOffset + player.translateY + sizeRatio * position.y * player.scrollValue, drawSize * player.scrollValue, drawSize * player.scrollValue);
     
     if (type == INVERTER) {
       fill(COLOR_SOURCE);
       
-      float barOffset = sizeRatio / 2 - drawSize + drawSize / 15 / 2;
+      float barOffset = sizeRatio * player.scrollValue / 2 - (drawSize * player.scrollValue) + (drawSize * player.scrollValue) / 15 / 2;
       
-      if (rotation == 3) rect(drawOffset + sizeRatio * position.x - barOffset, drawOffset + sizeRatio * position.y, drawSize / 15, drawSize / 2);
-      if (rotation == 2) rect(drawOffset + sizeRatio * position.x, drawOffset + sizeRatio * position.y + barOffset, drawSize / 2, drawSize / 15);
-      if (rotation == 1) rect(drawOffset + sizeRatio * position.x + barOffset, drawOffset + sizeRatio * position.y, drawSize / 15, drawSize / 2);
-      if (rotation == 0) rect(drawOffset + sizeRatio * position.x, drawOffset + sizeRatio * position.y - barOffset, drawSize / 2, drawSize / 15);
+      if (rotation == 3) rect(drawOffset + sizeRatio * position.x + player.translateX * player.scrollValue - barOffset, drawOffset + sizeRatio * position.y * player.scrollValue, drawSize / 15, drawSize / 2);
+      if (rotation == 2) rect(drawOffset + sizeRatio * position.x + player.translateX * player.scrollValue, drawOffset + sizeRatio * position.y * player.scrollValue + barOffset, drawSize / 2, drawSize / 15);
+      if (rotation == 1) rect(drawOffset + sizeRatio * position.x + player.translateX * player.scrollValue + barOffset, drawOffset + sizeRatio * position.y * player.scrollValue, drawSize / 15, drawSize / 2);
+      if (rotation == 0) rect(drawOffset + sizeRatio * position.x + player.translateX * player.scrollValue, drawOffset + sizeRatio * position.y * player.scrollValue - barOffset, drawSize / 2, drawSize / 15);
     }
     }
   }
@@ -154,10 +156,10 @@ class Block {
   }
   
   boolean mouseOver(Player player) {
-    return mouseX > drawOffset + player.translateX + sizeRatio * position.x - drawSize / 2 && 
-           mouseX < drawOffset + player.translateX + sizeRatio * position.x + drawSize / 2 && 
-           mouseY > drawOffset + player.translateY + sizeRatio * position.y - drawSize / 2 && 
-           mouseY < drawOffset + player.translateY + sizeRatio * position.y + drawSize / 2;
+    return mouseX > drawOffset + player.translateX + sizeRatio * position.x * player.scrollValue - drawSize * player.scrollValue / 2 && 
+           mouseX < drawOffset + player.translateX + sizeRatio * position.x * player.scrollValue + drawSize * player.scrollValue / 2 && 
+           mouseY > drawOffset + player.translateY + sizeRatio * position.y * player.scrollValue - drawSize * player.scrollValue / 2 && 
+           mouseY < drawOffset + player.translateY + sizeRatio * position.y * player.scrollValue + drawSize * player.scrollValue / 2;
   }
   
   
