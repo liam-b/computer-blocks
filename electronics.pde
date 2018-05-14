@@ -25,7 +25,7 @@ void setup() {
 void draw() {
   space.draw(player);
   player.cameraUpdate();
-  ui.draw();
+  ui.draw(player);
 }
 
 void mousePressed() {
@@ -43,6 +43,6 @@ void keyPressed() {
 
 //void mouseWheel(MouseEvent event) {
 //  float e = event.getCount();
-//  player.scrollValue += - e / 1000;
+//  player.scrollValue += - sq(e / 1000);
 //  player.scrollUpdate();
 //}
