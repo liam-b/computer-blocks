@@ -6,12 +6,6 @@ class UI {
 
   //hi
 
-  int EDIT = 0;
-  int COPY = 1;
-  int COPY_STARTED = 2;
-  int COPY_ENDED = 3;
-  int PASTE = 4;
-
   UI(Position blockPosition_, float blockWidth_, float blockBackgroundWidth_) {
     blockPosition = blockPosition_;
     blockWidth = blockWidth_;

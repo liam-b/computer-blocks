@@ -142,8 +142,6 @@ class Player {
   }
 
   void pasteSelection(Space space, BlockPosition[][][] selection, BlockPosition pos) {
-    //ArrayList<BlockPosition> updateQueue = new ArrayList<BlockPosition>();
-
     for (int l = 0; l < space.layers; l++) {
       for (int x = pos.x; x < pos.x + selection[l].length; x++) {
         for (int y = pos.y; y < pos.y + selection[l][x - pos.x].length; y++) {
@@ -151,32 +149,23 @@ class Player {
           Block selectionBlock = space.blocks[selectionBlockPosition.l][selectionBlockPosition.x][selectionBlockPosition.y];
 
           space.blocks[l][x][y].type = selectionBlock.type;
-          space.blocks[l][x][y].position.r = selectionBlock.position.r;
+          space.blocks[l][x][y].position.r = selectionBlockPosition.r;
           space.blocks[l][x][y].charge = selectionBlock.charge;
           space.blocks[l][x][y].lastCharge = selectionBlock.lastCharge;
 
           BlockPosition positionDifference = new BlockPosition(space.blocks[l][x][y].position.x - selectionBlock.position.x, space.blocks[l][x][y].position.y - selectionBlock.position.y, 0, 0);
           space.blocks[l][x][y].inputs = new ArrayList<BlockPosition>();
           for (int i = 0; i < selectionBlock.inputs.size(); i++) {
-            BlockPosition newInput = selectionBlock.inputs.get(i);
+            BlockPosition newInput = selectionBlock.inputs.get(i).duplicate();
             newInput.x += positionDifference.x;
             newInput.y += positionDifference.y;
 
             space.blocks[l][x][y].inputs.add(newInput);
-            //spaceBlock.position.r = 0; //<>//
           }
-
-          //if (selectionBlock.type == SOURCE) updateQueue.add(selectionBlock.position);
 
           space.blocks[l][x][y].draw(this);
         }
       }
     }
-
-    //for (int j = 0; j < updateQueue.size(); j++) {
-    //  BlockPosition currentUpdate = updateQueue.get(j);
-    //  space.blocks[currentUpdate.l][currentUpdate.x][currentUpdate.y].update(this, space, currentUpdate);
-    //  space.blocks[currentUpdate.l][currentUpdate.x][currentUpdate.y].update(this, space, currentUpdate);
-    //}
   }
 }

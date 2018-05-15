@@ -13,7 +13,7 @@ void setup() {
 
   space = new Space(SPACE_SIZE, SPACE_LAYERS, SPACE_SPACING);
   player = new Player(space);
-  
+
   ui = new UI(new Position(50 , height - 50), 50, 5);
 
   space.drawAllBlocks(player);
@@ -27,15 +27,7 @@ void draw() {
 
 void mousePressed() {
   player.resetTranslate();
-  player.selectionUpdate(space);
-  
-  if (key == '0') {
-    println("hrllo"); //<>//
-    //BlockPosition pos = player.findClickedBlock(space);
-    //Block myBlock = space.blocks[pos.l][pos.x][pos.y];
-    
-    //println(myBlock.type);
-  };
+  player.selectionUpdate(space); //<>//
 }
 
 void mouseReleased() {
