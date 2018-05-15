@@ -50,18 +50,17 @@ class UI {
     if (player.mode == COPY || player.mode == COPY_STARTED) {
       fill(COLOR_BACKGROUND);
       rect(blockPosition.x, blockPosition.y, blockWidth + blockBackgroundWidth, blockWidth + blockBackgroundWidth);
-      fill(COLOR_CABLE_OFF);
+      fill(COLOR_COPY);
       rect(blockPosition.x, blockPosition.y, blockWidth, blockWidth);
 
       fill(COLOR_BACKGROUND);
-      if (player.mode == COPY) text("C", blockPosition.x, blockPosition.y - blockWidth/16);
-      if (player.mode == COPY_STARTED) text("Cs", blockPosition.x, blockPosition.y - blockWidth/16);
+      text("C", blockPosition.x, blockPosition.y - blockWidth/16);
     }
 
     if (player.mode == PASTE) {
       fill(COLOR_BACKGROUND);
       rect(blockPosition.x, blockPosition.y, blockWidth + blockBackgroundWidth, blockWidth + blockBackgroundWidth);
-      fill(COLOR_CABLE_OFF);
+      fill(COLOR_PASTE);
       rect(blockPosition.x, blockPosition.y, blockWidth, blockWidth);
 
       fill(COLOR_BACKGROUND);

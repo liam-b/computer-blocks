@@ -8,6 +8,9 @@ color COLOR_INVERTER_ON;
 color COLOR_VIA_OFF;
 color COLOR_VIA_ON;
 
+color COLOR_COPY;
+color COLOR_PASTE;
+
 int EMPTY = 0;
 int CABLE = 1;
 int SOURCE = 2;
@@ -30,4 +33,7 @@ void setupColors() {
   COLOR_INVERTER_ON = color(0, 55, 88);
   COLOR_VIA_OFF = color(55, 55, 74);
   COLOR_VIA_ON = color(55, 55, 88);
+  
+  COLOR_COPY = color(70, 38, 74);
+  COLOR_PASTE = color(80, 38, 74);
 }
