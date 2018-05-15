@@ -8,6 +8,8 @@ class UI {
 
   int EDIT = 0;
   int COPY = 1;
+  int COPY_STARTED = 2;
+  int COPY_ENDED = 3;
   int PASTE = 4;
 
   UI(Position blockPosition_, float blockWidth_, float blockBackgroundWidth_) {
@@ -45,15 +47,25 @@ class UI {
     textSize(30);
     text(str(player.selectedLayer + 1), blockPosition.x + blockWidth + blockMargin, blockPosition.y - blockWidth/16);
 
-    if (player.mode == COPY) {
+    if (player.mode == COPY || player.mode == COPY_STARTED) {
       fill(COLOR_BACKGROUND);
       rect(blockPosition.x, blockPosition.y, blockWidth + blockBackgroundWidth, blockWidth + blockBackgroundWidth);
       fill(COLOR_CABLE_OFF);
       rect(blockPosition.x, blockPosition.y, blockWidth, blockWidth);
 
       fill(COLOR_BACKGROUND);
-      text("C", blockPosition.x, blockPosition.y - blockWidth/16);
+      if (player.mode == COPY) text("C", blockPosition.x, blockPosition.y - blockWidth/16);
+      if (player.mode == COPY_STARTED) text("Cs", blockPosition.x, blockPosition.y - blockWidth/16);
+    }
 
+    if (player.mode == PASTE) {
+      fill(COLOR_BACKGROUND);
+      rect(blockPosition.x, blockPosition.y, blockWidth + blockBackgroundWidth, blockWidth + blockBackgroundWidth);
+      fill(COLOR_CABLE_OFF);
+      rect(blockPosition.x, blockPosition.y, blockWidth, blockWidth);
+
+      fill(COLOR_BACKGROUND);
+      text("P", blockPosition.x, blockPosition.y - blockWidth/16);
     }
 
   }
