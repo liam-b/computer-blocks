@@ -23,7 +23,7 @@ class Space {
   void draw(Player player) {
     for (int x = 0; x < size; x++) {
       for (int y = 0; y < size; y++) {
-        if (blocks[player.selectedLayer][x][y].mouseOver(player) && mousePressed && mouseButton == LEFT) {
+        if (blocks[player.selectedLayer][x][y].mouseOver(player) && mousePressed && mouseButton == LEFT && player.mode == EDIT) {
           blocks[player.selectedLayer][x][y].lock = true;
           
           if (player.selectedType == EMPTY) blocks[player.selectedLayer][x][y].erase(player, this);
@@ -38,6 +38,19 @@ class Space {
       for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
           blocks[l][i][j].lock = false;
+        }
+      }
+    }
+  }
+  
+  void unselectAllBlocks(Player player) {
+    for (int l = 0; l < layers; l++) {
+      for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+          if (blocks[l][i][j].selected) {
+            blocks[l][i][j].selected = false;
+            blocks[l][i][j].draw(player);
+          }
         }
       }
     }

@@ -8,9 +8,6 @@ void setup() {
   noStroke();
   frameRate(60);
   cursor(CROSS);
-
-  int barOffset;
-
   setupColors();
   background(COLOR_BACKGROUND);
 
@@ -30,11 +27,20 @@ void draw() {
 
 void mousePressed() {
   player.resetTranslate();
+  player.selectionUpdate(space);
+  
+  //if (key == '0') {
+  //  BlockPosition pos = player.findClickedBlock(space);
+  //  Block myBlock = space.blocks[pos.l][pos.x][pos.y];
+    
+  //  myBlock.
+  //};
 }
 
 void mouseReleased() {
   space.unlockAllBlocks();
   player.resetTranslate();
+  player.selectionReset();
 }
 
 void keyPressed() {
@@ -43,6 +49,6 @@ void keyPressed() {
 
 //void mouseWheel(MouseEvent event) {
 //  float e = event.getCount();
-//  player.scrollValue += - sq(e / 1000);
+//  player.scrollValue += -e / 1000;
 //  player.scrollUpdate();
 //}

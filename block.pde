@@ -3,6 +3,7 @@ class Block {
   boolean lock;
   boolean charge;
   boolean lastCharge;
+  boolean selected;
   
   float drawOffset;
   float sizeRatio;
@@ -21,6 +22,7 @@ class Block {
     lock = false;
     charge = false;
     lastCharge = false;
+    selected = false;
     
     size = space.size;
     sizeRatio = width / size;
@@ -42,21 +44,27 @@ class Block {
     float rectSize = drawSize * player.scrollValue;
     
     if (!(drawPosition.x < 0 || drawPosition.x > width || drawPosition.y < 0 || drawPosition.y > height) && position.l == player.selectedLayer) {
+      color drawFill;
+      
+      drawFill = COLOR_EMPTY;
       if (type != EMPTY) {
         if (charge == true) {
-          if (type == CABLE) fill(COLOR_CABLE_ON);
-          if (type == SOURCE) fill(COLOR_SOURCE);
-          if (type == INVERTER) fill(COLOR_INVERTER_ON);
-          if (type == VIA) fill(COLOR_VIA_ON);
+          if (type == CABLE) drawFill = COLOR_CABLE_ON;
+          if (type == SOURCE) drawFill = COLOR_SOURCE;
+          if (type == INVERTER) drawFill = COLOR_INVERTER_ON;
+          if (type == VIA) drawFill = COLOR_VIA_ON;
         }
         else {
-          if (type == CABLE) fill(COLOR_CABLE_OFF);
-          if (type == SOURCE) fill(COLOR_SOURCE);
-          if (type == INVERTER) fill(COLOR_INVERTER_OFF);
-          if (type == VIA) fill(COLOR_VIA_OFF);
+          if (type == CABLE) drawFill = COLOR_CABLE_OFF;
+          if (type == SOURCE) drawFill = COLOR_SOURCE;
+          if (type == INVERTER) drawFill = COLOR_INVERTER_OFF;
+          if (type == VIA) drawFill = COLOR_VIA_OFF;
         }
       }
-      else fill(COLOR_EMPTY);
+      
+      if (selected) drawFill = color(hue(drawFill), saturation(drawFill), brightness(drawFill) - 4);
+      
+      fill(drawFill);
     
       rect(drawPosition.x, drawPosition.y, rectSize, rectSize);
     
