@@ -29,12 +29,13 @@ void mousePressed() {
   player.resetTranslate();
   player.selectionUpdate(space);
   
-  //if (key == '0') {
-  //  BlockPosition pos = player.findClickedBlock(space);
-  //  Block myBlock = space.blocks[pos.l][pos.x][pos.y];
+  if (key == '0') {
+    println("hrllo"); //<>//
+    //BlockPosition pos = player.findClickedBlock(space);
+    //Block myBlock = space.blocks[pos.l][pos.x][pos.y];
     
-  //  myBlock.
-  //};
+    //println(myBlock.type);
+  };
 }
 
 void mouseReleased() {

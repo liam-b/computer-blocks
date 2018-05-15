@@ -14,7 +14,7 @@ class Player {
   int mode;
   BlockPosition selectionA;
   BlockPosition selectionB;
-  Block[][][] selection;
+  BlockPosition[][][] selection;
 
   Position translate;
   Position oldTranslate;
@@ -123,16 +123,16 @@ class Player {
     return null;
   }
 
-  Block[][][] getSelection(BlockPosition positionA, BlockPosition positionB, Space space) {
+  BlockPosition[][][] getSelection(BlockPosition positionA, BlockPosition positionB, Space space) {
     int selectionOffsetX = min(positionA.x, positionB.x);
     int selectionOffsetY = min(positionA.y, positionB.y);
 
-    Block[][][] foundSelection = new Block[space.layers][max(positionA.x, positionB.x) - min(positionA.x, positionB.x) + 1][max(positionA.y, positionB.y) - min(positionA.y, positionB.y) + 1];
+    BlockPosition[][][] foundSelection = new BlockPosition[space.layers][max(positionA.x, positionB.x) - min(positionA.x, positionB.x) + 1][max(positionA.y, positionB.y) - min(positionA.y, positionB.y) + 1];
 
     for (int l = 0; l < space.layers; l++) {
       for (int x = min(positionA.x, positionB.x); x <= max(positionA.x, positionB.x); x++) {
         for (int y = min(positionA.y, positionB.y); y <= max(positionA.y, positionB.y); y++) {
-          foundSelection[l][x - selectionOffsetX][y - selectionOffsetY] = space.blocks[l][x][y];
+          foundSelection[l][x - selectionOffsetX][y - selectionOffsetY] = space.blocks[l][x][y].position.duplicate();
           space.blocks[l][x][y].selected = true;
           space.blocks[l][x][y].draw(this);
         }
@@ -141,14 +141,14 @@ class Player {
     return foundSelection;
   }
 
-  void pasteSelection(Space space, Block[][][] selection, BlockPosition pos) {
+  void pasteSelection(Space space, BlockPosition[][][] selection, BlockPosition pos) {
     //ArrayList<BlockPosition> updateQueue = new ArrayList<BlockPosition>();
 
     for (int l = 0; l < space.layers; l++) {
       for (int x = pos.x; x < pos.x + selection[l].length; x++) {
         for (int y = pos.y; y < pos.y + selection[l][x - pos.x].length; y++) {
-          Block selectionBlock = selection[l][x - pos.x][y - pos.y];
-          //Block spaceBlock = space.blocks[l][x][y];
+          BlockPosition selectionBlockPosition = selection[l][x - pos.x][y - pos.y];
+          Block selectionBlock = space.blocks[selectionBlockPosition.l][selectionBlockPosition.x][selectionBlockPosition.y];
 
           space.blocks[l][x][y].type = selectionBlock.type;
           space.blocks[l][x][y].position.r = selectionBlock.position.r;
@@ -163,7 +163,7 @@ class Player {
             newInput.y += positionDifference.y;
 
             space.blocks[l][x][y].inputs.add(newInput);
-            //spaceBlock.position.r = 0; //<>// //<>//
+            //spaceBlock.position.r = 0; //<>//
           }
 
           //if (selectionBlock.type == SOURCE) updateQueue.add(selectionBlock.position);

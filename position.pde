@@ -38,4 +38,8 @@ class BlockPosition {
     if (x == posX && y == posY) return true;
     return false;
   }
+  
+  BlockPosition duplicate() {
+    return new BlockPosition(x, y, r, l);
+  }
 }
