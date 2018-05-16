@@ -49,6 +49,10 @@ void keyPressed() {
     save = new Save(space);
     save.saveToFile("test.xml");
   }
+
+  if (key == 'l') {
+    save = new Save("test.xml");
+  }
 }
 
 //void mouseWheel(MouseEvent event) {
