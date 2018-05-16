@@ -1,3 +1,4 @@
+// main colors
 color COLOR_BACKGROUND;
 color COLOR_EMPTY;
 color COLOR_CABLE_OFF;
@@ -8,19 +9,27 @@ color COLOR_INVERTER_ON;
 color COLOR_VIA_OFF;
 color COLOR_VIA_ON;
 
+// ui colors
 color COLOR_UI_BACKGROUND;
 color COLOR_UI_COPY;
 color COLOR_UI_PASTE;
 
+// block types
 int EMPTY = 0;
 int CABLE = 1;
 int SOURCE = 2;
 int INVERTER = 3;
 int VIA = 4;
 
+// space attributes
 int SPACE_SIZE = 50;
 int SPACE_LAYERS = 5;
-int SPACE_SPACING = 1;
+
+// draw variables
+int BLOCK_RATIO = 10;
+int BLOCK_SPACING = 1;
+int BLOCK_OFFSET = BLOCK_RATIO / 2;
+int BLOCK_SIZE = BLOCK_RATIO - BLOCK_SPACING;
 
 void setupColors() {
   colorMode(HSB, 100);
@@ -38,4 +47,6 @@ void setupColors() {
   COLOR_UI_BACKGROUND = color(0, 0, 88);
   COLOR_UI_COPY = color(70, 38, 74);
   COLOR_UI_PASTE = color(80, 38, 74);
+
+  background(COLOR_BACKGROUND);
 }

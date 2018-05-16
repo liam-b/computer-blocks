@@ -5,48 +5,30 @@ class Block {
   boolean lastCharge;
   boolean selected;
   
-  float drawOffset;
-  float sizeRatio;
-  float drawSize;
-  float size;
-  float spacingPercent;
-  float spacing;
-  int layers;
-  
   BlockPosition position;
   
   ArrayList<BlockPosition> inputs;
   
-  Block(BlockPosition position_, Space space, float spacing_) {
+  Block(BlockPosition position_) {
     type = EMPTY;
     lock = false;
     charge = false;
     lastCharge = false;
     selected = false;
     
-    size = space.size;
-    sizeRatio = width / size;
-    drawOffset = sizeRatio / 2;
-    drawSize = sizeRatio - spacing_;
-    spacingPercent = spacing_;
-    spacing = spacing_ / 100 * drawSize;
-    layers = space.layers;
-    
     position = position_;
     inputs = new ArrayList<BlockPosition>();
   }
   
   void draw(Player player) {
+    float rectSize = BLOCK_SIZE * player.scrollValue;
     Position drawPosition = new Position(
-      drawOffset + player.translate.x + sizeRatio * position.x * player.scrollValue,
-      drawOffset + player.translate.y + sizeRatio * position.y * player.scrollValue
+      BLOCK_OFFSET + player.translate.x + BLOCK_RATIO * position.x * player.scrollValue,
+      BLOCK_OFFSET + player.translate.y + BLOCK_RATIO * position.y * player.scrollValue
     );
-    float rectSize = drawSize * player.scrollValue;
     
     if (!(drawPosition.x < 0 || drawPosition.x > width || drawPosition.y < 0 || drawPosition.y > height) && position.l == player.selectedLayer) {
-      color drawFill;
-      
-      drawFill = COLOR_EMPTY;
+      color drawFill = COLOR_EMPTY;
       if (type != EMPTY) {
         if (charge == true) {
           if (type == CABLE) drawFill = COLOR_CABLE_ON;
@@ -61,16 +43,13 @@ class Block {
           if (type == VIA) drawFill = COLOR_VIA_OFF;
         }
       }
-      
       if (selected) drawFill = color(hue(drawFill), saturation(drawFill), brightness(drawFill) - 4);
       
       fill(drawFill);
-    
       rect(drawPosition.x, drawPosition.y, rectSize, rectSize);
     
       if (type == INVERTER) {
         fill(COLOR_SOURCE);
-      
         if (position.r == 2) rect(drawPosition.x, drawPosition.y + rectSize / 2.5 - rectSize / 24, rectSize / 2, rectSize / 12);
         if (position.r == 1) rect(drawPosition.x + rectSize / 2.5 - rectSize / 24, drawPosition.y, rectSize / 12, rectSize / 2);
         if (position.r == 0) rect(drawPosition.x, drawPosition.y - rectSize / 2.5 + rectSize / 24, rectSize / 2, rectSize / 12);
@@ -82,12 +61,10 @@ class Block {
   void place(Player player, Space space) {
     if (type != player.selectedType) {
       type = player.selectedType;
-      position.r = player.selectedRotation;
-      
       charge = false;
       lock = false;
       lastCharge = false;
-      
+      position.r = player.selectedRotation;
       inputs = new ArrayList<BlockPosition>();
       
       update(player, space, position);
@@ -99,11 +76,9 @@ class Block {
     charge = false;
     lock = false;
     lastCharge = false;
-    
     inputs = new ArrayList<BlockPosition>();
     
     updateSurroundingBlocks(getSurroundingBlocks(space), space, player, position);
-    
     draw(player);
   }
   
@@ -129,14 +104,11 @@ class Block {
         }
         else if (currentSurroundingBlock.charge && ((notOnlyItemInList(currentSurroundingBlock.inputs, position)) || currentSurroundingBlock.type == SOURCE)) inputs.add(currentSurroundingBlock.position);
       }
-      
       if (updaterIndex != -1) surroundingBlocks.remove(updaterIndex);
       
       charge = true;
       if (inputs.size() == 0) charge = false;
-      
       if (type == SOURCE) charge = true;
-      
       if (type == INVERTER) {
         if (inputs.size() == 0) charge = true;
         else charge = false;
@@ -155,20 +127,20 @@ class Block {
   }
   
   boolean mouseOver(Player player) {
-    return mouseX > drawOffset + player.translate.x + sizeRatio * position.x * player.scrollValue - drawSize * player.scrollValue / 2 && 
-           mouseX < drawOffset + player.translate.x + sizeRatio * position.x * player.scrollValue + drawSize * player.scrollValue / 2 && 
-           mouseY > drawOffset + player.translate.y + sizeRatio * position.y * player.scrollValue - drawSize * player.scrollValue / 2 && 
-           mouseY < drawOffset + player.translate.y + sizeRatio * position.y * player.scrollValue + drawSize * player.scrollValue / 2;
+    return mouseX > BLOCK_OFFSET + player.translate.x + BLOCK_RATIO * position.x * player.scrollValue - BLOCK_SIZE * player.scrollValue / 2 && 
+           mouseX < BLOCK_OFFSET + player.translate.x + BLOCK_RATIO * position.x * player.scrollValue + BLOCK_SIZE * player.scrollValue / 2 && 
+           mouseY > BLOCK_OFFSET + player.translate.y + BLOCK_RATIO * position.y * player.scrollValue - BLOCK_SIZE * player.scrollValue / 2 && 
+           mouseY < BLOCK_OFFSET + player.translate.y + BLOCK_RATIO * position.y * player.scrollValue + BLOCK_SIZE * player.scrollValue / 2;
   }
   
   
   ArrayList<BlockPosition> getSurroundingBlocks(Space space) {
     ArrayList<BlockPosition> foundBlocks = new ArrayList<BlockPosition>();
-    if (position.x + 1 < size - 1) { if (space.blocks[position.l][position.x + 1][position.y].type != EMPTY) 
+    if (position.x + 1 < space.size - 1) { if (space.blocks[position.l][position.x + 1][position.y].type != EMPTY) 
       foundBlocks.add(new BlockPosition(position.x + 1, position.y, space.blocks[position.l][position.x + 1][position.y].position.r, position.l)); };
     if (position.x - 1 > 0) { if (space.blocks[position.l][position.x - 1][position.y].type != EMPTY) 
       foundBlocks.add(new BlockPosition(position.x - 1, position.y, space.blocks[position.l][position.x - 1][position.y].position.r, position.l)); };
-    if (position.y + 1 < size - 1) { if (space.blocks[position.l][position.x][position.y + 1].type != EMPTY) 
+    if (position.y + 1 < space.size - 1) { if (space.blocks[position.l][position.x][position.y + 1].type != EMPTY) 
       foundBlocks.add(new BlockPosition(position.x, position.y + 1, space.blocks[position.l][position.x][position.y + 1].position.r, position.l)); };
     if (position.y - 1 > 0) { if (space.blocks[position.l][position.x][position.y - 1].type != EMPTY) 
       foundBlocks.add(new BlockPosition(position.x, position.y - 1, space.blocks[position.l][position.x][position.y - 1].position.r, position.l)); };
@@ -195,7 +167,7 @@ class Block {
   
   ArrayList<BlockPosition> appendViasToList(ArrayList<BlockPosition> list, Space space) {
     ArrayList<BlockPosition> foundVias = list;
-    for (int l = 0; l < layers; l++) {
+    for (int l = 0; l < space.layers; l++) {
       if (space.blocks[l][position.x][position.y].type == VIA && space.blocks[l][position.x][position.y].position.l != position.l) foundVias.add(space.blocks[l][position.x][position.y].position);
     }
     return foundVias;

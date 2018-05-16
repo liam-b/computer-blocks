@@ -1,12 +1,10 @@
 class Space {
   Block[][][] blocks;
   int size;
-  float spacing;
   int layers;
 
-  Space(int size_, int layers_, float spacing_) {
+  Space(int size_, int layers_) {
     size = size_;
-    spacing = spacing_;
     layers = layers_;
 
     blocks = new Block[layers][size][size];
@@ -14,17 +12,15 @@ class Space {
     for (int l = 0; l < layers; l++) {
       for (int x = 0; x < size; x++) {
         for (int y = 0; y < size; y++) {
-          blocks[l][x][y] = new Block(new BlockPosition(x, y, 0, l), this, spacing);
+          blocks[l][x][y] = new Block(new BlockPosition(x, y, 0, l));
         }
       }
     }
   }
 
-  Space(float spacing_) {
-    spacing = spacing_;
-  }
+  Space() {}
 
-  void draw(Player player) {
+  void update(Player player) {
     for (int x = 0; x < size; x++) {
       for (int y = 0; y < size; y++) {
         if (blocks[player.selectedLayer][x][y].mouseOver(player) && mousePressed && mouseButton == LEFT && player.mode == EDIT) {

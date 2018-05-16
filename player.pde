@@ -8,8 +8,6 @@ class Player {
   int selectedType;
   int selectedRotation;
   int selectedLayer;
-  int size;
-  int layers;
 
   int mode;
   BlockPosition selectionA;
@@ -18,21 +16,17 @@ class Player {
 
   Position translate;
   Position oldTranslate;
-
   float scrollValue;
 
-  Player(Space space) {
+  Player() {
     selectedType = CABLE;
     selectedRotation = 0;
     selectedLayer = 0;
-    size = space.size;
-    layers = space.layers;
 
+    mode = EDIT;
     translate = new Position(0, 0);
     oldTranslate = new Position(0, 0);
     scrollValue = 3;
-
-    mode = EDIT;
   }
 
   void update(Space space) {
@@ -55,7 +49,7 @@ class Player {
 
     if (key == '[' || key == ']') {
       if (selectedLayer < 0) selectedLayer = 0;
-      if (selectedLayer > layers - 1) selectedLayer = layers - 1;
+      if (selectedLayer > space.layers - 1) selectedLayer = space.layers - 1;
 
       background(COLOR_BACKGROUND);
       space.drawAllBlocks(player);
@@ -87,12 +81,12 @@ class Player {
     }
   }
 
-  void selectionReset() {
+  void resetMode() {
     if (mode == COPY_ENDED) mode = EDIT;
     if (mode == PASTE) mode = EDIT;
   }
 
-  void cameraUpdate() {
+  void updateTranslate() {
     if (mousePressed && mouseButton == RIGHT) {
       translate.x = mouseX - oldTranslate.x;
       translate.y = mouseY - oldTranslate.y;
@@ -102,7 +96,7 @@ class Player {
     }
   }
 
-  void scrollUpdate() {
+  void updateScroll() {
     background(COLOR_BACKGROUND);
     space.drawAllBlocks(player);
   }
@@ -115,8 +109,8 @@ class Player {
   }
 
   BlockPosition findClickedBlock(Space space) {
-    for (int x = 0; x < size; x++) {
-      for (int y = 0; y < size; y++) {
+    for (int x = 0; x < space.size; x++) {
+      for (int y = 0; y < space.size; y++) {
         if (space.blocks[player.selectedLayer][x][y].mouseOver(this) && mouseButton == LEFT) return space.blocks[player.selectedLayer][x][y].position;
       }
     }

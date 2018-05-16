@@ -4,8 +4,6 @@ UI ui;
 
 // TODO: fix scrolling
 
-Save save;
-
 void setup() {
   size(800, 800);
   rectMode(CENTER);
@@ -13,19 +11,17 @@ void setup() {
   frameRate(60);
   cursor(CROSS);
   setupColors();
-  background(COLOR_BACKGROUND);
 
-  space = new Space(SPACE_SIZE, SPACE_LAYERS, SPACE_SPACING);
-  player = new Player(space);
-
+  space = new Space(SPACE_SIZE, SPACE_LAYERS);
+  player = new Player();
   ui = new UI(new Position(50 , height - 50), 50, 5);
 
   space.drawAllBlocks(player);
 }
 
 void draw() {
-  space.draw(player);
-  player.cameraUpdate();
+  space.update(player);
+  player.updateTranslate();
   ui.draw(player);
 }
 
@@ -37,19 +33,18 @@ void mousePressed() {
 void mouseReleased() {
   space.unlockAllBlocks();
   player.resetTranslate();
-  player.selectionReset();
+  player.resetMode();
 }
 
 void keyPressed() {
   player.update(space);
 
   if (key == 's') {
-    save = new Save(space);
-    save.saveToFile("test.xml");
+    save("test.xml");
   }
 
   if (key == 'l') {
-    save = new Save("test.xml");
+    load("test.xml");
   }
 }
 
