@@ -6,6 +6,8 @@ UI ui;
 // TODO: fix scrolling
 // TODO: make layer ui better
 
+Save save;
+
 void setup() {
   size(800, 800);
   rectMode(CENTER);
@@ -42,6 +44,11 @@ void mouseReleased() {
 
 void keyPressed() {
   player.update(space);
+
+  if (key == 's') {
+    save = new Save(space);
+    save.saveToFile("test.xml");
+  }
 }
 
 //void mouseWheel(MouseEvent event) {

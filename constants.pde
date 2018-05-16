@@ -18,7 +18,7 @@ int SOURCE = 2;
 int INVERTER = 3;
 int VIA = 4;
 
-int SPACE_SIZE = 75;
+int SPACE_SIZE = 5;
 int SPACE_LAYERS = 3;
 int SPACE_SPACING = 1;
 
