@@ -21,10 +21,10 @@ class Block {
   }
 
   void draw(Player player) {
-    float rectSize = BLOCK_SIZE * player.scrollValue;
+    float rectSize = BLOCK_SIZE * player.zoom;
     Position drawPosition = new Position(
-      BLOCK_OFFSET + player.translate.x + BLOCK_RATIO * position.x * player.scrollValue,
-      BLOCK_OFFSET + player.translate.y + BLOCK_RATIO * position.y * player.scrollValue
+      BLOCK_OFFSET + player.translate.x + BLOCK_RATIO * position.x * player.zoom,
+      BLOCK_OFFSET + player.translate.y + BLOCK_RATIO * position.y * player.zoom
     );
 
     if (!(drawPosition.x + rectSize < 0 || drawPosition.x - rectSize > width || drawPosition.y + rectSize < 0 || drawPosition.y - rectSize > height) && position.l == player.selectedLayer) {
@@ -127,10 +127,10 @@ class Block {
   }
 
   boolean mouseOver(Player player) {
-    return mouseX > BLOCK_OFFSET + player.translate.x + BLOCK_RATIO * position.x * player.scrollValue - BLOCK_SIZE * player.scrollValue / 2 &&
-           mouseX < BLOCK_OFFSET + player.translate.x + BLOCK_RATIO * position.x * player.scrollValue + BLOCK_SIZE * player.scrollValue / 2 &&
-           mouseY > BLOCK_OFFSET + player.translate.y + BLOCK_RATIO * position.y * player.scrollValue - BLOCK_SIZE * player.scrollValue / 2 &&
-           mouseY < BLOCK_OFFSET + player.translate.y + BLOCK_RATIO * position.y * player.scrollValue + BLOCK_SIZE * player.scrollValue / 2;
+    return mouseX > BLOCK_OFFSET + player.translate.x + BLOCK_RATIO * position.x * player.zoom - BLOCK_SIZE * player.zoom / 2 &&
+           mouseX < BLOCK_OFFSET + player.translate.x + BLOCK_RATIO * position.x * player.zoom + BLOCK_SIZE * player.zoom / 2 &&
+           mouseY > BLOCK_OFFSET + player.translate.y + BLOCK_RATIO * position.y * player.zoom - BLOCK_SIZE * player.zoom / 2 &&
+           mouseY < BLOCK_OFFSET + player.translate.y + BLOCK_RATIO * position.y * player.zoom + BLOCK_SIZE * player.zoom / 2;
   }
 
 

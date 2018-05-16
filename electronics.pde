@@ -39,17 +39,16 @@ void mouseReleased() {
 void keyPressed() {
   player.update(space);
 
-  if (key == 's') {
-    saveSpace(SAVE_FILE);
-  }
+  if (key == 's') saveSpace(SAVE_FILE);
+  if (key == 'l') loadSpace(LOAD_FILE);
 
-  if (key == 'l') {
-    loadSpace(LOAD_FILE);
-  }
+  if (key == ',') player.zoom -= 0.5;
+  if (key == '.') player.zoom += 0.5;
+  if (key == '.' || key == ',') player.updateScroll();
 }
 
-//void mouseWheel(MouseEvent event) {
+// void mouseWheel(MouseEvent event) {
 //  float e = event.getCount();
-//  player.scrollValue += -e / 1000;
-//  player.scrollUpdate();
-//}
+//  player.zoom += -e / 1000;
+//  player.updateScroll();
+// }

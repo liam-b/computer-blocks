@@ -16,7 +16,7 @@ class Player {
 
   Position translate;
   Position oldTranslate;
-  float scrollValue;
+  float zoom;
 
   Player() {
     selectedType = CABLE;
@@ -26,7 +26,7 @@ class Player {
     mode = EDIT;
     translate = new Position(0, 0);
     oldTranslate = new Position(0, 0);
-    scrollValue = 3;
+    zoom = 3;
   }
 
   Player(Player oldPlayer) {
@@ -37,7 +37,7 @@ class Player {
     mode = EDIT;
     translate = oldPlayer.translate;
     oldTranslate = oldPlayer.oldTranslate;
-    scrollValue = oldPlayer.scrollValue;
+    zoom = oldPlayer.zoom;
   }
 
   void update(Space space) {
