@@ -31,6 +31,10 @@ int BLOCK_SPACING = 1;
 int BLOCK_OFFSET = BLOCK_RATIO / 2;
 int BLOCK_SIZE = BLOCK_RATIO - BLOCK_SPACING;
 
+// file names
+String LOAD_FILE = "save.xml";
+String SAVE_FILE = "save.xml";
+
 void setupColors() {
   colorMode(HSB, 100);
 

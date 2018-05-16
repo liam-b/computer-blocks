@@ -1,10 +1,10 @@
-void save(String path) {
+void saveSpace(String path) {
   XML xml = new XML("space");
   xml.setInt("size", space.size);
   xml.setInt("layers", space.layers);
-  
+
   xml.addChild("blocks");
-  
+
   for (int l = 0; l < space.layers; l++) {
     for (int x = 0; x < space.size; x++) {
       for (int y = 0; y < space.size; y++) {
@@ -14,9 +14,9 @@ void save(String path) {
           currentBlockXML.setInt("type", currentBlock.type);
           currentBlockXML.setInt("charge", int(currentBlock.charge));
           currentBlockXML.setInt("lastCharge", int(currentBlock.lastCharge));
-    
+
           setPosition(currentBlockXML.addChild("position"), currentBlock.position);
-    
+
           if (currentBlock.inputs.size() != 0) {
             XML currentBlockInputsXML = currentBlockXML.addChild("inputs");
             for (int i = 0; i < currentBlock.inputs.size(); i++) {
@@ -27,11 +27,11 @@ void save(String path) {
       }
     }
   }
-  
+
   saveXML(xml, path);
 }
 
-void load(String path) {
+void loadSpace(String path) {
   XML xml = loadXML(path);
 
   space = new Space();
@@ -39,7 +39,7 @@ void load(String path) {
   space.size = xml.getInt("size");
   space.layers = xml.getInt("layers");
   space.blocks = new Block[space.layers][space.size][space.size];
-  
+
   for (int l = 0; l < space.layers; l++) {
     for (int x = 0; x < space.size; x++) {
       for (int y = 0; y < space.size; y++) {
@@ -65,11 +65,10 @@ void load(String path) {
 
       space.blocks[newBlockPosition.l][newBlockPosition.x][newBlockPosition.y].inputs.add(newBlockInput);
     }
-
-    space.blocks[newBlockPosition.l][newBlockPosition.x][newBlockPosition.y].draw(player);
   }
 
-  player = new Player();
+  player = new Player(player);
+  space.drawAllBlocks(player);
 }
 
 void setPosition(XML positionXML, BlockPosition position) {

@@ -3,6 +3,8 @@ class Space {
   int size;
   int layers;
 
+  Space() {}
+
   Space(int size_, int layers_) {
     size = size_;
     layers = layers_;
@@ -17,8 +19,6 @@ class Space {
       }
     }
   }
-
-  Space() {}
 
   void update(Player player) {
     for (int x = 0; x < size; x++) {

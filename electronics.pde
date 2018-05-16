@@ -40,11 +40,11 @@ void keyPressed() {
   player.update(space);
 
   if (key == 's') {
-    save("test.xml");
+    saveSpace(SAVE_FILE);
   }
 
   if (key == 'l') {
-    load("test.xml");
+    loadSpace(LOAD_FILE);
   }
 }
 

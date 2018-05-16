@@ -29,6 +29,17 @@ class Player {
     scrollValue = 3;
   }
 
+  Player(Player oldPlayer) {
+    selectedType = oldPlayer.selectedType;
+    selectedRotation = oldPlayer.selectedRotation;
+    selectedLayer = oldPlayer.selectedLayer;
+
+    mode = EDIT;
+    translate = oldPlayer.translate;
+    oldTranslate = oldPlayer.oldTranslate;
+    scrollValue = oldPlayer.scrollValue;
+  }
+
   void update(Space space) {
     if (key == '1') selectedType = EMPTY;
     if (key == '2') selectedType = CABLE;
