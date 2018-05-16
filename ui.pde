@@ -32,15 +32,13 @@ class UI {
     fill(COLOR_UI_BACKGROUND);
     rect(blockPosition.x + blockWidth + blockMargin, blockPosition.y, blockWidth + blockBackgroundWidth, blockWidth + blockBackgroundWidth);
 
-    fill(COLOR_CABLE_OFF);
+    fill(COLOR_UI_BACKGROUND);
     rect(blockPosition.x + blockWidth + blockMargin, blockPosition.y, blockWidth, blockWidth);
 
     //Draw Layers
     textAlign(CENTER, CENTER);
-    fill(COLOR_UI_BACKGROUND);
+    fill(COLOR_CABLE_OFF);
     rect(blockPosition.x + blockWidth + blockMargin, blockPosition.y + blockWidth/2 - blockWidth/SPACE_LAYERS/2 - player.selectedLayer*(blockWidth/SPACE_LAYERS), blockWidth, blockWidth/SPACE_LAYERS);
-    textSize(30);
-    text(str(player.selectedLayer + 1), blockPosition.x + blockWidth + blockMargin, blockPosition.y - blockWidth/16);
 
     //Draw Copy
     if (player.mode == COPY || player.mode == COPY_STARTED) {
