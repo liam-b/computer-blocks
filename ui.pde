@@ -4,8 +4,6 @@ class UI {
   float blockBackgroundWidth;
   float blockMargin = 25;
 
-  //hi
-
   UI(Position blockPosition_, float blockWidth_, float blockBackgroundWidth_) {
     blockPosition = blockPosition_;
     blockWidth = blockWidth_;
@@ -13,9 +11,10 @@ class UI {
   }
 
   void draw(Player player) {
-    fill(COLOR_BACKGROUND);
+    fill(COLOR_UI_BACKGROUND);
     rect(blockPosition.x, blockPosition.y, blockWidth + blockBackgroundWidth, blockWidth + blockBackgroundWidth);
 
+    fill(COLOR_BACKGROUND);
     if (player.selectedType == CABLE) fill(COLOR_CABLE_OFF);
     if (player.selectedType == SOURCE) fill(COLOR_SOURCE);
     if (player.selectedType == INVERTER) fill(COLOR_INVERTER_OFF);
@@ -30,34 +29,34 @@ class UI {
       if (player.selectedRotation == 2) rect(blockPosition.x, blockPosition.y + blockWidth / 3, blockWidth / 2, blockWidth / 15);
     }
 
-    fill(COLOR_BACKGROUND);
+    fill(COLOR_UI_BACKGROUND);
     rect(blockPosition.x + blockWidth + blockMargin, blockPosition.y, blockWidth + blockBackgroundWidth, blockWidth + blockBackgroundWidth);
 
     fill(COLOR_CABLE_OFF);
     rect(blockPosition.x + blockWidth + blockMargin, blockPosition.y, blockWidth, blockWidth);
 
     textAlign(CENTER, CENTER);
-    fill(COLOR_BACKGROUND);
+    fill(COLOR_UI_BACKGROUND);
     textSize(30);
     text(str(player.selectedLayer + 1), blockPosition.x + blockWidth + blockMargin, blockPosition.y - blockWidth/16);
 
     if (player.mode == COPY || player.mode == COPY_STARTED) {
-      fill(COLOR_BACKGROUND);
+      fill(COLOR_UI_BACKGROUND);
       rect(blockPosition.x, blockPosition.y, blockWidth + blockBackgroundWidth, blockWidth + blockBackgroundWidth);
-      fill(COLOR_COPY);
+      fill(COLOR_UI_COPY);
       rect(blockPosition.x, blockPosition.y, blockWidth, blockWidth);
 
-      fill(COLOR_BACKGROUND);
+      fill(COLOR_UI_BACKGROUND);
       text("C", blockPosition.x, blockPosition.y - blockWidth/16);
     }
 
     if (player.mode == PASTE) {
-      fill(COLOR_BACKGROUND);
+      fill(COLOR_UI_BACKGROUND);
       rect(blockPosition.x, blockPosition.y, blockWidth + blockBackgroundWidth, blockWidth + blockBackgroundWidth);
-      fill(COLOR_PASTE);
+      fill(COLOR_UI_PASTE);
       rect(blockPosition.x, blockPosition.y, blockWidth, blockWidth);
 
-      fill(COLOR_BACKGROUND);
+      fill(COLOR_UI_BACKGROUND);
       text("P", blockPosition.x, blockPosition.y - blockWidth/16);
     }
 
