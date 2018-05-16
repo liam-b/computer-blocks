@@ -2,9 +2,7 @@ Space space;
 Player player;
 UI ui;
 
-// TODO: add space saving
 // TODO: fix scrolling
-// TODO: make layer ui better
 
 Save save;
 

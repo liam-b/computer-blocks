@@ -17,7 +17,7 @@ class UI {
     fill(COLOR_BACKGROUND);
     if (player.selectedType == CABLE) fill(COLOR_CABLE_OFF);
     if (player.selectedType == SOURCE) fill(COLOR_SOURCE);
-    if (player.selectedType == INVERTER) fill(COLOR_INVERTER_OFF);
+    if (player.selectedType == INVERTER) fill(COLOR_INVERTER_ON);
     if (player.selectedType == VIA) fill(COLOR_VIA_OFF);
     rect(blockPosition.x, blockPosition.y, blockWidth, blockWidth);
 

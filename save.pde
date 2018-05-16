@@ -1,25 +1,3 @@
-String testString = "<blocks>" +
-  "<Block>" +
-    "<BlockPosition>" +
-      "<x>0</x>" +
-      "<y>0</y>" +
-      "<r>0</r>" +
-      "<l>0</l>" +
-    "</BlockPosition>" +
-    "<type>1</type>" +
-    "<charge>false</charge>" +
-    "<lastCharge>false</lastCharge>" +
-    "<inputs>" +
-      "<BlockPosition>" +
-        "<x>0</x>" +
-        "<y>1</y>" +
-        "<r>0</r>" +
-        "<l>0</l>" +
-      "</BlockPosition>" +
-    "</inputs>" +
-  "</Block>" +
-"</blocks>";
-
 class Save {
   XML xml;
 
@@ -68,15 +46,15 @@ class Save {
       space.blocks[newBlockPosition.l][newBlockPosition.x][newBlockPosition.y].type = blockXML.getInt("type");
       space.blocks[newBlockPosition.l][newBlockPosition.x][newBlockPosition.y].charge = boolean(blockXML.getInt("charge"));
       space.blocks[newBlockPosition.l][newBlockPosition.x][newBlockPosition.y].lastCharge = boolean(blockXML.getInt("lastCharge"));
-      
+
       XML[] blockInputsXML = blockXML.getChildren("inputs");
       for (int i = 0; i < blockInputsXML.length; i++) {
         XML blockInputXML = blockInputsXML[i];
         BlockPosition newBlockInput = getPosition(blockInputXML);
-        
+
         space.blocks[newBlockPosition.l][newBlockPosition.x][newBlockPosition.y].inputs.add(newBlockInput);
       }
-      
+
       space.blocks[newBlockPosition.l][newBlockPosition.x][newBlockPosition.y].draw(player);
     }
 

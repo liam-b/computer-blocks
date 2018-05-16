@@ -19,7 +19,7 @@ int INVERTER = 3;
 int VIA = 4;
 
 int SPACE_SIZE = 50;
-int SPACE_LAYERS = 3;
+int SPACE_LAYERS = 5;
 int SPACE_SPACING = 1;
 
 void setupColors() {
