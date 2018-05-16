@@ -2,6 +2,10 @@ Space space;
 Player player;
 UI ui;
 
+// TODO: add space saving
+// TODO: fix scrolling
+// TODO: make layer ui better
+
 void setup() {
   size(800, 800);
   rectMode(CENTER);
@@ -27,7 +31,7 @@ void draw() {
 
 void mousePressed() {
   player.resetTranslate();
-  player.selectionUpdate(space); //<>//
+  player.selectionUpdate(space);
 }
 
 void mouseReleased() {
