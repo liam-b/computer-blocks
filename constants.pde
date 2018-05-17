@@ -22,7 +22,7 @@ int INVERTER = 3;
 int VIA = 4;
 
 // space attributes
-int SPACE_SIZE = 50;
+int SPACE_SIZE = 150;
 int SPACE_LAYERS = 5;
 
 // draw variables
@@ -32,8 +32,8 @@ int BLOCK_OFFSET = BLOCK_RATIO / 2;
 int BLOCK_SIZE = BLOCK_RATIO - BLOCK_SPACING;
 
 // file names
-String LOAD_FILE = "save.xml";
-String SAVE_FILE = "save.xml";
+String LOAD_FILE = "save1.xml";
+String SAVE_FILE = "save1.xml";
 
 void setupColors() {
   colorMode(HSB, 100);

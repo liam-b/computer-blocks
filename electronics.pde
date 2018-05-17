@@ -3,6 +3,8 @@ Player player;
 UI ui;
 
 // TODO: fix scrolling
+// TODO: make selected areas deleteable
+// TODO: 
 
 void setup() {
   size(800, 800);
