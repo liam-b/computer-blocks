@@ -2,21 +2,25 @@ Space space;
 Player player;
 UI ui;
 
-// TODO: fix scrolling
-// TODO: make selected areas deleteable
-// TODO: 
+// BUG: fix scrolling
+// BUG: fix weird copy lag on first selection
+// BUG: make ui text scale
+// BUG: make infinite block loops impossible
+// TODO: make save file ui
 
 void setup() {
-  size(800, 800);
-  rectMode(CENTER);
-  noStroke();
+  fullScreen();
+  pixelDensity(2);
   frameRate(60);
   cursor(CROSS);
+
+  rectMode(CENTER);
+  noStroke();
   setupColors();
 
   space = new Space(SPACE_SIZE, SPACE_LAYERS);
   player = new Player();
-  ui = new UI(new Position(50 , height - 50), 50, 5);
+  ui = new UI(new Position(UI_OFFSET_X , height - UI_OFFSET_Y), UI_SPACING, UI_BLOCK_SIZE, UI_BACKGROUND_MARGIN);
 
   space.drawAllBlocks(player);
 }
@@ -24,7 +28,7 @@ void setup() {
 void draw() {
   space.update(player);
   player.updateTranslate();
-  ui.draw(player);
+  ui.draw(space, player);
 }
 
 void mousePressed() {
@@ -41,12 +45,13 @@ void mouseReleased() {
 void keyPressed() {
   player.update(space);
 
-  if (key == 's') saveSpace(SAVE_FILE);
-  if (key == 'l') loadSpace(LOAD_FILE);
-
-  if (key == ',') player.zoom -= 0.5;
-  if (key == '.') player.zoom += 0.5;
+  if (key == ',') player.zoom -= 0.3;
+  if (key == '.') player.zoom += 0.3;
   if (key == '.' || key == ',') player.updateScroll();
+}
+
+void keyReleased() {
+  player.deupdate(space);
 }
 
 // void mouseWheel(MouseEvent event) {

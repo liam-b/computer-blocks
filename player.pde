@@ -3,6 +3,8 @@ int COPY = 1;
 int COPY_STARTED = 2;
 int COPY_ENDED = 3;
 int PASTE = 4;
+int SAVE = 5;
+int LOAD = 6;
 
 class Player {
   int selectedType;
@@ -26,7 +28,7 @@ class Player {
     mode = EDIT;
     translate = new Position(0, 0);
     oldTranslate = new Position(0, 0);
-    zoom = 3;
+    zoom = 2;
   }
 
   Player(Player oldPlayer) {
@@ -41,11 +43,13 @@ class Player {
   }
 
   void update(Space space) {
-    if (key == '1') selectedType = EMPTY;
-    if (key == '2') selectedType = CABLE;
-    if (key == '3') selectedType = SOURCE;
-    if (key == '4') selectedType = INVERTER;
-    if (key == '5') selectedType = VIA;
+    if (mode != SAVE && mode != LOAD) {
+      if (key == '1') selectedType = EMPTY;
+      if (key == '2') selectedType = CABLE;
+      if (key == '3') selectedType = SOURCE;
+      if (key == '4') selectedType = INVERTER;
+      if (key == '5') selectedType = VIA;
+    }
 
     if (key == '[') selectedLayer -= 1;
     if (key == ']') selectedLayer += 1;
@@ -56,6 +60,21 @@ class Player {
     if (mode == EDIT && key == 'x') space.unselectAllBlocks(this);
     if (mode == EDIT && key == 'p') mode = PASTE;
 
+    if (mode == EDIT && key == 's') mode = SAVE;
+    if (mode == EDIT && key == 'l') mode = LOAD;
+
+    if (mode == SAVE) {
+      if (key >= '0' && key <= '9') {
+        saveSpace(SAVE_FILE + "_" + key + ".xml");
+      }
+    }
+
+    if (mode == LOAD) {
+      if (key >= '0' && key <= '9') {
+        loadSpace(SAVE_FILE + "_" + key + ".xml");
+      }
+    }
+
     if (selectedRotation > 3) selectedRotation = 0;
 
     if (key == '[' || key == ']') {
@@ -64,8 +83,13 @@ class Player {
 
       background(COLOR_BACKGROUND);
       space.drawAllBlocks(player);
-      ui.draw(this);
+      ui.draw(space, this);
     }
+  }
+
+  void deupdate(Space space) {
+    if (mode == SAVE && key == 's') mode = EDIT;
+    if (mode == LOAD && key == 'l') mode = EDIT;
   }
 
   void selectionUpdate(Space space) {
