@@ -58,6 +58,26 @@ class UI {
         textAlign(CENTER, CENTER);
         text("P", blockPosition.x, blockPosition.y - blockSize / 14);
       }
+      if (player.mode == SAVE) {
+        // save mode
+        fill(COLOR_UI_PASTE);
+        rect(blockPosition.x, blockPosition.y, blockSize, blockSize);
+
+        fill(COLOR_UI_BACKGROUND);
+        textSize(20);
+        textAlign(CENTER, CENTER);
+        text("S", blockPosition.x, blockPosition.y - blockSize / 14);
+      }
+      if (player.mode == LOAD) {
+        // load mode
+        fill(COLOR_UI_PASTE);
+        rect(blockPosition.x, blockPosition.y, blockSize, blockSize);
+
+        fill(COLOR_UI_BACKGROUND);
+        textSize(20);
+        textAlign(CENTER, CENTER);
+        text("L", blockPosition.x, blockPosition.y - blockSize / 14);
+      }
     }
 
     // layers

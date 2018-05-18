@@ -3,10 +3,9 @@ Player player;
 UI ui;
 
 // BUG: fix scrolling
-// BUG: fix weird copy lag on first selection
-// BUG: make ui text scale
+// BUG: fix weird copy lag on first selection (possibly just fonts loading in?)
 // BUG: make infinite block loops impossible
-// TODO: make save file ui
+// TODO: make save file ui better
 
 void setup() {
   fullScreen();
