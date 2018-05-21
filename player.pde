@@ -49,6 +49,7 @@ class Player {
       if (key == '3') selectedType = SOURCE;
       if (key == '4') selectedType = INVERTER;
       if (key == '5') selectedType = VIA;
+      if (key == '6') selectedType = DELAY;
     }
 
     if (key == '[') selectedLayer -= 1;

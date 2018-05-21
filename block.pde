@@ -5,6 +5,10 @@ class Block {
   boolean lastCharge;
   boolean selected;
 
+  // boolean chargeNextTick;
+  // boolean dischargeNextTick;
+  boolean tickCharge;
+
   BlockPosition position;
 
   ArrayList<BlockPosition> inputs;
@@ -35,12 +39,14 @@ class Block {
           if (type == SOURCE) drawFill = COLOR_SOURCE;
           if (type == INVERTER) drawFill = COLOR_INVERTER_ON;
           if (type == VIA) drawFill = COLOR_VIA_ON;
+          if (type == DELAY) drawFill = COLOR_DELAY_ON;
         }
         else {
           if (type == CABLE) drawFill = COLOR_CABLE_OFF;
           if (type == SOURCE) drawFill = COLOR_SOURCE;
           if (type == INVERTER) drawFill = COLOR_INVERTER_OFF;
           if (type == VIA) drawFill = COLOR_VIA_OFF;
+          if (type == DELAY) drawFill = COLOR_DELAY_OFF;
         }
       }
       if (selected) drawFill = color(hue(drawFill), saturation(drawFill), brightness(drawFill) - 4);
@@ -48,7 +54,7 @@ class Block {
       fill(drawFill);
       rect(drawPosition.x, drawPosition.y, rectSize, rectSize);
 
-      if (type == INVERTER) {
+      if (type == INVERTER || type == DELAY) {
         fill(COLOR_SOURCE);
         if (position.r == 2) rect(drawPosition.x, drawPosition.y + rectSize / 2.5 - rectSize / 24, rectSize / 2, rectSize / 12);
         if (position.r == 1) rect(drawPosition.x + rectSize / 2.5 - rectSize / 24, drawPosition.y, rectSize / 12, rectSize / 2);
@@ -96,18 +102,24 @@ class Block {
 
         if (updater.x == currentSurroundingBlockPosition.x && updater.y == currentSurroundingBlockPosition.y) updaterIndex = i;
 
-        if (type == INVERTER) {
+        if (type == INVERTER || type == DELAY) {
           if ((!position.isFacing(currentSurroundingBlockPosition) && currentSurroundingBlock.charge) || currentSurroundingBlock.type == SOURCE) inputs.add(currentSurroundingBlock.position);
         }
-        else if (currentSurroundingBlock.type == INVERTER) {
+        else if (currentSurroundingBlock.type == INVERTER || currentSurroundingBlock.type == DELAY) {
           if (currentSurroundingBlockPosition.isFacing(position) && currentSurroundingBlock.charge) inputs.add(currentSurroundingBlock.position);
         }
         else if (currentSurroundingBlock.charge && ((notOnlyItemInList(currentSurroundingBlock.inputs, position)) || currentSurroundingBlock.type == SOURCE)) inputs.add(currentSurroundingBlock.position);
       }
       if (updaterIndex != -1) surroundingBlocks.remove(updaterIndex);
 
-      charge = true;
-      if (inputs.size() == 0) charge = false;
+      if (type != DELAY) {
+        if (inputs.size() == 0) charge = false;
+        else charge = true;
+      }
+      else {
+        if (inputs.size() == 0) tickCharge = false;
+        else tickCharge = true;
+      }
       if (type == SOURCE) charge = true;
       if (type == INVERTER) {
         if (inputs.size() == 0) charge = true;
@@ -124,6 +136,17 @@ class Block {
 
       draw(player);
     }
+  }
+
+  BlockPosition tick(Player player) {
+    if (type == DELAY) {
+      if (tickCharge != charge) {
+        charge = tickCharge;
+        draw(player);
+        return position;
+      }
+    }
+    return null;
   }
 
   boolean mouseOver(Player player) {

@@ -29,6 +29,10 @@ void draw() {
   space.update(player);
   player.updateTranslate();
   ui.draw(space, player);
+
+  if (frameCount % 10 == 0) {
+    space.tickAllBlocks(player);
+  }
 }
 
 void mousePressed() {

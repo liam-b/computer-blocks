@@ -8,6 +8,8 @@ color COLOR_INVERTER_OFF;
 color COLOR_INVERTER_ON;
 color COLOR_VIA_OFF;
 color COLOR_VIA_ON;
+color COLOR_DELAY_OFF;
+color COLOR_DELAY_ON;
 
 // ui colors
 color COLOR_UI_BACKGROUND;
@@ -20,6 +22,7 @@ int CABLE = 1;
 int SOURCE = 2;
 int INVERTER = 3;
 int VIA = 4;
+int DELAY = 5;
 
 // space attributes
 int SPACE_SIZE = 150;
@@ -47,12 +50,14 @@ void setupColors() {
   COLOR_BACKGROUND = color(0, 0, 90);
   COLOR_EMPTY = color(0, 0, 85);
   COLOR_CABLE_OFF = color(0, 0, 70);
-  COLOR_CABLE_ON = color(15, 45, 80);
-  COLOR_SOURCE = color(15, 55, 88);
+  COLOR_CABLE_ON = color(15, 45, 85);
+  COLOR_SOURCE = color(17, 55, 90);
   COLOR_INVERTER_OFF = color(0, 55, 74);
   COLOR_INVERTER_ON = color(0, 55, 88);
   COLOR_VIA_OFF = color(55, 55, 74);
   COLOR_VIA_ON = color(55, 55, 88);
+  COLOR_DELAY_OFF = color(35, 55, 78);
+  COLOR_DELAY_ON = color(35, 55, 86);
 
   COLOR_UI_BACKGROUND = color(0, 0, 88);
   COLOR_UI_COPY = color(70, 37, 80);

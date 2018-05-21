@@ -63,4 +63,23 @@ class Space {
       }
     }
   }
+
+  void tickAllBlocks(Player player) {
+    ArrayList<BlockPosition> updateQueue = new ArrayList<BlockPosition>();
+
+    for (int l = 0; l < layers; l++) {
+      for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+          if (blocks[l][i][j].type == DELAY) updateQueue.add(blocks[l][i][j].tick(player));
+        }
+      }
+    }
+
+    for (int b = 0; b < updateQueue.size(); b++) {
+      BlockPosition currentBlock = updateQueue.get(b);
+      if (currentBlock != null) {
+        blocks[currentBlock.l][currentBlock.x][currentBlock.y].updateSurroundingBlocks(blocks[currentBlock.l][currentBlock.x][currentBlock.y].getSurroundingBlocks(this), this, player, currentBlock);
+      }
+    }
+  }
 }
