@@ -2,7 +2,11 @@ void saveSpace(String path) {
   XML xml = new XML("space");
   xml.setInt("size", space.size);
   xml.setInt("layers", space.layers);
-  xml.setString("saveName", "New Save");
+  if (fileExists(sketchPath(path))) {
+    xml.setString("saveName", loadXML(path).getString("saveName", "Unnamed Save"));
+  } else {
+    xml.setString("saveName", "New Save");
+  }
 
   xml.addChild("blocks");
 
