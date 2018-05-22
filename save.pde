@@ -75,14 +75,11 @@ void loadSpace(String path) {
 
 boolean fileExists(String path) {
   File file=new File(path);
-  println(file.getName());
   boolean exists = file.exists();
   if (exists) {
-    println("true");
     return true;
   }
   else {
-    println("false");
     return false;
   }
 }

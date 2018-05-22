@@ -4,6 +4,7 @@ UI ui;
 
 // BUG: fix scrolling
 // BUG: make infinite block update loops impossible
+// BUG: panning through world while load / save menu is open is reaaaaly laggy
 // TODO: make save file ui better
 // TODO: make copy selection moveable
 // TODO: load fonts of start
