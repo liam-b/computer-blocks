@@ -92,7 +92,7 @@ class UI {
           text(i, blockPosition.x - blockSize/4, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)) - blockSize/24);
 
           if (fileExists(sketchPath(SAVE_FILE + "_" + i + ".xml"))) {
-            tempSaveName = loadXML(SAVE_FILE + "_" + i + ".xml").getString("saveName");
+            tempSaveName = loadXML(SAVE_FILE + "_" + i + ".xml").getString("saveName", "Unnamed Save");
           } else {
             tempSaveName = "__";
           }
