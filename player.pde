@@ -12,6 +12,7 @@ class Player {
   int selectedLayer;
 
   int mode;
+  int lastMode;
   BlockPosition selectionA;
   BlockPosition selectionB;
   BlockPosition[][][] selection;
@@ -89,8 +90,16 @@ class Player {
   }
 
   void deupdate(Space space) {
-    if (mode == SAVE && key == 's') mode = EDIT;
-    if (mode == LOAD && key == 'l') mode = EDIT;
+    if (mode == SAVE && key == 's') {
+      mode = EDIT;
+      background(COLOR_BACKGROUND);
+      space.drawAllBlocks(this);
+    }
+    if (mode == LOAD && key == 'l') {
+      mode = EDIT;
+      background(COLOR_BACKGROUND);
+      space.drawAllBlocks(this);
+    }
   }
 
   void selectionUpdate(Space space) {
