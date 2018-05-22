@@ -2,7 +2,7 @@ void saveSpace(String path) {
   XML xml = new XML("space");
   xml.setInt("size", space.size);
   xml.setInt("layers", space.layers);
-  xml.setString("saveName", "New Save");
+  xml.setString("saveName", "___");
 
   xml.addChild("blocks");
 
@@ -70,6 +70,20 @@ void loadSpace(String path) {
 
   player = new Player(player);
   space.drawAllBlocks(player);
+}
+
+boolean fileExists(String path) {
+  File file=new File(path);
+  println(file.getName());
+  boolean exists = file.exists();
+  if (exists) {
+    println("true");
+    return true;
+  }
+  else {
+    println("false");
+    return false;
+  }
 }
 
 void setPosition(XML positionXML, BlockPosition position) {

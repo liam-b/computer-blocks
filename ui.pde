@@ -91,11 +91,17 @@ class UI {
           textAlign(CENTER, CENTER);
           text(i, blockPosition.x - blockSize/4, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)) - blockSize/24);
 
+          if (fileExists(dataPath(SAVE_FILE + "_" + i + ".xml"))) {
+            tempSaveName = loadXML(SAVE_FILE + "_" + i + ".xml").getString("saveName", "___");
+          } else tempSaveName = "___";
+
           fill(COLOR_CABLE_OFF);
           textSize(15);
           textAlign(LEFT, CENTER);
-          
-          tempSaveName = loadXML(SAVE_FILE + "_" + i + ".xml").getString("saveName", "random shit");
+          text(tempSaveName, blockPosition.x - blockSize/4 + spacing/4, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)) - blockSize/24);
+
+          fill(COLOR_CABLE_OFF);
+          textSize(15);
           text(tempSaveName, blockPosition.x - blockSize/4 + spacing/4, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)) - blockSize/24);
         }
 
