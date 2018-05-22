@@ -28,9 +28,10 @@ class UI {
       if (player.selectedType == SOURCE) fill(COLOR_SOURCE);
       if (player.selectedType == INVERTER) fill(COLOR_INVERTER_ON);
       if (player.selectedType == VIA) fill(COLOR_VIA_OFF);
+      if (player.selectedType == DELAY) fill(COLOR_DELAY_OFF);
       rect(blockPosition.x, blockPosition.y, blockSize, blockSize);
 
-      if (player.selectedType == INVERTER) {
+      if (player.selectedType == INVERTER || player.selectedType == DELAY) {
         fill(COLOR_SOURCE);
         if (player.selectedRotation == 1) rect(blockPosition.x + blockSize / 3, blockPosition.y, blockSize / 15, blockSize / 2);
         if (player.selectedRotation == 0) rect(blockPosition.x, blockPosition.y - blockSize / 3, blockSize / 2, blockSize / 15);
