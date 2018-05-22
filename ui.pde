@@ -7,6 +7,8 @@ class UI {
 
   Position blockPosition;
 
+  String tempSaveName;
+
   UI(Position offset_, float spacing_, float blockSize_, float blockBackgroundMargin) {
     offset = offset_;
     spacing = spacing_;
@@ -78,7 +80,8 @@ class UI {
         textSize(20);
         textAlign(CENTER, CENTER);
         text("L", blockPosition.x, blockPosition.y - blockSize / 14);
-
+      }
+      if (player.mode == LOAD || player.mode == SAVE) {
         for(int i = 0; i < 10; i++) {
           fill(COLOR_UI_PASTE);
           rect(blockPosition.x - blockSize/4, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)), blockSize/2, blockSize/2);
@@ -91,7 +94,9 @@ class UI {
           fill(COLOR_CABLE_OFF);
           textSize(15);
           textAlign(LEFT, CENTER);
-          text("thingy", blockPosition.x - blockSize/4 + spacing/4, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)) - blockSize/24);
+          
+          tempSaveName = loadXML(SAVE_FILE + "_" + i + ".xml").getString("saveName", "random shit");
+          text(tempSaveName, blockPosition.x - blockSize/4 + spacing/4, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)) - blockSize/24);
         }
 
 
