@@ -69,6 +69,7 @@ void loadSpace(String path) {
   }
 
   player = new Player(player);
+  background(COLOR_BACKGROUND);
   space.drawAllBlocks(player);
 }
 
