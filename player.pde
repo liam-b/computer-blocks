@@ -73,7 +73,11 @@ class Player {
 
     if (mode == LOAD) {
       if (key >= '0' && key <= '9') {
-        loadSpace(SAVE_FILE + "_" + key + ".xml");
+        if (fileExists(sketchPath(SAVE_FILE + "_" + key + ".xml"))) {
+          loadSpace(SAVE_FILE + "_" + key + ".xml");
+        } else {
+          println("ERROR - Cannot find attempted load file " + SAVE_FILE + "_" + key + ".xml" + "!");
+        }
       }
     }
 

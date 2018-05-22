@@ -97,6 +97,11 @@ class UI {
             tempSaveName = "__";
           }
 
+          // fill(COLOR_UI_BACKGROUND);
+          // rectMode(CORNERS);
+          // rect(blockPosition.x + blockSize/8, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)) - blockSize/4, blockPosition.x + tempSaveNameLength*10, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)) + blockSize/4);
+          // rectMode(CENTER);
+
           fill(COLOR_CABLE_OFF);
           textSize(15);
           textAlign(LEFT, CENTER);
