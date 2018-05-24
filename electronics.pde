@@ -4,6 +4,8 @@ UI ui;
 
 int lastLoad;
 
+String[] saveNames = new String[10];
+
 // BUG: fix scrolling
 // BUG: make infinite block update loops impossible
 // BUG: panning through world while load / save menu is open is reaaaaly laggy
@@ -20,6 +22,8 @@ void setup() {
   rectMode(CENTER);
   noStroke();
   setupColors();
+
+
 
   space = new Space(SPACE_SIZE, SPACE_LAYERS);
   player = new Player();

@@ -42,7 +42,7 @@ void drawSaveNameList() {
     fill(COLOR_CABLE_OFF);
     textSize(15);
     textAlign(LEFT, CENTER);
-    text(space.saveNames[i], ui.blockPosition.x - ui.blockSize/4 + ui.spacing/4, ui.blockPosition.y -  ui.blockSize - (i * (ui.blockSize/4 + ui.spacing/4)) - ui.blockSize/24);
+    text(saveNames[i], ui.blockPosition.x - ui.blockSize/4 + ui.spacing/4, ui.blockPosition.y -  ui.blockSize - (i * (ui.blockSize/4 + ui.spacing/4)) - ui.blockSize/24);
   }
 }
 

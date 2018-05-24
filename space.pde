@@ -2,15 +2,12 @@ class Space {
   Block[][][] blocks;
   int size;
   int layers;
-  String saveNames[];
 
   Space() {}
 
   Space(int size_, int layers_) {
     size = size_;
     layers = layers_;
-
-    saveNames = new String[10];
 
     blocks = new Block[layers][size][size];
 
