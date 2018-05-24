@@ -37,7 +37,7 @@ void draw() {
     space.tickAllBlocks(player);
   }
 
-  if(frameCount % (AUTOSAVE_RATE*60) == 0 && lastLoad != -6) {
+  if(frameCount % (AUTOSAVE_RATE*60) == 0 && lastLoad != -1) {
     saveSpace(SAVE_FILE + "_" + str(lastLoad) + ".xml");
     println("AUTOSAVE: " + SAVE_FILE + "_" + str(lastLoad) + ".xml");
   }
