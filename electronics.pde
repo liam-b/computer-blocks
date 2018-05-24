@@ -38,7 +38,7 @@ void draw() {
 
 void mousePressed() {
   player.resetTranslate();
-  player.selectionUpdate(space);
+  if (mouseButton == LEFT) player.selectionUpdate(space);
 }
 
 void mouseReleased() {
