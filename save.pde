@@ -2,7 +2,7 @@ void saveSpace(String path) {
   XML xml = new XML("space");
   xml.setInt("size", space.size);
   xml.setInt("layers", space.layers);
-  if (fileExists(sketchPath(path))) {
+  if (fileExists(path)) {
     xml.setString("saveName", loadXML(path).getString("saveName", "Unnamed Save"));
   } else {
     xml.setString("saveName", "New Save");
@@ -78,13 +78,20 @@ void loadSpace(String path) {
 }
 
 boolean fileExists(String path) {
-  File file=new File(path);
+  File file=new File(sketchPath(path));
   boolean exists = file.exists();
   if (exists) {
     return true;
   }
   else {
     return false;
+  }
+}
+
+void deleteSave(String path) {
+  if (fileExists(path)) {
+      File f = new File(sketchPath(path));
+      f.delete();
   }
 }
 
