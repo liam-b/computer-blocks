@@ -2,12 +2,15 @@ class Space {
   Block[][][] blocks;
   int size;
   int layers;
+  String saveNames[];
 
   Space() {}
 
   Space(int size_, int layers_) {
     size = size_;
     layers = layers_;
+
+    saveNames = new String[10];
 
     blocks = new Block[layers][size][size];
 
@@ -29,6 +32,16 @@ class Space {
           if (player.selectedType == EMPTY) blocks[player.selectedLayer][x][y].erase(player, this);
           else blocks[player. selectedLayer][x][y].place(player, this);
         }
+      }
+    }
+  }
+
+  void updateSaveNames() {
+    for(int i = 0; i < 10; i++) {
+      if (fileExists(sketchPath(SAVE_FILE + "_" + i + ".xml"))) {
+        saveNames[i] = loadXML(SAVE_FILE + "_" + i + ".xml").getString("saveName", "Unnamed Save");
+      } else {
+        saveNames[i] = "__";
       }
     }
   }

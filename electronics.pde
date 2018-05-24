@@ -9,7 +9,7 @@ int lastLoad;
 // BUG: panning through world while load / save menu is open is reaaaaly laggy
 // TODO: more versatile copy, past selection system
 // TODO: load fonts on start
-// TODO: add autosave feature
+// TODO: better/more versatile state sytem
 
 void setup() {
   fullScreen();

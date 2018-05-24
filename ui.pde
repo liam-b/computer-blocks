@@ -7,8 +7,6 @@ class UI {
 
   Position blockPosition;
 
-  String tempSaveName;
-
   UI(Position offset_, float spacing_, float blockSize_, float blockBackgroundMargin) {
     offset = offset_;
     spacing = spacing_;
@@ -22,105 +20,35 @@ class UI {
   void draw(Space space, Player player) {
     fill(COLOR_UI_BACKGROUND);
     rect(blockPosition.x, blockPosition.y, blockBackgroundSize, blockBackgroundSize);
-
     if (player.mode == EDIT) {
       // current block
       fill(COLOR_BACKGROUND);
-      if (player.selectedType == CABLE) fill(COLOR_CABLE_OFF);
-      if (player.selectedType == SOURCE) fill(COLOR_SOURCE);
-      if (player.selectedType == INVERTER) fill(COLOR_INVERTER_ON);
-      if (player.selectedType == VIA) fill(COLOR_VIA_OFF);
-      if (player.selectedType == DELAY) fill(COLOR_DELAY_OFF);
-      rect(blockPosition.x, blockPosition.y, blockSize, blockSize);
+      if (player.selectedType == CABLE) drawUiBlock(COLOR_CABLE_OFF, false);
+      if (player.selectedType == SOURCE) drawUiBlock(COLOR_SOURCE, false);
+      if (player.selectedType == INVERTER) drawUiBlock(COLOR_INVERTER_ON, true);
+      if (player.selectedType == VIA) drawUiBlock(COLOR_VIA_OFF, false);
+      if (player.selectedType == DELAY) drawUiBlock(COLOR_DELAY_OFF, true);
 
-      if (player.selectedType == INVERTER || player.selectedType == DELAY) {
-        fill(COLOR_SOURCE);
-        if (player.selectedRotation == 1) rect(blockPosition.x + blockSize / 3, blockPosition.y, blockSize / 15, blockSize / 2);
-        if (player.selectedRotation == 0) rect(blockPosition.x, blockPosition.y - blockSize / 3, blockSize / 2, blockSize / 15);
-        if (player.selectedRotation == 3) rect(blockPosition.x - blockSize / 3, blockPosition.y, 50 / 15, 50 / 2);
-        if (player.selectedRotation == 2) rect(blockPosition.x, blockPosition.y + blockSize / 3, blockSize / 2, blockSize / 15);
-      }
     } else {
       if (player.mode == COPY || player.mode == COPY_STARTED) {
-        // copy mode
-        fill(COLOR_UI_COPY);
-        rect(blockPosition.x, blockPosition.y, blockSize, blockSize);
-
-        fill(COLOR_UI_BACKGROUND);
-        textSize(20);
-        textAlign(CENTER, CENTER);
-        text("C", blockPosition.x, blockPosition.y - blockSize / 14);
+        drawModeIcon("C", COLOR_UI_PASTE, COLOR_UI_BACKGROUND);
       }
       if (player.mode == PASTE) {
-        // paste mode
-        fill(COLOR_UI_PASTE);
-        rect(blockPosition.x, blockPosition.y, blockSize, blockSize);
-
-        fill(COLOR_UI_BACKGROUND);
-        textSize(20);
-        textAlign(CENTER, CENTER);
-        text("P", blockPosition.x, blockPosition.y - blockSize / 14);
+        drawModeIcon("P", COLOR_UI_PASTE, COLOR_UI_BACKGROUND);
       }
       if (player.mode == SAVE) {
-        // save mode
-        fill(COLOR_UI_PASTE);
-        rect(blockPosition.x, blockPosition.y, blockSize, blockSize);
-
-        fill(COLOR_UI_BACKGROUND);
-        textSize(20);
-        textAlign(CENTER, CENTER);
-        text("S", blockPosition.x, blockPosition.y - blockSize / 14);
+        drawModeIcon("S", COLOR_UI_PASTE, COLOR_UI_BACKGROUND);
+        drawSaveNameList();
       }
       if (player.mode == LOAD) {
-        // load mode
-        fill(COLOR_UI_PASTE);
-        rect(blockPosition.x, blockPosition.y, blockSize, blockSize);
-
-        fill(COLOR_UI_BACKGROUND);
-        textSize(20);
-        textAlign(CENTER, CENTER);
-        text("L", blockPosition.x, blockPosition.y - blockSize / 14);
+        drawModeIcon("L", COLOR_UI_PASTE, COLOR_UI_BACKGROUND);
+        drawSaveNameList();
       }
-      if (player.mode == LOAD || player.mode == SAVE) {
-        for(int i = 0; i < 10; i++) {
-          fill(COLOR_UI_PASTE);
-          rect(blockPosition.x - blockSize/4, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)), blockSize/2, blockSize/2);
-
-          fill(COLOR_UI_BACKGROUND);
-          textSize(10);
-          textAlign(CENTER, CENTER);
-          text(i, blockPosition.x - blockSize/4, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)) - blockSize/24);
-
-          if (fileExists(sketchPath(SAVE_FILE + "_" + i + ".xml"))) {
-            tempSaveName = loadXML(SAVE_FILE + "_" + i + ".xml").getString("saveName", "Unnamed Save");
-          } else {
-            tempSaveName = "__";
-          }
-
-          // fill(COLOR_UI_BACKGROUND);
-          // rectMode(CORNERS);
-          // rect(blockPosition.x + blockSize/8, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)) - blockSize/4, blockPosition.x + tempSaveNameLength*10, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)) + blockSize/4);
-          // rectMode(CENTER);
-
-          fill(COLOR_CABLE_OFF);
-          textSize(15);
-          textAlign(LEFT, CENTER);
-          text(tempSaveName, blockPosition.x - blockSize/4 + spacing/4, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)) - blockSize/24);
-
-          fill(COLOR_CABLE_OFF);
-          textSize(15);
-          text(tempSaveName, blockPosition.x - blockSize/4 + spacing/4, blockPosition.y -  blockSize - (i * (blockSize/4 + spacing/4)) - blockSize/24);
-        }
-
-
+      if (player.mode == MENU_MAIN) {
+        drawModeIcon("M", COLOR_UI_MENU_SELECTION, COLOR_UI_BACKGROUND);
+        drawMainMenu();
       }
     }
-
-    // layers
-    fill(COLOR_UI_BACKGROUND);
-    rect(blockPosition.x + spacing, blockPosition.y, blockBackgroundSize, blockBackgroundSize);
-
-    fill(COLOR_CABLE_OFF);
-    rect(blockPosition.x + spacing, blockPosition.y + blockSize / 2 - blockSize / space.layers / 2 - player.selectedLayer * (blockSize / space.layers), blockSize, blockSize / space.layers);
+    drawUiLayers(space.layers);
   }
 }

@@ -5,11 +5,14 @@ int COPY_ENDED = 3;
 int PASTE = 4;
 int SAVE = 5;
 int LOAD = 6;
+int MENU_MAIN = 7;
 
 class Player {
   int selectedType;
   int selectedRotation;
   int selectedLayer;
+
+  int currentMenuSelection;
 
   int mode;
   int lastMode;
@@ -51,6 +54,14 @@ class Player {
       if (key == '4') selectedType = INVERTER;
       if (key == '5') selectedType = VIA;
       if (key == '6') selectedType = DELAY;
+    }
+
+    //MENU navigation
+    if (keyCode == DOWN && mode == EDIT) {
+      mode = MENU_MAIN;
+    }
+    if (keyCode == UP && mode == MENU_MAIN) {
+      mode = EDIT;
     }
 
     if (key == '[') selectedLayer -= 1;
@@ -150,6 +161,18 @@ class Player {
   void updateScroll() {
     background(COLOR_BACKGROUND);
     space.drawAllBlocks(player);
+  }
+
+  void addState() {
+
+  }
+
+  void changeState() {
+
+  }
+
+  void stateTriffer() {
+
   }
 
   void resetTranslate() {

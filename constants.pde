@@ -15,6 +15,7 @@ color COLOR_DELAY_ON;
 color COLOR_UI_BACKGROUND;
 color COLOR_UI_COPY;
 color COLOR_UI_PASTE;
+color COLOR_UI_MENU_SELECTION;
 
 // block types
 int EMPTY = 0;
@@ -65,6 +66,7 @@ void setupColors() {
   COLOR_UI_BACKGROUND = color(0, 0, 88);
   COLOR_UI_COPY = color(70, 37, 80);
   COLOR_UI_PASTE = color(80, 37, 80);
+  COLOR_UI_MENU_SELECTION = color(166, 64, 80);
 
   background(COLOR_BACKGROUND);
 }
