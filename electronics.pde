@@ -2,6 +2,8 @@ Space space;
 Player player;
 UI ui;
 
+int lastLoad;
+
 // BUG: fix scrolling
 // BUG: make infinite block update loops impossible
 // BUG: panning through world while load / save menu is open is reaaaaly laggy
@@ -34,6 +36,11 @@ void draw() {
   if (frameCount % 10 == 0) {
     space.tickAllBlocks(player);
   }
+
+  if(frameCount % (AUTOSAVE_RATE*60) == 0 && lastLoad != -6) {
+    saveSpace(SAVE_FILE + "_" + str(lastLoad) + ".xml");
+    println("AUTOSAVE: " + SAVE_FILE + "_" + str(lastLoad) + ".xml");
+  }
 }
 
 void mousePressed() {
@@ -64,3 +71,17 @@ void keyReleased() {
 //  player.zoom += -e / 1000;
 //  player.updateScroll();
 // }
+
+int convertKeyToInt(char charKey) {
+  if(charKey == '0') return 0;
+  if(charKey == '1') return 1;
+  if(charKey == '2') return 2;
+  if(charKey == '3') return 3;
+  if(charKey == '4') return 4;
+  if(charKey == '5') return 5;
+  if(charKey == '6') return 6;
+  if(charKey == '7') return 7;
+  if(charKey == '8') return 8;
+  if(charKey == '9') return 9;
+  return -1;
+}

@@ -75,6 +75,8 @@ class Player {
       if (key >= '0' && key <= '9') {
         if (fileExists(SAVE_FILE + "_" + key + ".xml")) {
           loadSpace(SAVE_FILE + "_" + key + ".xml");
+          lastLoad = convertKeyToInt(key);
+          println(str(lastLoad));
         } else {
           println("ERROR - Cannot find attempted load file " + SAVE_FILE + "_" + key + ".xml" + "!");
         }
