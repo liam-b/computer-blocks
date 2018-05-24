@@ -5,9 +5,9 @@ UI ui;
 // BUG: fix scrolling
 // BUG: make infinite block update loops impossible
 // BUG: panning through world while load / save menu is open is reaaaaly laggy
-// TODO: make save file ui better
-// TODO: make copy selection moveable
-// TODO: load fonts of start
+// TODO: more versatile copy, past selection system
+// TODO: load fonts on start
+// TODO: add autosave feature
 
 void setup() {
   fullScreen();
