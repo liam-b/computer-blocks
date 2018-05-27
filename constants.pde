@@ -46,7 +46,8 @@ float UI_BACKGROUND_MARGIN = 5;
 String SAVE_FILE = "saves/save";
 
 //Auto save rate in seconds
-int AUTOSAVE_RATE = 10;
+boolean AUTOSAVE = false;
+int AUTOSAVE_RATE = 30;
 
 void setupColors() {
   colorMode(HSB, 100);
