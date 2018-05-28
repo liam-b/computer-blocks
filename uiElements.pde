@@ -29,7 +29,6 @@ void drawModeIcon(String textIcon, color backColor, color textColor) {
 }
 
 void drawSaveNameList() {
-  space.updateSaveNames();
   for(int i = 0; i < 10; i++) {
     fill(COLOR_UI_PASTE);
     rect(ui.blockPosition.x - ui.blockSize/4, ui.blockPosition.y -  ui.blockSize - (i * (ui.blockSize/4 + ui.spacing/4)), ui.blockSize/2, ui.blockSize/2);
@@ -39,6 +38,10 @@ void drawSaveNameList() {
     textAlign(CENTER, CENTER);
     text(i, ui.blockPosition.x - ui.blockSize/4, ui.blockPosition.y -  ui.blockSize - (i * (ui.blockSize/4 + ui.spacing/4)) - ui.blockSize/24);
 
+    // textAlign(LEFT, CENTER);
+    // fill(COLOR_BACKGROUND);
+    // rect(ui.blockPosition.x - ui.blockSize/4 + ui.spacing/4 + textWidth(saveNames[i])/2, ui.blockPosition.y -  ui.blockSize - (i * (ui.blockSize/4 + ui.spacing/4)) - ui.blockSize/24, textWidth(saveNames[i]) + 10, 20);
+
     fill(COLOR_CABLE_OFF);
     textSize(15);
     textAlign(LEFT, CENTER);
@@ -46,11 +49,11 @@ void drawSaveNameList() {
   }
 }
 
-void drawUiLayers(int numOfLayers) {
+void drawUiLayers(int numOfLayers, int selectedLayer) {
   // layers
   fill(COLOR_UI_BACKGROUND);
   rect(ui.blockPosition.x + ui.spacing, ui.blockPosition.y, ui.blockBackgroundSize, ui.blockBackgroundSize);
 
   fill(COLOR_CABLE_OFF);
-  rect(ui.blockPosition.x + ui.spacing, ui.blockPosition.y + ui.blockSize / 2 - ui.blockSize / numOfLayers / 2 - player.selectedLayer * (ui.blockSize / numOfLayers), ui.blockSize, ui.blockSize / numOfLayers);
+  rect(ui.blockPosition.x + ui.spacing, ui.blockPosition.y + ui.blockSize / 2 - ui.blockSize / numOfLayers / 2 - selectedLayer * (ui.blockSize / numOfLayers), ui.blockSize, ui.blockSize / numOfLayers);
 }

@@ -38,7 +38,7 @@ class Space {
       if (fileExists(sketchPath(SAVE_FILE + "_" + i + ".xml"))) {
         saveNames[i] = loadXML(SAVE_FILE + "_" + i + ".xml").getString("saveName", "Unnamed Save");
       } else {
-        saveNames[i] = "__";
+        saveNames[i] = "";
       }
     }
   }

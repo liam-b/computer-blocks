@@ -5,6 +5,7 @@ UI ui;
 int lastLoad;
 
 String[] saveNames = new String[10];
+ArrayList<Notification> notifications = new ArrayList<Notification>();
 
 // BUG: fix scrolling
 // BUG: make infinite block update loops impossible
@@ -37,6 +38,8 @@ void draw() {
   player.updateTranslate();
   ui.draw(space, player);
 
+  tickNotifications();
+
   if (frameCount % 10 == 0) {
     space.tickAllBlocks(player);
   }
@@ -44,6 +47,7 @@ void draw() {
   if(frameCount % (AUTOSAVE_RATE*60) == 0 && lastLoad != -1) {
     saveSpace(SAVE_FILE + "_" + str(lastLoad) + ".xml");
     println("AUTOSAVE: " + SAVE_FILE + "_" + str(lastLoad) + ".xml");
+    notifications.add(new Notification(NOTIF_DEFAULT, "AUTOSAVE: " + SAVE_FILE + "_" + str(lastLoad) + ".xml"));
   }
 }
 

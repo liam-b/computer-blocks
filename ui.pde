@@ -49,6 +49,7 @@ class UI {
         drawMainMenu();
       }
     }
-    drawUiLayers(space.layers);
+    drawUiLayers(space.layers, player.selectedLayer);
+    drawNotifications();
   }
 }

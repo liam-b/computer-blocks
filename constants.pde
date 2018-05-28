@@ -35,6 +35,16 @@ int BLOCK_SPACING = 1;
 int BLOCK_OFFSET = BLOCK_RATIO / 2;
 int BLOCK_SIZE = BLOCK_RATIO - BLOCK_SPACING;
 
+// notification types
+int NOTIF_DEFAULT = 0;
+int NOTIF_ERROR = 1;
+int NOTIF_WARNING = 2;
+
+// notification colors
+color COLOR_WARNING;
+color COLOR_ERROR;
+color COLOR_DEFAULT;
+
 // ui variables
 float UI_OFFSET_X = 30;
 float UI_OFFSET_Y = 30;
@@ -50,6 +60,10 @@ int AUTOSAVE_RATE = 10;
 
 void setupColors() {
   colorMode(HSB, 100);
+
+  COLOR_WARNING = color(map(50,0,360,0,100), 95, 100);
+  COLOR_ERROR = color(0, 100, 100);
+  COLOR_DEFAULT = color(0, 0, 70);
 
   COLOR_BACKGROUND = color(0, 0, 90);
   COLOR_EMPTY = color(0, 0, 85);

@@ -73,12 +73,13 @@ class Player {
     if (mode == EDIT && key == 'x') space.unselectAllBlocks(this);
     if (mode == EDIT && key == 'p') mode = PASTE;
 
-    if (mode == EDIT && key == 's') mode = SAVE;
-    if (mode == EDIT && key == 'l') mode = LOAD;
+    if (mode == EDIT && key == 's') mode = SAVE; space.updateSaveNames();
+    if (mode == EDIT && key == 'l') mode = LOAD; space.updateSaveNames();
 
     if (mode == SAVE) {
       if (key >= '0' && key <= '9') {
         saveSpace(SAVE_FILE + "_" + key + ".xml");
+        space.updateSaveNames();
       }
     }
 
@@ -89,6 +90,7 @@ class Player {
           lastLoad = convertKeyToInt(key);
           println(str(lastLoad));
         } else {
+          notifications.add(new Notification(NOTIF_WARNING, "Cannot load " + SAVE_FILE + "_" + key + ".xml" + "!"));
           println("ERROR - Cannot find attempted load file " + SAVE_FILE + "_" + key + ".xml" + "!");
         }
       }
