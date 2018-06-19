@@ -22,7 +22,7 @@ void setup() {
 
   rectMode(CENTER);
   noStroke();
-  setupColors();
+  background(COLOR_BACKGROUND);
 
 
 
@@ -38,17 +38,17 @@ void draw() {
   player.updateTranslate();
   ui.draw(space, player);
 
-  tickNotifications();
+  // tickNotifications();
 
   if (frameCount % 10 == 0) {
     space.tickAllBlocks(player);
   }
 
-  if(frameCount % (AUTOSAVE_RATE*60) == 0 && lastLoad != -1 && AUTOSAVE) {
-    saveSpace(SAVE_FILE + "_" + str(lastLoad) + ".xml");
-    println("AUTOSAVE: " + SAVE_FILE + "_" + str(lastLoad) + ".xml");
-    notifications.add(new Notification(NOTIF_DEFAULT, "AUTOSAVE: " + SAVE_FILE + "_" + str(lastLoad) + ".xml"));
-  }
+  // if(frameCount % (AUTOSAVE_RATE*60) == 0 && lastLoad != -1 && AUTOSAVE) {
+  //   saveSpace(SAVE_FILE + "_" + str(lastLoad) + ".xml");
+  //   println("AUTOSAVE: " + SAVE_FILE + "_" + str(lastLoad) + ".xml");
+  //   notifications.add(new Notification(NOTIF_DEFAULT, "AUTOSAVE: " + SAVE_FILE + "_" + str(lastLoad) + ".xml"));
+  // }
 }
 
 void mousePressed() {
@@ -76,6 +76,7 @@ void keyReleased() {
 
 // void mouseWheel(MouseEvent event) {
 //  float e = event.getCount();
+//  println(e);
 //  player.zoom += -e / 1000;
 //  player.updateScroll();
 // }

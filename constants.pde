@@ -1,18 +1,18 @@
 // main colors
-color COLOR_BACKGROUND;
-color COLOR_EMPTY;
-color COLOR_CABLE_OFF;
-color COLOR_CABLE_ON;
-color COLOR_SOURCE;
-color COLOR_INVERTER_OFF;
-color COLOR_INVERTER_ON;
-color COLOR_VIA_OFF;
-color COLOR_VIA_ON;
-color COLOR_DELAY_OFF;
-color COLOR_DELAY_ON;
+color COLOR_BACKGROUND = #E6E6E6;
+color COLOR_EMPTY = #D7D7D7;
+color COLOR_CABLE_OFF = #B4B4B4;
+color COLOR_CABLE_ON = #DBD44E;
+color COLOR_SOURCE = #F2E24F;
+color COLOR_INVERTER_OFF = #CE4E4A;
+color COLOR_INVERTER_ON = #F95E59;
+color COLOR_VIA_OFF = #589EC9;
+color COLOR_VIA_ON = #75BDEA;
+color COLOR_DELAY_OFF = #59C664;
+color COLOR_DELAY_ON = #62DB6E;
 
 // ui colors
-color COLOR_UI_BACKGROUND;
+color COLOR_UI_BACKGROUND = #E0E0E0;
 color COLOR_UI_COPY;
 color COLOR_UI_PASTE;
 color COLOR_UI_MENU_SELECTION;
@@ -55,33 +55,6 @@ float UI_BACKGROUND_MARGIN = 5;
 // file names
 String SAVE_FILE = "saves/save";
 
-//Auto save rate in seconds
+// auto save rate in seconds
 boolean AUTOSAVE = false;
 int AUTOSAVE_RATE = 30;
-
-void setupColors() {
-  colorMode(HSB, 100);
-
-  COLOR_WARNING = color(map(50,0,360,0,100), 95, 100);
-  COLOR_ERROR = color(0, 100, 100);
-  COLOR_DEFAULT = color(0, 0, 70);
-
-  COLOR_BACKGROUND = color(0, 0, 90);
-  COLOR_EMPTY = color(0, 0, 85);
-  COLOR_CABLE_OFF = color(0, 0, 70);
-  COLOR_CABLE_ON = color(15, 45, 85);
-  COLOR_SOURCE = color(17, 55, 90);
-  COLOR_INVERTER_OFF = color(0, 55, 74);
-  COLOR_INVERTER_ON = color(0, 55, 88);
-  COLOR_VIA_OFF = color(55, 55, 74);
-  COLOR_VIA_ON = color(55, 55, 88);
-  COLOR_DELAY_OFF = color(35, 55, 78);
-  COLOR_DELAY_ON = color(35, 55, 86);
-
-  COLOR_UI_BACKGROUND = color(0, 0, 88);
-  COLOR_UI_COPY = color(70, 37, 80);
-  COLOR_UI_PASTE = color(80, 37, 80);
-  COLOR_UI_MENU_SELECTION = color(166, 64, 80);
-
-  background(COLOR_BACKGROUND);
-}

@@ -4,9 +4,6 @@ class Block {
   boolean charge;
   boolean lastCharge;
   boolean selected;
-
-  // boolean chargeNextTick;
-  // boolean dischargeNextTick;
   boolean tickCharge;
 
   BlockPosition position;
