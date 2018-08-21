@@ -1,5 +1,5 @@
 package computerblocks.block;
 
 public enum BlockType {
-  CABLE, SOURCE, INVERTER, VIA, DELAY
+  EMPTY, CABLE, SOURCE, INVERTER, VIA, DELAY
 };

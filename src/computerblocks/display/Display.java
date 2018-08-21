@@ -1,5 +1,6 @@
 package computerblocks.display;
 
+import computerblocks.player.KeyManager;
 import java.awt.image.BufferStrategy;
 import javax.swing.*;
 import java.awt.*;
@@ -56,11 +57,15 @@ public class Display {
     else throw new RuntimeException("No Screens Found");
   }
 
-  public void reset() {
+  public void addKeyListener(KeyManager keyManager) {
+    frame.addKeyListener(keyManager);
+  }
+
+  public void reset(Color backgroundColor) {
     graphics = strategy.getDrawGraphics();
 
     graphics.clearRect(0, 0, width, height);
-    graphics.setColor(new Color("#e6e6e6").data);
+    graphics.setColor(backgroundColor.data);
     graphics.fillRect(0, 0, width, height);
   }
 

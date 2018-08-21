@@ -14,11 +14,14 @@ public class Game {
 
   private Display display;
 
-  private Block myBlock;
-  private Player myPlayer;
+  private Player player;
+  private KeyManager keyManager;
+  private Grid grid;
 
   public Game(String title, int displayWidth, int displayHeight, int displayScreen) {
     display = new Display(title, displayWidth, displayHeight, displayScreen);
+    keyManager = new KeyManager();
+    display.addKeyListener(keyManager);
 
     setup();
     loop();
@@ -26,43 +29,45 @@ public class Game {
 
   private void loop() {
     long lastLoopTime = System.nanoTime();
-    long optimalTime = 1000000000l / targetFps;
+    double optimalTime = 1000000000d / (double)targetFps;
+    double fps;
 
     while (running) {
       long timeNow = System.nanoTime();
       long updateLength = timeNow - lastLoopTime;
-      double delta = updateLength / ((double) optimalTime);
+      double delta = updateLength / ((double)optimalTime);
       lastLoopTime = timeNow;
-
-      double fps = (1000000000d / (double) (timeNow - System.nanoTime() + optimalTime));
-      double displayFps = Math.round(fps * 100d) / 100d;
-      // System.out.println(displayFps);
 
       update();
       render();
 
-      long delay = Math.max((timeNow - System.nanoTime() + optimalTime) / 1000000l, 0l);
-      // long stress = ((optimalTime / 1000000l) - delay);
-      try { Thread.sleep(delay); }
+      long delay = (long)optimalTime - (System.nanoTime() - timeNow);
+      double sleepTime = Math.max((double)delay / 1000000d, 0d);
+      // long stress = (long)optimalTime - delay;
+      // System.out.println(stress / 100000l);
+
+      try { Thread.sleep((long)sleepTime); }
       catch (InterruptedException ex) { Thread.currentThread().interrupt(); }
     }
   }
 
   private void setup() {
-    myPlayer = new Player();
-    myBlock = new CableBlock(new BlockPosition());
+    player = new Player();
+    grid = new Grid(300, 300, 1);
+
+    grid.blocks[0][0][0] = new CableBlock(new BlockPosition(0, 0, 0));
+    grid.blocks[1][0][0] = new SourceBlock(new BlockPosition(1, 0, 0));
+
   }
 
   private void update() {
+    player.tick(keyManager);
   }
 
-  private void render() {
-    display.reset();
+  private synchronized void render() {
+    display.reset(Color.BACKGROUND);
 
-    myBlock.draw(display, myPlayer);
-
-    // display.color(new Color("#dddddd"));
-    // display.rect(10, 10, 300, 300);
+    grid.draw(display, player);
 
     display.draw();
   }

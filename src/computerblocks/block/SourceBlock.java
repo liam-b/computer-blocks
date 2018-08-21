@@ -1,5 +1,8 @@
 package computerblocks.block;
 
+import computerblocks.display.Color;
+import computerblocks.position.*;
+
 public class SourceBlock extends Block {
   public SourceBlock(BlockPosition position) {
     super(position);
