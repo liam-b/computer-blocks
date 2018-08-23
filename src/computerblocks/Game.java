@@ -16,12 +16,13 @@ public class Game {
 
   private Player player;
   private KeyManager keyManager;
+  private MouseManager mouseManager;
   private Grid grid;
 
   public Game(String title, int displayWidth, int displayHeight, int displayScreen) {
     display = new Display(title, displayWidth, displayHeight, displayScreen);
-    keyManager = new KeyManager();
-    display.addKeyListener(keyManager);
+    keyManager = new KeyManager(display);
+    mouseManager = new MouseManager(display);
 
     setup();
     loop();
@@ -55,13 +56,16 @@ public class Game {
     player = new Player();
     grid = new Grid(300, 300, 1);
 
-    grid.blocks[0][0][0] = new CableBlock(new BlockPosition(0, 0, 0));
-    grid.blocks[1][0][0] = new SourceBlock(new BlockPosition(1, 0, 0));
+    grid.place(BlockType.CABLE, new BlockPosition(0, 0, 0));
+    grid.place(BlockType.SOURCE, new BlockPosition(1, 0, 0));
+
+    grid.erase(new BlockPosition(0, 0, 0));
 
   }
 
   private void update() {
-    player.tick(keyManager);
+    player.update(keyManager, mouseManager);
+    mouseManager.update(display);
   }
 
   private synchronized void render() {
