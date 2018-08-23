@@ -8,8 +8,13 @@ public class Player {
   public RealPosition translate;
   public float zoom = 5;
 
+  public Keyboard keyboard;
+  public Mouse mouse;
+
   public Player() {
     translate = new RealPosition(50, 0);
+    keyManager = new Keyboard(display);
+    mouseManager = new Mouse(display);
   }
 
   public void update(KeyManager keyManager, MouseManager mouseManager) {
@@ -23,11 +28,11 @@ public class Player {
     zoom += ((keyManager.getKey('.') ? 1: 0) - (keyManager.getKey(',') ? 1: 0)) * zoom / 100.0f;
 
 
-    // if (mouseManager.left) {
-    //   BlockPosition clickedPosition = grid.getBlockPosition(mouseX, mouseY);
-    //   Block blockAtPos = grid.getBlockAtPosition(clickedPosition);
-    //   if (clickedPosition != null && blockAtPos == null) grid.place(player.selectedType, new BlockPosition(clickedPosition.x, clickedPosition.y, selectedRotation, selectedLayer));
-    // }
+    if (mouseManager.left) {
+      BlockPosition clickedPosition = grid.getBlockPosition(mouseX, mouseY);
+      Block blockAtPos = grid.getBlockAtPosition(clickedPosition);
+      if (clickedPosition != null && blockAtPos == null) grid.place(player.selectedType, new BlockPosition(clickedPosition.x, clickedPosition.y, selectedRotation, selectedLayer));
+    }
 
     if (mouseManager.right) {
       System.out.println("out");

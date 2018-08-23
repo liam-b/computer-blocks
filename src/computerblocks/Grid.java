@@ -41,6 +41,19 @@ public class Grid {
     return newBlock;
   }
 
+  public BlockPosition getBlockPosition(RealPosition position) {
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        for (int l = 0; l < layers; l++) {
+          if (blocks[x][y][l] != null) {
+            if (blocks[x][y][l].mouseOver(player)) return blocks[x][y][l].position;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   public void place(BlockType type, BlockPosition position) {
     Block block = getBlockFromType(type, position);
     blocks[position.x][position.y][position.l] = block;

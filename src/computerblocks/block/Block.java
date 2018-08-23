@@ -65,4 +65,12 @@ public class Block {
       (int)position.y > 0 - (int)size &&
       (int)position.y < display.height + (int)size / 2;
   }
+
+  public boolean mouseOver(Player player) {
+    return
+      player.mouse.position.x > BLOCK_OFFSET + player.translate.x + BLOCK_RATIO * player.mouse.position.x * player.zoom - BLOCK_SIZE * player.zoom / 2f &&
+      player.mouse.position.x < BLOCK_OFFSET + player.translate.x + BLOCK_RATIO * player.mouse.position.x * player.zoom + BLOCK_SIZE * player.zoom / 2f &&
+      player.mouse.position.y > BLOCK_OFFSET + player.translate.y + BLOCK_RATIO * player.mouse.position.y * player.zoom - BLOCK_SIZE * player.zoom / 2f &&
+      player.mouse.position.y < BLOCK_OFFSET + player.translate.y + BLOCK_RATIO * player.mouse.position.y * player.zoom + BLOCK_SIZE * player.zoom / 2f;
+  }
 }
