@@ -12,7 +12,7 @@ public class MouseManager implements MouseListener {
   public int x, y;
 
   public MouseManager(Display display) {
-    display.frame.addMouseListener(this);
+    display.canvas.addMouseListener(this);
   }
 
   public void update(Display display) {
@@ -24,9 +24,7 @@ public class MouseManager implements MouseListener {
     }
   }
 
-  @Override
   public void mousePressed(MouseEvent e) {
-    System.out.println("iuhiuhiuhoih");
     if (e.getButton() == MouseEvent.BUTTON1) left = true;
     if (e.getButton() == MouseEvent.BUTTON2) right = true;
   }
