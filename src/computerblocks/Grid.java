@@ -32,5 +32,24 @@ public class Grid {
     }
   }
 
-  // public void addBlock
+  private Block getBlockFromType(BlockType type, BlockPosition position) {
+    Block newBlock = new CableBlock(position);
+    if (type == BlockType.SOURCE) newBlock = new SourceBlock(position);
+    // if (type == BlockType.INVERTER) newBlock = new InverterBlock(position);
+    // if (type == BlockType.VIA) newBlock = new ViaBlock(position);
+    // if (type == BlockType.DELAY) newBlock = new DelayBlock(position);
+    return newBlock;
+  }
+
+  public void place(BlockType type, BlockPosition position) {
+    Block block = getBlockFromType(type, position);
+    blocks[position.x][position.y][position.l] = block;
+    // block.update();
+  }
+
+  public void erase(BlockPosition position) {
+    Block block = blocks[position.x][position.y][position.l];
+    // block.updateSurroundingBlocks();
+    blocks[position.x][position.y][position.l] = null;
+  }
 }

@@ -11,8 +11,8 @@ public class Display {
   private String title;
   public int width, height, screen;
 
-  private JFrame frame;
-  private Canvas canvas;
+  public JFrame frame;
+  public Canvas canvas;
   private BufferStrategy strategy;
   private Graphics graphics;
 
@@ -55,10 +55,6 @@ public class Display {
     if (screen > -1 && screen < screens.length) frame.setLocation(screens[screen].getDefaultConfiguration().getBounds().x, frame.getY());
     else if (screens.length > 0) frame.setLocation(screens[0].getDefaultConfiguration().getBounds().x, frame.getY());
     else throw new RuntimeException("No Screens Found");
-  }
-
-  public void addKeyListener(KeyManager keyManager) {
-    frame.addKeyListener(keyManager);
   }
 
   public void reset(Color backgroundColor) {
