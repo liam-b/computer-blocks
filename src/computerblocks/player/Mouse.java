@@ -12,7 +12,7 @@ public class Mouse implements MouseListener {
   public boolean right, left;
   public RealPosition position;
 
-  public MouseManager(Display display) {
+  public Mouse(Display display) {
     display.canvas.addMouseListener(this);
   }
 
@@ -26,12 +26,12 @@ public class Mouse implements MouseListener {
 
   public void mousePressed(MouseEvent e) {
     if (e.getButton() == MouseEvent.BUTTON1) left = true;
-    if (e.getButton() == MouseEvent.BUTTON2) right = true;
+    if (e.getButton() == MouseEvent.BUTTON3) right = true;
   }
 
   public void mouseReleased(MouseEvent e) {
     if (e.getButton() == MouseEvent.BUTTON1) left = false;
-    if (e.getButton() == MouseEvent.BUTTON2) right = false;
+    if (e.getButton() == MouseEvent.BUTTON3) right = false;
   }
 
   public void mouseExited(MouseEvent e) {}

@@ -19,4 +19,8 @@ public class RealPosition {
     this.x = 0f;
     this.y = 0f;
   }
+
+  public String toString() {
+    return "[" + x + ", " + y + "]";
+  }
 }

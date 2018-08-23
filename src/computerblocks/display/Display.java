@@ -1,6 +1,6 @@
 package computerblocks.display;
 
-import computerblocks.player.KeyManager;
+import computerblocks.player.Keyboard;
 import java.awt.image.BufferStrategy;
 import javax.swing.*;
 import java.awt.*;

@@ -32,11 +32,11 @@ public class BlockPosition {
     this.l = 0;
   }
 
-  boolean isEqual(BlockPosition pos) {
+  public boolean isEqual(BlockPosition pos) {
     return pos != null && (x == pos.x && y == pos.y && l == pos.l);
   }
 
-  boolean isFacing(BlockPosition pos) {
+  public boolean isFacing(BlockPosition pos) {
     int posX = pos.x;
     int posY = pos.y;
 
@@ -47,5 +47,9 @@ public class BlockPosition {
 
     if (x == posX && y == posY) return true;
     return false;
+  }
+
+  public String toString() {
+    return "[" + x + ", " + y + ", " + l + "]";
   }
 }
