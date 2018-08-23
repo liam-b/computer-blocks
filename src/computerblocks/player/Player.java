@@ -38,8 +38,7 @@ public class Player {
 
     if (mouse.left) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
-      System.out.println(mouse.position.toString());
-      if (mouseBlockPosition != null && grid.blockAt(mouseBlockPosition) != null) grid.place(selectedType, mouseBlockPosition);
+      if (mouseBlockPosition != null && grid.blockAt(mouseBlockPosition) == null) grid.place(selectedType, mouseBlockPosition);
     }
 
     if (mouse.right) {

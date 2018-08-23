@@ -46,11 +46,16 @@ public class Grid {
   }
 
   public BlockPosition mouseOverBlock(Player player) {
+    Block dummyBlock = new EmptyBlock(new BlockPosition(0, 0, 0));
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
         for (int l = 0; l < layers; l++) {
           if (blocks[x][y][l] != null) {
             if (blocks[x][y][l].mouseOver(player)) return new BlockPosition(blocks[x][y][l].position);
+          }
+          else {
+            dummyBlock.position = new BlockPosition(x, y, l);
+            if (dummyBlock.mouseOver(player)) return new BlockPosition(dummyBlock.position);
           }
         }
       }
