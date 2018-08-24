@@ -5,10 +5,10 @@ import java.awt.event.KeyListener;
 
 import computerblocks.display.Display;
 
-public class KeyManager implements KeyListener {
+public class Keyboard implements KeyListener {
   private boolean[] keys;
 
-  public KeyManager(Display display) {
+  public Keyboard(Display display) {
     display.frame.addKeyListener(this);
     keys = new boolean[256];
   }

@@ -2,16 +2,17 @@ package computerblocks.player;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import computerblocks.position.*;
 import java.awt.Point;
 
 import computerblocks.display.Display;
 
-public class MouseManager implements MouseListener {
+public class Mouse implements MouseListener {
   public boolean onScreen;
   public boolean right, left;
-  public int x, y;
+  public RealPosition position;
 
-  public MouseManager(Display display) {
+  public Mouse(Display display) {
     display.canvas.addMouseListener(this);
   }
 
@@ -19,19 +20,18 @@ public class MouseManager implements MouseListener {
     Point mousePosition = display.canvas.getMousePosition();
     onScreen = mousePosition != null;
     if (onScreen) {
-      x = mousePosition.x;
-      y = mousePosition.y;
+      position = new RealPosition(mousePosition);
     }
   }
 
   public void mousePressed(MouseEvent e) {
     if (e.getButton() == MouseEvent.BUTTON1) left = true;
-    if (e.getButton() == MouseEvent.BUTTON2) right = true;
+    if (e.getButton() == MouseEvent.BUTTON3) right = true;
   }
 
   public void mouseReleased(MouseEvent e) {
     if (e.getButton() == MouseEvent.BUTTON1) left = false;
-    if (e.getButton() == MouseEvent.BUTTON2) right = false;
+    if (e.getButton() == MouseEvent.BUTTON3) right = false;
   }
 
   public void mouseExited(MouseEvent e) {}

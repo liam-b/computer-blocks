@@ -1,5 +1,7 @@
 package computerblocks.position;
 
+import java.awt.Point;
+
 public class RealPosition {
   public float x, y;
 
@@ -8,8 +10,17 @@ public class RealPosition {
     this.y = y;
   }
 
+  public RealPosition(Point pos) {
+    this.x = pos.x;
+    this.y = pos.y;
+  }
+
   public RealPosition() {
     this.x = 0f;
     this.y = 0f;
+  }
+
+  public String toString() {
+    return "[" + x + ", " + y + "]";
   }
 }

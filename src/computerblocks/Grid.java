@@ -32,23 +32,44 @@ public class Grid {
     }
   }
 
+  public Block blockAt(BlockPosition position) {
+    return blocks[position.x][position.y][position.l];
+  }
+
   private Block getBlockFromType(BlockType type, BlockPosition position) {
-    Block newBlock = new CableBlock(position);
-    if (type == BlockType.SOURCE) newBlock = new SourceBlock(position);
-    // if (type == BlockType.INVERTER) newBlock = new InverterBlock(position);
-    // if (type == BlockType.VIA) newBlock = new ViaBlock(position);
-    // if (type == BlockType.DELAY) newBlock = new DelayBlock(position);
-    return newBlock;
+    Block block = new CableBlock(position);
+    if (type == BlockType.SOURCE) block = new SourceBlock(position);
+    // if (type == BlockType.INVERTER) block = new InverterBlock(position);
+    // if (type == BlockType.VIA) block = new ViaBlock(position);
+    // if (type == BlockType.DELAY) block = new DelayBlock(position);
+    return block;
+  }
+
+  public BlockPosition mouseOverBlock(Player player) {
+    Block dummyBlock = new EmptyBlock(new BlockPosition(0, 0, 0));
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        for (int l = 0; l < layers; l++) {
+          if (blocks[x][y][l] != null) {
+            if (blocks[x][y][l].mouseOver(player)) return new BlockPosition(blocks[x][y][l].position);
+          }
+          else {
+            dummyBlock.position = new BlockPosition(x, y, l);
+            if (dummyBlock.mouseOver(player)) return new BlockPosition(dummyBlock.position);
+          }
+        }
+      }
+    }
+    return null;
   }
 
   public void place(BlockType type, BlockPosition position) {
-    Block block = getBlockFromType(type, position);
-    blocks[position.x][position.y][position.l] = block;
+    blocks[position.x][position.y][position.l] = getBlockFromType(type, position);;
     // block.update();
   }
 
   public void erase(BlockPosition position) {
-    Block block = blocks[position.x][position.y][position.l];
+    Block block = blockAt(position);
     // block.updateSurroundingBlocks();
     blocks[position.x][position.y][position.l] = null;
   }

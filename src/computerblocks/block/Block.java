@@ -34,6 +34,7 @@ public class Block {
   }
 
   public void draw(Display display, Player player) {
+    // if (type != BlockType.EMPTY) System.out.println(position.toString());
     float rectSize = (float)BLOCK_SIZE * player.zoom;
     RealPosition drawPosition = new RealPosition(
       player.translate.x + (float)BLOCK_RATIO * (float)position.x * player.zoom,
@@ -64,5 +65,13 @@ public class Block {
       (int)position.x < display.width + (int)size / 2 &&
       (int)position.y > 0 - (int)size &&
       (int)position.y < display.height + (int)size / 2;
+  }
+
+  public boolean mouseOver(Player player) {
+    return
+      player.mouse.position.x > player.translate.x + (float)BLOCK_RATIO * (float)position.x * player.zoom &&
+      player.mouse.position.x < player.translate.x + (float)BLOCK_RATIO * (float)position.x * player.zoom + (float)BLOCK_SIZE * player.zoom &&
+      player.mouse.position.y > player.translate.y + (float)BLOCK_RATIO * (float)position.y * player.zoom &&
+      player.mouse.position.y < player.translate.y + (float)BLOCK_RATIO * (float)position.y * player.zoom + (float)BLOCK_SIZE * player.zoom;
   }
 }

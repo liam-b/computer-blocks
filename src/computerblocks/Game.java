@@ -15,14 +15,10 @@ public class Game {
   private Display display;
 
   private Player player;
-  private KeyManager keyManager;
-  private MouseManager mouseManager;
   private Grid grid;
 
   public Game(String title, int displayWidth, int displayHeight, int displayScreen) {
     display = new Display(title, displayWidth, displayHeight, displayScreen);
-    keyManager = new KeyManager(display);
-    mouseManager = new MouseManager(display);
 
     setup();
     loop();
@@ -53,25 +49,32 @@ public class Game {
   }
 
   private void setup() {
-    player = new Player();
+    player = new Player(display);
     grid = new Grid(300, 300, 1);
 
     grid.place(BlockType.CABLE, new BlockPosition(0, 0, 0));
     grid.place(BlockType.SOURCE, new BlockPosition(1, 0, 0));
-
-    grid.erase(new BlockPosition(0, 0, 0));
-
   }
 
   private void update() {
-    player.update(keyManager, mouseManager);
-    mouseManager.update(display);
+    player.update(display, grid);
   }
 
   private synchronized void render() {
     display.reset(Color.BACKGROUND);
 
     grid.draw(display, player);
+
+
+    // for (int x = 0; x < grid.width; x++) {
+    //   for (int y = 0; y < grid.height; y++) {
+    //     for (int l = 0; l < grid.layers; l++) {
+    //       if (grid.blocks[x][y][l] != null) {
+    //         System.out.println(grid.blocks[x][y][l].position.toString());
+    //       }
+    //     }
+    //   }
+    // }
 
     display.draw();
   }
