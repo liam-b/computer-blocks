@@ -22,7 +22,10 @@ public class Grid {
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
         for (int l = 0; l < layers; l++) {
-          if (blocks[x][y][l] != null) blocks[x][y][l].draw(display, player);
+          if (blocks[x][y][l] != null) {
+            blocks[x][y][l].draw(display, player);
+            blocks[x][y][l].update(this, blocks[x][y][l]);
+          }
           else {
             dummyBlock.position = new BlockPosition(x, y, l);
             dummyBlock.draw(display, player);
@@ -33,6 +36,12 @@ public class Grid {
   }
 
   public Block blockAt(BlockPosition position) {
+    if (
+      position.x < 0 || position.x > width ||
+      position.y < 0 || position.y > height ||
+      position.l < 0 || position.l > layers
+    ) return null;
+
     return blocks[position.x][position.y][position.l];
   }
 
@@ -65,12 +74,15 @@ public class Grid {
 
   public void place(BlockType type, BlockPosition position) {
     blocks[position.x][position.y][position.l] = getBlockFromType(type, position);;
-    // block.update();
+    Block block = blocks[position.x][position.y][position.l];
+    block.update(this, block);
   }
 
   public void erase(BlockPosition position) {
     Block block = blockAt(position);
-    // block.updateSurroundingBlocks();
-    blocks[position.x][position.y][position.l] = null;
+    if (block != null) {
+      blocks[position.x][position.y][position.l] = null;
+      block.updateSurroundingBlocks(this, block.getSurroundingBlocks(this));
+    }
   }
 }
