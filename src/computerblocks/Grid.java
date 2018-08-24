@@ -39,7 +39,7 @@ public class Grid {
   private Block getBlockFromType(BlockType type, BlockPosition position) {
     Block block = new CableBlock(position);
     if (type == BlockType.SOURCE) block = new SourceBlock(position);
-    // if (type == BlockType.INVERTER) block = new InverterBlock(position);
+    if (type == BlockType.INVERTER) block = new InverterBlock(position);
     // if (type == BlockType.VIA) block = new ViaBlock(position);
     // if (type == BlockType.DELAY) block = new DelayBlock(position);
     return block;

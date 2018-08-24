@@ -13,6 +13,7 @@ public class Player {
   public float zoom = 5;
 
   public BlockType selectedType;
+  public Rotation selectedRotation;
 
   public Keyboard keyboard;
   public Mouse mouse;
@@ -23,6 +24,7 @@ public class Player {
     mouse = new Mouse(display);
 
     selectedType = BlockType.CABLE;
+    selectedRotation = Rotation.UP;
   }
 
   public void update(Display display, Grid grid) {
@@ -35,6 +37,14 @@ public class Player {
     translate.y += ((keyboard.getKey('W') ? 1: 0) - (keyboard.getKey('S') ? 1 : 0)) * PAN_SPEED;
 
     zoom += ((keyboard.getKey('.') ? 1: 0) - (keyboard.getKey(',') ? 1: 0)) * zoom / ZOOM_SPEED;
+
+    if (keyboard.getKey('1')) selectedType = BlockType.CABLE;
+    if (keyboard.getKey('2')) selectedType = BlockType.SOURCE;
+    if (keyboard.getKey('3')) selectedType = BlockType.INVERTER;
+    if (keyboard.getKey('4')) selectedType = BlockType.DELAY;
+    if (keyboard.getKey('5')) selectedType = BlockType.VIA;
+
+    if (keyboard.getKey('r')) selectedRotation = Rotation.values()[(selectedRotation.ordinal() + 1) > 3 ? 0 : selectedRotation.ordinal() + 1];
 
     if (mouse.left) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);

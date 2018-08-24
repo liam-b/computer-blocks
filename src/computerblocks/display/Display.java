@@ -5,6 +5,8 @@ import java.awt.image.BufferStrategy;
 import javax.swing.*;
 import java.awt.*;
 
+import java.awt.geom.*;
+
 public class Display {
   public static int PRIMARY = 0;
 
@@ -46,6 +48,7 @@ public class Display {
     canvas.createBufferStrategy(3);
     strategy = canvas.getBufferStrategy();
     graphics = strategy.getDrawGraphics();
+
   }
 
   public void showOnScreen(JFrame frame, int screen) {
@@ -74,7 +77,11 @@ public class Display {
     graphics.setColor(color.data);
   }
 
-  public void rect(int x, int y, int width, int height) {
-    graphics.fillRect(x, y, width, height);
+  public void rect(float x, float y, float width, float height) {
+    // Rectangle2D.Double rect = new Rectangle2D.Double(x, y, width, height);
+    // Graphics2d g2d = (Graphics2D)graphics.create();
+    // g2d.draw(rect);
+
+    graphics.fillRect((int)x, (int)y, (int)width, (int)height);
   }
 }

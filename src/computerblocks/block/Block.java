@@ -48,7 +48,7 @@ public class Block {
     }
   }
 
-  private void highlightBlock(Display display, Player player, float size, RealPosition position) {
+  public void highlightBlock(Display display, Player player, float size, RealPosition position) {
     float highlightOffset = BLOCK_HIGHLIGHT_OFFSET * player.zoom;
     display.color(new Color("#31c831"));
     display.rect(
@@ -59,7 +59,7 @@ public class Block {
     );
   }
 
-  private boolean withinScreenBounds(Display display, float size, RealPosition position) {
+  public boolean withinScreenBounds(Display display, float size, RealPosition position) {
     return
       (int)position.x > 0 - (int)size &&
       (int)position.x < display.width + (int)size / 2 &&
