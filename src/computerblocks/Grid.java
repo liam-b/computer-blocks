@@ -60,11 +60,11 @@ public class Grid {
       for (int y = 0; y < height; y++) {
         for (int l = 0; l < layers; l++) {
           if (blocks[x][y][l] != null) {
-            if (blocks[x][y][l].mouseOver(player)) return new BlockPosition(blocks[x][y][l].position);
+            if (blocks[x][y][l].mouseOver(player)) return new BlockPosition(x, y, player.selectedRotation, l);
           }
           else {
-            dummyBlock.position = new BlockPosition(x, y, l);
-            if (dummyBlock.mouseOver(player)) return new BlockPosition(dummyBlock.position);
+            dummyBlock.position = new BlockPosition(x, y, player.selectedRotation, l);
+            if (dummyBlock.mouseOver(player)) return new BlockPosition(x, y, player.selectedRotation, l);
           }
         }
       }

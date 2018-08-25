@@ -7,6 +7,7 @@ import computerblocks.position.*;
 import computerblocks.player.*;
 
 public class DirectionalBlock extends Block {
+  public Color markerColor;
 
   public DirectionalBlock(BlockPosition position) {
     super(position);
@@ -28,10 +29,14 @@ public class DirectionalBlock extends Block {
   }
 
   void drawDirectionMarker(float rectSize, RealPosition drawPosition, Display display) {
+    float markerHeight = rectSize / 12f;
+    float markerWidth = rectSize / 2f;
+    float markerOffset = rectSize / 8f;
+
     display.color(new Color("#f2e24f"));
-    if (position.r == Rotation.DOWN) display.rect(drawPosition.x + rectSize/4, drawPosition.y + rectSize / 2.5f - rectSize / 24 + rectSize/2, rectSize / 2, rectSize / 12);
-    if (position.r == Rotation.RIGHT) display.rect(drawPosition.x + rectSize / 2.5f - rectSize / 24 + rectSize/4, drawPosition.y + rectSize/2, rectSize / 12, rectSize / 2);
-    if (position.r == Rotation.UP) display.rect(drawPosition.x + rectSize/4, drawPosition.y - rectSize / 2.5f + rectSize / 24 + rectSize/2, rectSize / 2, rectSize / 12);
-    if (position.r == Rotation.LEFT) display.rect(drawPosition.x - rectSize / 2.5f + rectSize / 24 + rectSize/4, drawPosition.y + rectSize/2, rectSize / 12, rectSize / 2);
+    if (position.r == Rotation.UP) display.rect(drawPosition.x + markerWidth / 2f, drawPosition.y + markerOffset, markerWidth, markerHeight);
+    if (position.r == Rotation.RIGHT) display.rect(drawPosition.x + rectSize - markerOffset - markerHeight / 2f, drawPosition.y + markerWidth / 2f, markerHeight, markerWidth);
+    if (position.r == Rotation.DOWN) display.rect(drawPosition.x + markerWidth / 2f, drawPosition.y + rectSize - markerOffset - markerHeight / 2f, markerWidth, markerHeight);
+    if (position.r == Rotation.LEFT) display.rect(drawPosition.x + markerOffset, drawPosition.y + markerWidth / 2f, markerHeight, markerWidth);
   }
 }

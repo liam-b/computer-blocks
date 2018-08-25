@@ -6,6 +6,8 @@ import java.awt.event.KeyListener;
 import computerblocks.display.Display;
 
 public class Keyboard implements KeyListener {
+  // public static final int
+
   private boolean[] keys;
 
   public Keyboard(Display display) {
@@ -21,9 +23,17 @@ public class Keyboard implements KeyListener {
     keys[e.getKeyCode()] = false;
   }
 
-  public void keyTyped(KeyEvent e) {}
-
-  public boolean getKey(int keyCode) {
-    return keys[keyCode];
+  public boolean held(int code) {
+    return keys[code];
   }
+
+  public boolean down(int code) {
+    if (keys[code]) {
+      keys[code] = false;
+      return true;
+    }
+    return false;
+  }
+
+  public void keyTyped(KeyEvent e) {}
 }
