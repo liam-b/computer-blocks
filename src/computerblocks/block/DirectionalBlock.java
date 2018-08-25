@@ -13,7 +13,6 @@ public class DirectionalBlock extends Block {
   }
 
   public void draw(Display display, Player player) {
-    // if (type != BlockType.EMPTY) System.out.println(position.toString());
     float rectSize = (float)BLOCK_SIZE * player.zoom;
     RealPosition drawPosition = new RealPosition(
       player.translate.x + (float)BLOCK_RATIO * (float)position.x * player.zoom,

@@ -48,7 +48,6 @@ public class Block {
     surroundingBlocks.remove(updater);
 
     charge = inputs.size() != 0;
-
     updateSurroundingBlocks(grid, surroundingBlocks);
   }
 

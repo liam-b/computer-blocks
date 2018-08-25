@@ -6,8 +6,8 @@ import computerblocks.Grid;
 import computerblocks.block.BlockType;
 
 public class Player {
-  public static int PAN_SPEED = 5;
-  public static float ZOOM_SPEED = 100f;
+  public static int PAN_SPEED = 8;
+  public static float ZOOM_SPEED = 80f;
 
   public RealPosition translate;
   public float zoom = 5;
