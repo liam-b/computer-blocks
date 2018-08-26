@@ -33,7 +33,7 @@ public class DirectionalBlock extends Block {
     float markerWidth = rectSize / 2f;
     float markerOffset = rectSize / 8f;
 
-    display.color(new Color("#f2e24f"));
+    display.color(markerColor);
     if (position.r == Rotation.UP) display.rect(drawPosition.x + markerWidth / 2f, drawPosition.y + markerOffset, markerWidth, markerHeight);
     if (position.r == Rotation.RIGHT) display.rect(drawPosition.x + rectSize - markerOffset - markerHeight / 2f, drawPosition.y + markerWidth / 2f, markerHeight, markerWidth);
     if (position.r == Rotation.DOWN) display.rect(drawPosition.x + markerWidth / 2f, drawPosition.y + rectSize - markerOffset - markerHeight / 2f, markerWidth, markerHeight);

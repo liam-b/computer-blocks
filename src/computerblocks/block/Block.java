@@ -108,4 +108,6 @@ public class Block {
       player.mouse.position.y > player.translate.y + (float)BLOCK_RATIO * (float)position.y * player.zoom &&
       player.mouse.position.y < player.translate.y + (float)BLOCK_RATIO * (float)position.y * player.zoom + (float)BLOCK_SIZE * player.zoom;
   }
+
+  public boolean tick() { return false; }
 }

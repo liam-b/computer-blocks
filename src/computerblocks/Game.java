@@ -10,7 +10,7 @@ import computerblocks.player.*;
 public class Game {
   private boolean running = true;
   private long targetFps = 60;
-  private int fps;
+  private int updateCount = 0;
 
   private Display display;
 
@@ -35,8 +35,11 @@ public class Game {
       double delta = updateLength / ((double)optimalTime);
       lastLoopTime = timeNow;
 
+      if (updateCount % 10 == 0) tick();
       update();
       render();
+
+      updateCount += 1;
 
       long delay = (long)optimalTime - (System.nanoTime() - timeNow);
       double sleepTime = Math.max((double)delay / 1000000d, 0d);
@@ -55,6 +58,10 @@ public class Game {
 
   private void update() {
     player.update(display, grid);
+  }
+
+  private void tick() {
+    grid.tick();
   }
 
   private synchronized void render() {

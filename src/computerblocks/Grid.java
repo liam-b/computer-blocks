@@ -1,5 +1,7 @@
 package computerblocks;
 
+import java.util.ArrayList;
+
 import computerblocks.block.*;
 import computerblocks.position.*;
 import computerblocks.display.*;
@@ -35,6 +37,25 @@ public class Grid {
     }
   }
 
+  public void tick() {
+    ArrayList<Block> queue = new ArrayList<Block>();
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        for (int l = 0; l < layers; l++) {
+          if (blocks[x][y][l] != null && blocks[x][y][l].type == BlockType.DELAY) {
+            if (blocks[x][y][l].tick()) {
+              queue.add(blocks[x][y][l]);
+            }
+          }
+        }
+      }
+    }
+
+    for (Block block : queue) {
+      block.updateSurroundingBlocks(this, block.getSurroundingBlocks(this));
+    }
+  }
+
   public Block blockAt(BlockPosition position) {
     if (
       position.x < 0 || position.x > width ||
@@ -50,7 +71,7 @@ public class Grid {
     if (type == BlockType.SOURCE) block = new SourceBlock(position);
     if (type == BlockType.INVERTER) block = new InverterBlock(position);
     // if (type == BlockType.VIA) block = new ViaBlock(position);
-    // if (type == BlockType.DELAY) block = new DelayBlock(position);
+    if (type == BlockType.DELAY) block = new DelayBlock(position);
     return block;
   }
 

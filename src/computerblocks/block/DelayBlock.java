@@ -6,15 +6,15 @@ import computerblocks.display.*;
 import computerblocks.position.*;
 import computerblocks.Grid;
 
-public class InverterBlock extends DirectionalBlock {
-  public boolean lastCharge = false;
+public class DelayBlock extends DirectionalBlock {
+  public boolean tickCharge = false;
 
-  public InverterBlock(BlockPosition position) {
+  public DelayBlock(BlockPosition position) {
     super(position);
 
-    this.type = BlockType.INVERTER;
-    this.color = new Color("#ce4e4a");
-    this.chargeColor = new Color("#f95e59");
+    this.type = BlockType.DELAY;
+    this.color = new Color("#59c664");
+    this.chargeColor = new Color("#62db6e");
     this.markerColor = new Color("#f2e24f");
   }
 
@@ -30,9 +30,14 @@ public class InverterBlock extends DirectionalBlock {
     }
     surroundingBlocks.remove(updater);
 
-    charge = !(inputs.size() != 0);
-    boolean willUpdateSurroundingBlocks = charge != lastCharge;
-    lastCharge = charge;
-    if (willUpdateSurroundingBlocks) updateSurroundingBlocks(grid, surroundingBlocks);
+    tickCharge = inputs.size() != 0;
+  }
+
+  public boolean tick() {
+    if (tickCharge != charge) {
+      charge = tickCharge;
+      return true;
+    }
+    return false;
   }
 }
