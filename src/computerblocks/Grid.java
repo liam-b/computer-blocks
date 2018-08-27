@@ -20,18 +20,15 @@ public class Grid {
   }
 
   public void draw(Display display, Player player) {
-    Block dummyBlock = new EmptyBlock(new BlockPosition(0, 0, 0));
+    Block dummyBlock = new EmptyBlock(new BlockPosition(0, 0, player.selectedLayer));
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
-        for (int l = 0; l < layers; l++) {
-          if (blocks[x][y][l] != null) {
-            blocks[x][y][l].draw(display, player);
-            blocks[x][y][l].update(this, blocks[x][y][l]);
-          }
-          else {
-            dummyBlock.position = new BlockPosition(x, y, l);
-            dummyBlock.draw(display, player);
-          }
+        if (blocks[x][y][player.selectedLayer] != null) {
+          blocks[x][y][player.selectedLayer].draw(display, player);
+        }
+        else {
+          dummyBlock.position = new BlockPosition(x, y, player.selectedLayer);
+          dummyBlock.draw(display, player);
         }
       }
     }
@@ -70,7 +67,7 @@ public class Grid {
     Block block = new CableBlock(position);
     if (type == BlockType.SOURCE) block = new SourceBlock(position);
     if (type == BlockType.INVERTER) block = new InverterBlock(position);
-    // if (type == BlockType.VIA) block = new ViaBlock(position);
+    if (type == BlockType.VIA) block = new ViaBlock(position);
     if (type == BlockType.DELAY) block = new DelayBlock(position);
     return block;
   }
@@ -79,14 +76,12 @@ public class Grid {
     Block dummyBlock = new EmptyBlock(new BlockPosition(0, 0, 0));
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
-        for (int l = 0; l < layers; l++) {
-          if (blocks[x][y][l] != null) {
-            if (blocks[x][y][l].mouseOver(player)) return new BlockPosition(x, y, player.selectedRotation, l);
-          }
-          else {
-            dummyBlock.position = new BlockPosition(x, y, player.selectedRotation, l);
-            if (dummyBlock.mouseOver(player)) return new BlockPosition(x, y, player.selectedRotation, l);
-          }
+        if (blocks[x][y][player.selectedLayer] != null) {
+          if (blocks[x][y][player.selectedLayer].mouseOver(player)) return new BlockPosition(x, y, player.selectedRotation, player.selectedLayer);
+        }
+        else {
+          dummyBlock.position = new BlockPosition(x, y, player.selectedRotation, player.selectedLayer);
+          if (dummyBlock.mouseOver(player)) return new BlockPosition(x, y, player.selectedRotation, player.selectedLayer);
         }
       }
     }

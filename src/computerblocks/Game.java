@@ -53,7 +53,7 @@ public class Game {
 
   private void setup() {
     player = new Player(display);
-    grid = new Grid(300, 300, 1);
+    grid = new Grid(300, 300, 6);
   }
 
   private void update() {
