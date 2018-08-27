@@ -12,6 +12,7 @@ public class Player {
   public RealPosition translate;
   public float zoom = 5;
 
+  public int selectedLayer;
   public BlockType selectedType;
   public Rotation selectedRotation;
 
@@ -37,6 +38,9 @@ public class Player {
     translate.y += ((keyboard.held('W') ? 1 : 0) - (keyboard.held('S') ? 1 : 0)) * PAN_SPEED;
 
     zoom += ((keyboard.held('.') ? 1 : 0) - (keyboard.held(',') ? 1 : 0)) * zoom / ZOOM_SPEED;
+
+    if (keyboard.down('[')) selectedLayer = Math.max(0, selectedLayer - 1);
+    if (keyboard.down(']')) selectedLayer = Math.min(selectedLayer + 1, grid.layers - 1);
 
     if (keyboard.down('1')) selectedType = BlockType.CABLE;
     if (keyboard.down('2')) selectedType = BlockType.SOURCE;
