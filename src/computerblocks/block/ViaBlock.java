@@ -2,17 +2,43 @@ package computerblocks.block;
 
 import java.util.ArrayList;
 
-import computerblocks.display.Color;
+import computerblocks.display.*;
 import computerblocks.position.*;
 import computerblocks.Grid;
+import computerblocks.player.Player;
 
 public class ViaBlock extends Block {
+  public Color coreColor;
+
   public ViaBlock(BlockPosition position) {
     super(position);
 
     this.type = BlockType.VIA;
     this.color = new Color("#589ec9");
     this.chargeColor = new Color("#75bdea");
+    this.coreColor = new Color("#f2e24f");
+  }
+
+  public void draw(Display display, Player player) {
+    float rectSize = (float)BLOCK_SIZE * player.zoom;
+    RealPosition drawPosition = new RealPosition(
+      player.translate.x + (float)BLOCK_RATIO * (float)position.x * player.zoom,
+      player.translate.y + (float)BLOCK_RATIO * (float)position.y * player.zoom
+    );
+
+    if (withinScreenBounds(display, rectSize, drawPosition)) {
+      if (selected) highlightBlock(display, player, rectSize, drawPosition);
+      display.color((charge) ? chargeColor : color);
+      display.rect((int)drawPosition.x, (int)drawPosition.y, (int)rectSize, (int)rectSize);
+      drawCore(rectSize, drawPosition, display);
+    }
+  }
+
+  void drawCore(float rectSize, RealPosition drawPosition, Display display) {
+    float coreSize = rectSize / 5f;
+
+    display.color(coreColor);
+    display.rect(drawPosition.x + rectSize / 2f - coreSize / 2f, drawPosition.y + rectSize / 2f - coreSize / 2f, coreSize, coreSize);
   }
 
   public void update(Grid grid, Block updater) {
