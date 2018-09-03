@@ -35,7 +35,7 @@ public class ViaBlock extends Block {
   }
 
   void drawCore(float rectSize, RealPosition drawPosition, Display display) {
-    float coreSize = rectSize / 5f;
+    float coreSize = rectSize / 6f;
 
     display.color(coreColor);
     display.rect(drawPosition.x + rectSize / 2f - coreSize / 2f, drawPosition.y + rectSize / 2f - coreSize / 2f, coreSize, coreSize);
