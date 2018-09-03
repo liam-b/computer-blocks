@@ -63,7 +63,7 @@ public class Grid {
     return blocks[position.x][position.y][position.l];
   }
 
-  private Block getBlockFromType(BlockType type, BlockPosition position) {
+  public Block getBlockFromType(BlockType type, BlockPosition position) {
     Block block = new CableBlock(position);
     if (type == BlockType.SOURCE) block = new SourceBlock(position);
     if (type == BlockType.INVERTER) block = new InverterBlock(position);

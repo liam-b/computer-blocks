@@ -6,6 +6,7 @@ import computerblocks.display.*;
 import computerblocks.block.*;
 import computerblocks.position.*;
 import computerblocks.player.*;
+import computerblocks.display.ui.*;
 
 public class Game {
   private boolean running = true;
@@ -13,6 +14,7 @@ public class Game {
   private int updateCount = 0;
 
   private Display display;
+  private UserInterface ui;
 
   private Player player;
   private Grid grid;
@@ -54,6 +56,7 @@ public class Game {
   private void setup() {
     player = new Player(display);
     grid = new Grid(300, 300, 6);
+    ui = new UserInterface();
   }
 
   private void update() {
@@ -68,6 +71,7 @@ public class Game {
     display.reset(Color.BACKGROUND);
 
     grid.draw(display, player);
+    ui.draw(display, player, grid);
 
     display.draw();
   }
