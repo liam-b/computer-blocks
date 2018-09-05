@@ -62,6 +62,7 @@ public class Game {
 
   private void update() {
     player.update(display, grid);
+    if (player.keyboard.down('E')) grid = new Grid(new Snippet("./", "save"));
   }
 
   private void tick() {

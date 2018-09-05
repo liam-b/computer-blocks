@@ -6,6 +6,7 @@ import computerblocks.block.*;
 import computerblocks.position.*;
 import computerblocks.display.*;
 import computerblocks.player.*;
+import computerblocks.snippet.Snippet;
 
 public class Grid {
   public Block[][][] blocks;
@@ -17,6 +18,14 @@ public class Grid {
     this.layers = layers;
 
     blocks = new Block[width][height][layers];
+  }
+
+  public Grid(Snippet snippet) {
+    this.width = snippet.width;
+    this.height = snippet.height;
+    this.layers = snippet.layers;
+
+    blocks = snippet.blocks;
   }
 
   public void draw(Display display, Player player) {
@@ -63,15 +72,6 @@ public class Grid {
     return blocks[position.x][position.y][position.l];
   }
 
-  public Block getBlockFromType(BlockType type, BlockPosition position) {
-    Block block = new CableBlock(position);
-    if (type == BlockType.SOURCE) block = new SourceBlock(position);
-    if (type == BlockType.INVERTER) block = new InverterBlock(position);
-    if (type == BlockType.VIA) block = new ViaBlock(position);
-    if (type == BlockType.DELAY) block = new DelayBlock(position);
-    return block;
-  }
-
   public BlockPosition mouseOverBlock(Player player) {
     Block dummyBlock = new EmptyBlock(new BlockPosition(0, 0, 0));
     for (int x = 0; x < width; x++) {
@@ -89,7 +89,7 @@ public class Grid {
   }
 
   public void place(BlockType type, BlockPosition position) {
-    blocks[position.x][position.y][position.l] = getBlockFromType(type, position);;
+    blocks[position.x][position.y][position.l] = Block.fromType(type, position);;
     Block block = blocks[position.x][position.y][position.l];
     block.update(this, block);
   }

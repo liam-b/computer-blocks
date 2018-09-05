@@ -21,6 +21,7 @@ public class Block {
 
   public BlockPosition position;
   public ArrayList<Block> inputs;
+  public ArrayList<BlockPosition> saveInputPositions;
 
   public boolean charge;
   public boolean lastCharge;
@@ -33,6 +34,15 @@ public class Block {
     this.charge = false;
     this.lastCharge = false;
     this.selected = false;
+  }
+
+  public static Block fromType(BlockType type, BlockPosition position) {
+    Block block = new CableBlock(position);
+    if (type == BlockType.SOURCE) block = new SourceBlock(position);
+    if (type == BlockType.INVERTER) block = new InverterBlock(position);
+    if (type == BlockType.VIA) block = new ViaBlock(position);
+    if (type == BlockType.DELAY) block = new DelayBlock(position);
+    return block;
   }
 
   public void update(Grid grid, Block updater) {
