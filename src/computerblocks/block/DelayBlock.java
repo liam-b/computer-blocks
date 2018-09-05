@@ -7,8 +7,6 @@ import computerblocks.position.*;
 import computerblocks.Grid;
 
 public class DelayBlock extends DirectionalBlock {
-  public boolean tickCharge = false;
-
   public DelayBlock(BlockPosition position) {
     super(position);
 

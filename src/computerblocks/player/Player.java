@@ -4,6 +4,7 @@ import computerblocks.position.*;
 import computerblocks.display.Display;
 import computerblocks.Grid;
 import computerblocks.block.BlockType;
+import computerblocks.snippet.*;
 
 public class Player {
   public static int PAN_SPEED = 8;
@@ -34,6 +35,8 @@ public class Player {
   }
 
   private void updatePlayerInput(Grid grid) {
+    if (keyboard.down('Q')) new Snippet(grid).saveToFile("./", "save");
+
     translate.x += ((keyboard.held('A') ? 1 : 0) - (keyboard.held('D') ? 1 : 0)) * PAN_SPEED;
     translate.y += ((keyboard.held('W') ? 1 : 0) - (keyboard.held('S') ? 1 : 0)) * PAN_SPEED;
 

@@ -7,6 +7,7 @@ import computerblocks.block.*;
 import computerblocks.position.*;
 import computerblocks.player.*;
 import computerblocks.display.ui.*;
+import computerblocks.snippet.Snippet;
 
 public class Game {
   private boolean running = true;

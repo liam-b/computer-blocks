@@ -17,13 +17,14 @@ public class Block {
   public BlockType type;
   public Color color;
   public Color chargeColor;
+  public boolean selected;
 
   public BlockPosition position;
   public ArrayList<Block> inputs;
 
   public boolean charge;
   public boolean lastCharge;
-  public boolean selected;
+  public boolean tickCharge;
 
   public Block(BlockPosition position) {
     this.position = position;

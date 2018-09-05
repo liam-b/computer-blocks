@@ -47,6 +47,7 @@ public class ViaBlock extends Block {
 
     for (int l = 0; l < grid.layers; l++) {
       Block block = grid.blockAt(new BlockPosition(position.x, position.y, l));
+
       if (block != null && block.type == BlockType.VIA && block.position.l != position.l) surroundingBlocks.add(block);
     }
 

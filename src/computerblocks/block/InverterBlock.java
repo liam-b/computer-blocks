@@ -7,8 +7,6 @@ import computerblocks.position.*;
 import computerblocks.Grid;
 
 public class InverterBlock extends DirectionalBlock {
-  public boolean lastCharge = false;
-
   public InverterBlock(BlockPosition position) {
     super(position);
 
