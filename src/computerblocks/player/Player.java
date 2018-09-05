@@ -35,7 +35,7 @@ public class Player {
   }
 
   private void updatePlayerInput(Grid grid) {
-    if (keyboard.down('Q')) new Snippet(grid).saveToFile("./", "save");
+    if (keyboard.down('Q')) new Snippet(grid).saveToFile("../saves/", "save");
 
     translate.x += ((keyboard.held('A') ? 1 : 0) - (keyboard.held('D') ? 1 : 0)) * PAN_SPEED;
     translate.y += ((keyboard.held('W') ? 1 : 0) - (keyboard.held('S') ? 1 : 0)) * PAN_SPEED;
