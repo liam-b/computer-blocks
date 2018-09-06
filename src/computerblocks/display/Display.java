@@ -79,18 +79,14 @@ public class Display {
   }
 
   public void rect(float x, float y, float width, float height) {
-    // Rectangle2D.Double rect = new Rectangle2D.Double(x, y, width, height);
-    // Graphics2d g2d = (Graphics2D)graphics.create();
-    // g2d.draw(rect);
-
     graphics.fillRect((int)x, (int)y, (int)width, (int)height);
-  }
-
-  public void image(Image image, float x, float y, float width, float height) {
-    graphics.drawImage(image, (int) x, (int) y, (int) width, (int) height, null);
   }
 
   public void rect(RealPosition position, float width, float height) {
     graphics.fillRect((int)position.x, (int)position.y, (int)width, (int)height);
+  }
+
+  public void image(Image image, float x, float y, float width, float height) {
+    graphics.drawImage(image, (int) x, (int) y, (int) width, (int) height, null);
   }
 }

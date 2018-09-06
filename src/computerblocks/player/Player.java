@@ -6,6 +6,7 @@ import computerblocks.display.Display;
 import computerblocks.Grid;
 import computerblocks.block.BlockType;
 import computerblocks.snippet.*;
+import computerblocks.player.*;
 
 public class Player {
   public static int PAN_SPEED = 8;
@@ -23,6 +24,8 @@ public class Player {
   public Mouse mouse;
   private Grid grid;
 
+  public State state = State.GAME;
+
   public Player(Display display, Grid grid) {
     this.translate = new RealPosition(50, 0);
     this.keyboard = new Keyboard(display);
@@ -36,7 +39,11 @@ public class Player {
 
   public void update(Display display, Grid grid) {
     mouse.update(display);
-    updatePlayerInput(grid);
+    if (state == State.GAME) updatePlayerInput(grid);
+    if (keyboard.down(Keyboard.ESC)) {
+      if (state == State.GAME) state = State.MENU;
+      else if (state == State.MENU) state = State.GAME;
+    }
   }
 
   private void updatePlayerInput(Grid grid) {

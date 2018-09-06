@@ -77,7 +77,7 @@ public class Game {
 
     grid.draw(display, player);
     ui.draw(display, player, grid);
-    menuController.update(display);
+    if (player.state == State.MENU) menuController.update(display);
     if (player.selection != null) player.selection.draw(display, grid, player);
     display.draw();
   }
