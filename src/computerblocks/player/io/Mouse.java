@@ -1,4 +1,4 @@
-package computerblocks.player;
+package computerblocks.player.io;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
