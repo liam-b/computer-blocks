@@ -5,7 +5,9 @@ import computerblocks.display.ui.menu.elements.*;
 
 import javax.imageio.ImageIO;
 import java.io.File;
-// import java.awt.*;
+import java.awt.image.*;
+import java.awt.Image;
+import java.io.IOException;
 
 public class Menu {
   private String title;
@@ -13,13 +15,17 @@ public class Menu {
   private int border = 8;
   // private ArrayList<Button> buttons;
 
-  // private BufferedImage logo;
+  private Image logo;
 
   public Menu(float width, float height) {
     this.width = (int) width;
     this.height = (int) height;
 
-    // logo = ImageIO.read(new File("computerblocks/assets/logo.png"));
+    try {
+      logo = ImageIO.read(new File("../assets/logo.png"));
+    } catch (IOException err) {
+      err.printStackTrace();
+    }
   }
 
   public void draw(Display display) {
@@ -31,7 +37,7 @@ public class Menu {
     display.color(Color.BACKGROUND);
     display.rect(display.width/2 - width/2, display.height/2 - height/2, width, height);
 
-    // display.image(image, display.width/2 - width/2, display.height/2 - height/2, width, height);
+    display.image(logo, display.width/2 - width/2, display.height/2 - height/2, width, width*0.18f);
   }
 
   public void addButton(Button button) {
