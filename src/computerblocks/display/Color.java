@@ -9,6 +9,8 @@ public class Color {
   public static final Color DELAY_OFF = new Color("#59C664");
   public static final Color VIA_OFF = new Color("#589EC9");
 
+  public static final Color UI_BORDER = new Color(124f, 124f, 124f);
+
   public java.awt.Color data;
 
   public Color(String colorString) {

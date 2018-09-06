@@ -64,7 +64,7 @@ public class Game {
   }
 
   private void update() {
-    player.update(display, grid);
+    player.update(display, grid, menuController);
     if (player.keyboard.down('E')) grid = new Grid(new Snippet("../saves/", "save"));
   }
 
@@ -77,7 +77,7 @@ public class Game {
 
     grid.draw(display, player);
     ui.draw(display, player, grid);
-    if (player.state == State.MENU) menuController.update(display);
+    if (player.state == State.MENU) menuController.update(display, player);
     if (player.selection != null) player.selection.draw(display, grid, player);
     display.draw();
   }

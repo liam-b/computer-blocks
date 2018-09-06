@@ -7,6 +7,7 @@ import computerblocks.Grid;
 import computerblocks.block.BlockType;
 import computerblocks.snippet.*;
 import computerblocks.player.*;
+import computerblocks.display.ui.menu.*;
 
 public class Player {
   public static int PAN_SPEED = 8;
@@ -37,12 +38,17 @@ public class Player {
     this.selectedRotation = Rotation.UP;
   }
 
-  public void update(Display display, Grid grid) {
+  public void update(Display display, Grid grid, MenuController menuController) {
     mouse.update(display);
     if (state == State.GAME) updatePlayerInput(grid);
     if (keyboard.down(Keyboard.ESC)) {
-      if (state == State.GAME) state = State.MENU;
-      else if (state == State.MENU) state = State.GAME;
+      if (state == State.GAME) {
+        menuController.currentMenu = menuController.pauseMenu;
+        state = State.MENU;
+      } else if (state == State.MENU) {
+        if (menuController.currentMenu == menuController.pauseMenu) state = State.GAME;
+        else menuController.currentMenu = menuController.pauseMenu;
+      }
     }
   }
 
