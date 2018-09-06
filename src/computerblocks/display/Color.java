@@ -15,7 +15,16 @@ public class Color {
     data = java.awt.Color.decode(colorString);
   }
 
+  public Color(float r, float g, float b, float a) {
+    data = new java.awt.Color(r/255, g/255, b/255, a);
+  }
+
+  public Color(float r, float g, float b) {
+    data = new java.awt.Color(r/255, g/255, b/255);
+  }
+
   public Color(java.awt.Color color) {
     data = color;
   }
+
 }
