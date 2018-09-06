@@ -15,6 +15,11 @@ public class RealPosition {
     this.y = pos.y;
   }
 
+  public RealPosition(RealPosition pos) {
+    this.x = pos.x;
+    this.y = pos.y;
+  }
+
   public RealPosition() {
     this.x = 0f;
     this.y = 0f;

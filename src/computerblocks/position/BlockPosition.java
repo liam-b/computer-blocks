@@ -57,6 +57,12 @@ public class BlockPosition {
     return false;
   }
 
+  public boolean isWithin(BlockPosition posA, BlockPosition posB) {
+    BlockPosition posLeast = new BlockPosition(Math.min(posA.x, posB.x), Math.min(posA.y, posB.y), Math.min(posA.l, posB.l));
+    BlockPosition posMost = new BlockPosition(Math.max(posA.x, posB.x), Math.max(posA.y, posB.y), Math.max(posA.l, posB.l));
+    return x >= posLeast.x && y >= posLeast.y && l >= posLeast.l && x <= posMost.x && y <= posMost.y && l <= posMost.l;
+  }
+
   public String toString() {
     return "[" + x + ", " + y + ", " + l + "]";
   }

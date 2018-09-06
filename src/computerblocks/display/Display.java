@@ -1,5 +1,6 @@
 package computerblocks.display;
 
+import computerblocks.position.*;
 import computerblocks.player.io.Keyboard;
 import java.awt.image.BufferStrategy;
 import javax.swing.*;
@@ -83,5 +84,9 @@ public class Display {
     // g2d.draw(rect);
 
     graphics.fillRect((int)x, (int)y, (int)width, (int)height);
+  }
+
+  public void rect(RealPosition position, float width, float height) {
+    graphics.fillRect((int)position.x, (int)position.y, (int)width, (int)height);
   }
 }

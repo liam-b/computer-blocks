@@ -74,6 +74,7 @@ public class Game {
 
     grid.draw(display, player);
     ui.draw(display, player, grid);
+    if (player.selection != null) player.selection.draw(display, grid, player);
 
     display.draw();
   }
