@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 import computerblocks.display.Display;
 
 public class Keyboard implements KeyListener {
-  // public static final int
+  public static final int SHIFT = 16;
 
   private boolean[] keys;
 

@@ -3,6 +3,7 @@ package computerblocks.player.io;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import computerblocks.position.*;
+import computerblocks.player.Player;
 import java.awt.Point;
 
 import computerblocks.display.Display;
@@ -12,8 +13,11 @@ public class Mouse implements MouseListener {
   public boolean right, left;
   public RealPosition position;
 
-  public Mouse(Display display) {
+  private Player player;
+
+  public Mouse(Display display, Player player) {
     display.canvas.addMouseListener(this);
+    this.player = player;
   }
 
   public void update(Display display) {
@@ -27,11 +31,13 @@ public class Mouse implements MouseListener {
   public void mousePressed(MouseEvent e) {
     if (e.getButton() == MouseEvent.BUTTON1) left = true;
     if (e.getButton() == MouseEvent.BUTTON3) right = true;
+    player.mousePressed();
   }
 
   public void mouseReleased(MouseEvent e) {
     if (e.getButton() == MouseEvent.BUTTON1) left = false;
     if (e.getButton() == MouseEvent.BUTTON3) right = false;
+    player.mouseReleased();
   }
 
   public void mouseExited(MouseEvent e) {}

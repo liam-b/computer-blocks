@@ -21,15 +21,17 @@ public class Player {
 
   public Keyboard keyboard;
   public Mouse mouse;
+  private Grid grid;
 
-  public Player(Display display) {
-    translate = new RealPosition(50, 0);
-    keyboard = new Keyboard(display);
-    mouse = new Mouse(display);
+  public Player(Display display, Grid grid) {
+    this.translate = new RealPosition(50, 0);
+    this.keyboard = new Keyboard(display);
+    this.mouse = new Mouse(display, this);
+    this.grid = grid;
 
-    selectedLayer = 0;
-    selectedType = BlockType.CABLE;
-    selectedRotation = Rotation.UP;
+    this.selectedLayer = 0;
+    this.selectedType = BlockType.CABLE;
+    this.selectedRotation = Rotation.UP;
   }
 
   public void update(Display display, Grid grid) {
@@ -40,8 +42,6 @@ public class Player {
   private void updatePlayerInput(Grid grid) {
     // if (keyboard.down('Q')) new Snippet(grid).saveToFile("../saves/", "save");
     if (keyboard.down('Q')) new Snippet(new BlockPosition(0, 0, 0), new BlockPosition(10, 10, 0), grid).saveToFile("../saves/", "save");
-
-    if (keyboard.down('J')) selection = new Selection(grid, this);
 
     translate.x += ((keyboard.held('A') ? 1 : 0) - (keyboard.held('D') ? 1 : 0)) * PAN_SPEED;
     translate.y += ((keyboard.held('W') ? 1 : 0) - (keyboard.held('S') ? 1 : 0)) * PAN_SPEED;
@@ -69,4 +69,12 @@ public class Player {
       if (mouseBlockPosition != null) grid.erase(mouseBlockPosition);
     }
   }
+
+  public void mousePressed() {
+    if (keyboard.held(Keyboard.SHIFT)) {
+      selection = new Selection(grid, this);
+    }
+  }
+
+  public void mouseReleased() {}
 }
