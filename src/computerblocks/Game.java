@@ -57,8 +57,8 @@ public class Game {
   }
 
   private void setup() {
-    player = new Player(display);
     grid = new Grid(300, 300, 6);
+    player = new Player(display, grid);
     ui = new UserInterface();
     menuController = new MenuController(display);
   }
@@ -77,7 +77,11 @@ public class Game {
 
     grid.draw(display, player);
     ui.draw(display, player, grid);
+<<<<<<< HEAD
     menuController.update(display);
+=======
+    if (player.selection != null) player.selection.draw(display, grid, player);
+>>>>>>> ec1fd0c9bddac25123ce45b2bb8c293226a63f93
 
     display.draw();
   }

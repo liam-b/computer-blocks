@@ -1,6 +1,7 @@
 package computerblocks.display;
 
-import computerblocks.player.Keyboard;
+import computerblocks.position.*;
+import computerblocks.player.io.Keyboard;
 import java.awt.image.BufferStrategy;
 import javax.swing.*;
 import java.awt.*;
@@ -87,5 +88,9 @@ public class Display {
 
   public void image(Image image, float x, float y, float width, float height) {
     graphics.drawImage(image, (int) x, (int) y, (int) width, (int) height, null);
+  }
+
+  public void rect(RealPosition position, float width, float height) {
+    graphics.fillRect((int)position.x, (int)position.y, (int)width, (int)height);
   }
 }
