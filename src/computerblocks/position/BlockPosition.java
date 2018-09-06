@@ -32,6 +32,14 @@ public class BlockPosition {
     this.l = 0;
   }
 
+  public BlockPosition subtract(BlockPosition pos) {
+    return new BlockPosition(x - pos.x, y - pos.y, r, l - pos.l);
+  }
+
+  public BlockPosition add(BlockPosition pos) {
+    return new BlockPosition(x + pos.x, y + pos.y, r, l + pos.l);
+  }
+
   public boolean isEqual(BlockPosition pos) {
     return pos != null && (x == pos.x && y == pos.y && l == pos.l);
   }

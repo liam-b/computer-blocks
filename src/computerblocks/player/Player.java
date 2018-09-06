@@ -25,6 +25,7 @@ public class Player {
     keyboard = new Keyboard(display);
     mouse = new Mouse(display);
 
+    selectedLayer = 0;
     selectedType = BlockType.CABLE;
     selectedRotation = Rotation.UP;
   }
@@ -35,7 +36,8 @@ public class Player {
   }
 
   private void updatePlayerInput(Grid grid) {
-    if (keyboard.down('Q')) new Snippet(grid).saveToFile("../saves/", "save");
+    // if (keyboard.down('Q')) new Snippet(grid).saveToFile("../saves/", "save");
+    if (keyboard.down('Q')) new Snippet(new BlockPosition(0, 0, 0), new BlockPosition(10, 10, 0), grid).saveToFile("../saves/", "save");
 
     translate.x += ((keyboard.held('A') ? 1 : 0) - (keyboard.held('D') ? 1 : 0)) * PAN_SPEED;
     translate.y += ((keyboard.held('W') ? 1 : 0) - (keyboard.held('S') ? 1 : 0)) * PAN_SPEED;
