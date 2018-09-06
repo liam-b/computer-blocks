@@ -8,6 +8,7 @@ import computerblocks.position.*;
 import computerblocks.player.*;
 import computerblocks.display.ui.*;
 import computerblocks.snippet.Snippet;
+import computerblocks.display.ui.menu.*;
 
 public class Game {
   private boolean running = true;
@@ -16,6 +17,7 @@ public class Game {
 
   private Display display;
   private UserInterface ui;
+  private MenuController menuController;
 
   private Player player;
   private Grid grid;
@@ -58,6 +60,7 @@ public class Game {
     player = new Player(display);
     grid = new Grid(300, 300, 6);
     ui = new UserInterface();
+    menuController = new MenuController(display);
   }
 
   private void update() {
@@ -74,6 +77,7 @@ public class Game {
 
     grid.draw(display, player);
     ui.draw(display, player, grid);
+    menuController.update(display);
 
     display.draw();
   }

@@ -84,4 +84,8 @@ public class Display {
 
     graphics.fillRect((int)x, (int)y, (int)width, (int)height);
   }
+
+  public void image(Image image, float x, float y, float width, float height) {
+    graphics.drawImage(image, (int) x, (int) y, (int) width, (int) height, null);
+  }
 }
