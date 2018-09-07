@@ -10,21 +10,19 @@ public class Button {
 
   private String text;
   private float x, y, width, height;
-  private int slot;
+  public int slot;
 
   private int buttonSpacing = 8;
 
-  public Button(String text, Menu menu) {
-    slot = menu.buttons.size();
-    menu.buttons.add(this);
+  public Button(String text) {
     this.text = text;
-    width = menu.width * 0.9f;
   }
 
   public void draw(Display display, Menu menu) {
-    height = (menu.height - menu.width*0.18f) / 6;
-    x = display.width/2 - width/2;
-    y = display.height/2 - menu.height/2 + menu.width*0.18f + (height + buttonSpacing)*slot;
+    height = (menu.height - menu.width * 0.18f) / 6;
+    width = menu.width * 0.9f;
+    x = display.width / 2 - width / 2;
+    y = display.height / 2 - menu.height / 2 + menu.width * 0.18f + (height + buttonSpacing) * slot;
 
     display.color(Color.UI_BORDER);
     display.rect(x, y + 4, width, height);

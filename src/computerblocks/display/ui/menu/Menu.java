@@ -55,8 +55,9 @@ public class Menu {
     }
   }
 
-  public void addButton(Button button) {
+  public void addElement(Button button) {
     buttons.add(button);
+    button.slot = buttons.size() - 1;
   }
 
   public void addTextField(TextField textField) {

@@ -14,9 +14,9 @@ public class MenuController {
 
   public void init(Display display) {
     pauseMenu = new Menu(display.width/3, display.height*0.7f);
-    new Button("_text_", pauseMenu);
-    new Button("_text_", pauseMenu);
-    new Button("_text_", pauseMenu);
+    pauseMenu.addElement(new Button("_text_"));
+    pauseMenu.addElement(new Button("_text_"));
+    pauseMenu.addElement(new Button("_text_"));
     currentMenu = pauseMenu;
     settingsMenu = new Menu(display.width*0.7f, display.height*0.9f);
   }

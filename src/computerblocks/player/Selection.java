@@ -8,6 +8,8 @@ public class Selection {
   private RealPosition initialPosition;
   private BlockPosition initialBlockPosition;
 
+  private static final Color areaColor = new Color("#31c831", 0.5f);
+
   public Selection(Grid grid, Player player) {
     this.initialPosition = new RealPosition(player.mouse.position);
     this.initialBlockPosition = grid.mouseOverBlock(player);
@@ -16,6 +18,8 @@ public class Selection {
   public void draw(Display display, Grid grid, Player player) {
     RealPosition positionLeast = new RealPosition(Math.min(initialPosition.x, player.mouse.position.x), Math.min(initialPosition.y, player.mouse.position.y));
     RealPosition positionMost = new RealPosition(Math.max(initialPosition.x, player.mouse.position.x), Math.max(initialPosition.y, player.mouse.position.y));
+
+    display.color(areaColor);
     display.rect(positionLeast, positionMost.x - positionLeast.x, positionMost.y - positionLeast.y);
 
     BlockPosition mouseBlockPosition = grid.mouseOverBlock(player);
