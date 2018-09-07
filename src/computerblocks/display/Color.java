@@ -19,15 +19,15 @@ public class Color {
 
   public Color(String colorString, float alpha) {
     java.awt.Color temp = java.awt.Color.decode(colorString);
-    data = new java.awt.Color(temp.getRed()/255, temp.getGreen()/255, temp.getBlue()/255, alpha);
+    data = new java.awt.Color(temp.getRed() / 255f, temp.getGreen() / 255f, temp.getBlue() / 255f, alpha);
   }
 
   public Color(float r, float g, float b, float a) {
-    data = new java.awt.Color(r/255, g/255, b/255, a);
+    data = new java.awt.Color(r / 255, g / 255, b / 255, a);
   }
 
   public Color(float r, float g, float b) {
-    data = new java.awt.Color(r/255, g/255, b/255);
+    data = new java.awt.Color(r / 255, g / 255, b / 255);
   }
 
   public Color(java.awt.Color color) {

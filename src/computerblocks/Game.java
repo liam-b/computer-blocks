@@ -76,9 +76,9 @@ public class Game {
     display.reset(Color.BACKGROUND);
 
     grid.draw(display, player);
+    player.draw(display, grid);
     ui.draw(display, player, grid);
     if (player.state == State.MENU) menuController.update(display, player);
-    if (player.selection != null) player.selection.draw(display, grid, player);
     display.draw();
   }
 }

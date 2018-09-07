@@ -47,12 +47,14 @@ public class Snippet {
     BlockPosition positionMost = new BlockPosition(Math.max(positionA_.x, positionB_.x), Math.max(positionA_.y, positionB_.y), Math.max(positionA_.l, positionB_.l));
     BlockPosition size = positionMost.subtract(positionLeast).add(new BlockPosition(1, 1, 1));
 
+    System.out.println(size.toString());
+
     // could see weird behaviour as Block references are being passed into this new Block array
 
     this.blocks = new Block[size.x][size.y][size.l];
-    for (int x = positionLeast.x; x <= positionMost.x; x++) {
-      for (int y = positionLeast.y; y <= positionMost.y; y++) {
-        for (int l = positionLeast.l; l <= positionMost.l; l++) {
+    for (int x = positionLeast.x; x < positionMost.x; x++) {
+      for (int y = positionLeast.y; y < positionMost.y; y++) {
+        for (int l = positionLeast.l; l < positionMost.l; l++) {
           blocks[x - positionLeast.x][y - positionLeast.y][l - positionLeast.l] = grid.blockAt(new BlockPosition(x, y, l));
         }
       }

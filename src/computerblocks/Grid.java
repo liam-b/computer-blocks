@@ -64,9 +64,9 @@ public class Grid {
 
   public Block blockAt(BlockPosition position) {
     if (
-      position.x < 0 || position.x > width ||
-      position.y < 0 || position.y > height ||
-      position.l < 0 || position.l > layers
+      position.x < 0 || position.x >= width ||
+      position.y < 0 || position.y >= height ||
+      position.l < 0 || position.l >= layers
     ) return null;
 
     return blocks[position.x][position.y][position.l];

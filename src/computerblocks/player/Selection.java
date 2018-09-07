@@ -6,7 +6,7 @@ import computerblocks.display.*;
 
 public class Selection {
   private RealPosition initialPosition;
-  private BlockPosition initialBlockPosition;
+  public BlockPosition initialBlockPosition;
 
   private static final Color areaColor = new Color("#31c831", 0.5f);
 

@@ -1,8 +1,10 @@
 package computerblocks.position;
 
 public class BlockPosition {
-  public int x, y, l;
-  public Rotation r;
+  public int x = 0, y = 0, l = 0;
+  public Rotation r = Rotation.UP;
+
+  public BlockPosition() {}
 
   public BlockPosition(int x, int y, Rotation r, int l) {
     this.x = x;
@@ -14,7 +16,6 @@ public class BlockPosition {
   public BlockPosition(int x, int y, int l) {
     this.x = x;
     this.y = y;
-    this.r = Rotation.UP;
     this.l = l;
   }
 
@@ -23,13 +24,6 @@ public class BlockPosition {
     this.y = pos.y;
     this.r = pos.r;
     this.l = pos.l;
-  }
-
-  public BlockPosition() {
-    this.x = 0;
-    this.y = 0;
-    this.r = Rotation.UP;
-    this.l = 0;
   }
 
   public BlockPosition subtract(BlockPosition pos) {
