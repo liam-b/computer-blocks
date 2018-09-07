@@ -9,11 +9,11 @@ import computerblocks.player.*;
 public class Button {
 
   public String text;
-  public float x, y, width, height;
+  public float x, y, width, height, offset = 0;
   public int slot, textSize = 25;
 
+  public Color color = null;
   public String font = Fonts.pixelmix;
-
   public int buttonSpacing = 8;
 
   public Button(String text) {
@@ -57,8 +57,9 @@ public class Button {
 
   private void buttonPress(Player player, MenuController menuController) {
     switch (text) {
-      case "Exit": System.exit(0);
-      case "Credits": menuController.currentMenu = menuController.creditsMenu;
+      case "Exit":      System.exit(0);
+      case "Saves":     menuController.currentMenu = menuController.saveMenu; break;
+      case "Credits":   menuController.currentMenu = menuController.creditsMenu; break;
     }
   }
 }
