@@ -64,6 +64,7 @@ public class Game {
     Fonts.addFont(new Fonts("Paloseco-Medium.ttf"));
     Fonts.addFont(new Fonts("Roboto-Regular.ttf"));
     Fonts.addFont(new Fonts("SUPERSCR.ttf"));
+    Fonts.addFont(new Fonts("pixelmix.ttf"));
   }
 
   private void update() {

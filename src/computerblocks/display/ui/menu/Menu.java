@@ -21,17 +21,17 @@ public class Menu {
 
   private Image logo;
 
-  public Menu(float width, float height) {
+  public Menu(float width, float height, String header) {
     this.width = (int) width;
     this.height = (int) height;
     buttons = new ArrayList<Button>();
 
-    loadImages();
+    if (header != null) loadImages(header);
   }
 
-  public void loadImages() {
+  public void loadImages(String header) {
     try {
-      logo = ImageIO.read(new File("../assets/logo.png"));
+      logo = ImageIO.read(new File("../assets/" + header));
     } catch (IOException err) {
       err.printStackTrace();
     }
@@ -63,7 +63,7 @@ public class Menu {
   }
 
   public void addTextField(TextField textField) {
-    
+
   }
 
   public void addLabel(Label label) {

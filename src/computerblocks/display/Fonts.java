@@ -10,6 +10,7 @@ public class Fonts {
   public static final String paloseco = "Paloseco Medium";
   public static final String roboto = "Roboto";
   public static final String superscr = "superscript";
+  public static final String pixelmix = "pixelmix";
 
   private static ArrayList<Fonts> fontList = new ArrayList<Fonts>();
 
