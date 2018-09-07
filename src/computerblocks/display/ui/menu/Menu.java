@@ -17,6 +17,8 @@ public class Menu {
   private int border = 8;
   public ArrayList<Button> buttons;
 
+  private TextField focusedField;
+
   private Image logo;
 
   public Menu(float width, float height) {
@@ -61,7 +63,7 @@ public class Menu {
   }
 
   public void addTextField(TextField textField) {
-
+    
   }
 
   public void addLabel(Label label) {

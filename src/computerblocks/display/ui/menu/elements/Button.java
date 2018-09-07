@@ -28,6 +28,10 @@ public class Button {
     display.rect(x, y + 4, width, height);
     display.color(Color.CABLE_OFF);
     display.rect(x, y, width, height);
+
+    display.color(Color.UI_BORDER);
+    display.font(Fonts.superscr, 30);
+    display.text(text, x + 15, y + height / 2 + display.getFontHeight(Fonts.superscr, 30) / 3);
   }
 
   private boolean pointOver(float x, float y) {
