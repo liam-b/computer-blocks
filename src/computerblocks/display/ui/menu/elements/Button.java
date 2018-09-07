@@ -31,7 +31,8 @@ public class Button {
 
     display.color(Color.UI_BORDER);
     display.font(Fonts.superscr, 30);
-    display.text(text, x + 15, y + height / 2 + display.getFontHeight(Fonts.superscr, 30) / 3);
+    display.text(text,  x + width/2 - display.getStringWidth(text, Fonts.superscr, 30) / 2,
+                        y + height / 2 + display.getFontHeight(Fonts.superscr, 30) / 3);
   }
 
   private boolean pointOver(float x, float y) {
@@ -53,6 +54,9 @@ public class Button {
   }
 
   private void buttonPress(Player player, MenuController menuController) {
-    menuController.currentMenu = menuController.settingsMenu;
+    switch (text) {
+      case "Exit": System.exit(0);
+      case "Settings": menuController.currentMenu = menuController.settingsMenu;
+    }
   }
 }

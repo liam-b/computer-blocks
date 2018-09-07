@@ -91,6 +91,10 @@ public class Display {
     graphics.drawImage(image, (int) x, (int) y, (int) width, (int) height, null);
   }
 
+  public void text(String text, float x, float y) {
+    graphics.drawString(text, (int) x, (int) y);
+  }
+
   public void font(String font, int size) {
     graphics.setFont(new Font(font, Font.PLAIN, size));
   }
@@ -100,7 +104,9 @@ public class Display {
     return metrics.getHeight();
   }
 
-  public void text(String text, float x, float y) {
-    graphics.drawString(text, (int) x, (int) y);
+  public int getStringWidth(String text, String font, int size) {
+    FontMetrics metrics = graphics.getFontMetrics(new Font(font, Font.PLAIN, size));
+    return metrics.stringWidth(text);
   }
+
 }
