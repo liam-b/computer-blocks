@@ -8,11 +8,13 @@ import computerblocks.player.*;
 
 public class Button {
 
-  private String text;
-  private float x, y, width, height;
-  public int slot;
+  public String text;
+  public float x, y, width, height, offset = 0;
+  public int slot, textSize = 25;
 
-  private int buttonSpacing = 8;
+  public Color color = null;
+  public String font = Fonts.pixelmix;
+  public int buttonSpacing = 8;
 
   public Button(String text) {
     this.text = text;
@@ -28,6 +30,11 @@ public class Button {
     display.rect(x, y + 4, width, height);
     display.color(Color.CABLE_OFF);
     display.rect(x, y, width, height);
+
+    display.color(Color.UI_BORDER);
+    display.font(font, textSize);
+    display.text(text,  x + width/2 - display.getStringWidth(text, font, textSize) / 2,
+                        y + height / 2 + display.getFontHeight(font, textSize) / 2);
   }
 
   private boolean pointOver(float x, float y) {
@@ -49,6 +56,10 @@ public class Button {
   }
 
   private void buttonPress(Player player, MenuController menuController) {
-    menuController.currentMenu = menuController.settingsMenu;
+    switch (text) {
+      case "Exit":      System.exit(0);
+      case "Saves":     menuController.currentMenu = menuController.saveMenu; break;
+      case "Credits":   menuController.currentMenu = menuController.creditsMenu; break;
+    }
   }
 }

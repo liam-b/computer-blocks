@@ -5,6 +5,7 @@ import computerblocks.player.io.Keyboard;
 import java.awt.image.BufferStrategy;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.FontMetrics;
 
 import java.awt.geom.*;
 
@@ -89,4 +90,23 @@ public class Display {
   public void image(Image image, float x, float y, float width, float height) {
     graphics.drawImage(image, (int) x, (int) y, (int) width, (int) height, null);
   }
+
+  public void text(String text, float x, float y) {
+    graphics.drawString(text, (int) x, (int) y);
+  }
+
+  public void font(String font, int size) {
+    graphics.setFont(new Font(font, Font.PLAIN, size));
+  }
+
+  public int getFontHeight(String font, int size) {
+    FontMetrics metrics = graphics.getFontMetrics(new Font(font, Font.PLAIN, size));
+    return metrics.getHeight();
+  }
+
+  public int getStringWidth(String text, String font, int size) {
+    FontMetrics metrics = graphics.getFontMetrics(new Font(font, Font.PLAIN, size));
+    return metrics.stringWidth(text);
+  }
+
 }

@@ -61,6 +61,10 @@ public class Game {
     player = new Player(display, grid);
     ui = new UserInterface();
     menuController = new MenuController(display);
+    Fonts.addFont(new Fonts("Paloseco-Medium.ttf"));
+    Fonts.addFont(new Fonts("Roboto-Regular.ttf"));
+    Fonts.addFont(new Fonts("SUPERSCR.ttf"));
+    Fonts.addFont(new Fonts("pixelmix.ttf"));
   }
 
   private void update() {
