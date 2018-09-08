@@ -23,14 +23,12 @@ public class Player {
 
   public Keyboard keyboard;
   public Mouse mouse;
-  private Grid grid;
 
   public State state = State.GAME;
 
-  public Player(Display display, Grid grid) {
+  public Player(Display display) {
     this.keyboard = new Keyboard(display);
-    this.mouse = new Mouse(display, this);
-    this.grid = grid;
+    this.mouse = new Mouse(display);
   }
 
   public void draw(Display display, Grid grid) {
@@ -43,6 +41,7 @@ public class Player {
 
     if (state.doPlayerTranslate) updateTranslate(grid);
     if (state.doPlayerInteraction) updateInteraction(grid);
+    if (state.doPlayerSelection) updateSelection(grid);
   }
 
   private void updateMenu(MenuController menuController) {
@@ -67,12 +66,12 @@ public class Player {
   }
 
   private void updateInteraction(Grid grid) {
-    if (mouse.left) {
+    if (mouse.held(Mouse.LEFT)) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
       if (mouseBlockPosition != null && grid.blockAt(mouseBlockPosition) == null) grid.place(selectedType, mouseBlockPosition);
     }
 
-    if (mouse.right) {
+    if (mouse.held(Mouse.RIGHT)) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
       if (mouseBlockPosition != null) grid.erase(mouseBlockPosition);
     }
@@ -85,19 +84,30 @@ public class Player {
     if (keyboard.down('R')) selectedRotation = Rotation.values()[(selectedRotation.ordinal() + 1) > 3 ? 0 : selectedRotation.ordinal() + 1];
   }
 
-  public void mousePressed() {
-    if (state != State.SELECT && keyboard.held(Keyboard.SHIFT)) {
-      state = State.SELECT;
-      if (grid.mouseOverBlock(this) != null) selection = new Selection(grid, this);
+  private void updateSelection(Grid grid) {
+    if (mouse.down(Mouse.LEFT)) {
+      // if (state != State.SELECT && keyboard.held(Keyboard.SHIFT)) {
+      //   state = State.SELECT;
+      //   if (grid.mouseOverBlock(this) != null) selection = new Selection(grid, this);
+      // }
+      System.out.println("down left");
     }
-  }
 
-  public void mouseReleased() {
-    if (state == State.SELECT) {
-      state = State.GAME;
-      if (selection != null && grid.mouseOverBlock(this) != null) new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid).saveToFile("../saves/", "save");
-      selection = null;
-      grid.unselect();
+    if (mouse.up(Mouse.LEFT)) {
+      // if (state == State.SELECT) {
+      //   state = State.GAME;
+      //   grid.unselect();
+      //   System.out.println(selection != null);
+      //   System.out.println(grid.mouseOverBlock(this) != null);
+      //   if (selection != null && grid.mouseOverBlock(this) != null) { // for some reason blocks is null so when saveToFile is called the save is aborted
+      //     Snippet snip = new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid);
+      //     snip.saveToFile("../saves/", "save");
+      //     snip = null;
+      //   }
+      //   selection = null;
+      // }
+
+      System.out.println("up left");
     }
   }
 }
