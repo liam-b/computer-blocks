@@ -1,5 +1,6 @@
 package computerblocks.snippet;
 
+import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.FileWriter;
@@ -45,17 +46,44 @@ public class Snippet {
   public Snippet(BlockPosition positionA_, BlockPosition positionB_, Grid grid) {
     BlockPosition positionLeast = new BlockPosition(Math.min(positionA_.x, positionB_.x), Math.min(positionA_.y, positionB_.y), Math.min(positionA_.l, positionB_.l));
     BlockPosition positionMost = new BlockPosition(Math.max(positionA_.x, positionB_.x), Math.max(positionA_.y, positionB_.y), Math.max(positionA_.l, positionB_.l));
-    BlockPosition size = positionMost.subtract(positionLeast).add(new BlockPosition(1, 1, 1));
-
-    System.out.println(size.toString());
-
-    // could see weird behaviour as Block references are being passed into this new Block array
+    positionMost = positionMost.add(new BlockPosition(1, 1, 1));
+    BlockPosition size = positionMost.subtract(positionLeast);
 
     this.blocks = new Block[size.x][size.y][size.l];
     for (int x = positionLeast.x; x < positionMost.x; x++) {
       for (int y = positionLeast.y; y < positionMost.y; y++) {
         for (int l = positionLeast.l; l < positionMost.l; l++) {
-          blocks[x - positionLeast.x][y - positionLeast.y][l - positionLeast.l] = grid.blockAt(new BlockPosition(x, y, l));
+          // System.out.println(new BlockPosition(x, y, l).toString());
+          // System.out.println(new BlockPosition(x - positionLeast.x, y - positionLeast.y, l - positionLeast.l).toString());
+          Block block = grid.blockAt(new BlockPosition(x, y, l));
+          if (block != null) {
+            Block newBlock = new Block(new BlockPosition(x, y, l).subtract(positionLeast));
+            newBlock.type = block.type;
+            newBlock.charge = block.charge;
+            newBlock.lastCharge = block.lastCharge;
+            newBlock.tickCharge = block.tickCharge;
+
+            ArrayList<BlockPosition> inputs = new ArrayList<BlockPosition>();
+            for (Block inputBlock : block.inputs) {
+              inputs.add(inputBlock.position.subtract(positionLeast));
+            }
+            newBlock.saveInputPositions = inputs;
+
+            blocks[x - positionLeast.x][y - positionLeast.y][l - positionLeast.l] = newBlock;
+          }
+        }
+      }
+    }
+
+    for (int x = 0; x < size.x; x++) {
+      for (int y = 0; y < size.y; y++) {
+        for (int l = 0; l < size.l; l++) {
+          Block block = blocks[x][y][l];
+          if (block != null) {
+            for (BlockPosition inputPosition : block.saveInputPositions) {
+              block.inputs.add(blocks[inputPosition.x][inputPosition.y][inputPosition.l]);
+            }
+          }
         }
       }
     }

@@ -17,23 +17,18 @@ public class Block {
   public BlockType type;
   public Color color;
   public Color chargeColor;
-  public boolean selected;
+  public boolean selected = false;
 
   public BlockPosition position;
-  public ArrayList<Block> inputs;
-  public ArrayList<BlockPosition> saveInputPositions;
+  public ArrayList<Block> inputs = new ArrayList<Block>();
+  public ArrayList<BlockPosition> saveInputPositions = new ArrayList<BlockPosition>();
 
-  public boolean charge;
-  public boolean lastCharge;
-  public boolean tickCharge;
+  public boolean charge = false;
+  public boolean lastCharge = false;
+  public boolean tickCharge = false;
 
   public Block(BlockPosition position) {
     this.position = position;
-    this.inputs = new ArrayList<Block>();
-
-    this.charge = false;
-    this.lastCharge = false;
-    this.selected = false;
   }
 
   public static Block fromType(BlockType type, BlockPosition position) {
