@@ -36,12 +36,14 @@ public class Player {
   }
 
   public void update(Display display, Grid grid, MenuController menuController) {
-    mouse.update(display);
     updateMenu(menuController);
+    updateSelection(grid);
+    updatePaste(grid);
 
     if (state.doPlayerTranslate) updateTranslate(grid);
     if (state.doPlayerInteraction) updateInteraction(grid);
-    if (state.doPlayerSelection) updateSelection(grid);
+
+    mouse.update(display);
   }
 
   private void updateMenu(MenuController menuController) {
@@ -66,12 +68,12 @@ public class Player {
   }
 
   private void updateInteraction(Grid grid) {
-    if (mouse.held(Mouse.LEFT) && !mouse.down(Mouse.LEFT)) {
+    if (mouse.held(Mouse.LEFT)) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
       if (mouseBlockPosition != null && grid.blockAt(mouseBlockPosition) == null) grid.place(selectedType, mouseBlockPosition);
     }
 
-    if (mouse.held(Mouse.RIGHT) && !mouse.down(Mouse.RIGHT)) {
+    if (mouse.held(Mouse.RIGHT)) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
       if (mouseBlockPosition != null) grid.erase(mouseBlockPosition);
     }
@@ -86,7 +88,7 @@ public class Player {
 
   private void updateSelection(Grid grid) {
     if (mouse.down(Mouse.LEFT)) {
-      if (state != State.SELECT && keyboard.held(Keyboard.SHIFT)) {
+      if (state == State.GAME && keyboard.held(Keyboard.SHIFT)) {
         state = State.SELECT;
         if (grid.mouseOverBlock(this) != null) selection = new Selection(grid, this);
       }
@@ -96,11 +98,15 @@ public class Player {
       if (state == State.SELECT) {
         state = State.GAME;
         grid.unselect();
-        if (selection != null && grid.mouseOverBlock(this) != null) { // for some reason blocks is null so when saveToFile is called the save is aborted
-          new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid).saveToFile("../saves/", "save");
-        }
+        if (selection != null && grid.mouseOverBlock(this) != null) new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid).saveToFile("../saves/", "save");
         selection = null;
       }
+    }
+  }
+
+  private void updatePaste(Grid grid) {
+    if (keyboard.down('P')) {
+      grid.place(new Snippet("../saves/", "save"), new BlockPosition(10, 10, 0));
     }
   }
 }

@@ -48,25 +48,8 @@ public class Snippet {
   public Snippet(BlockPosition positionA_, BlockPosition positionB_, Grid grid) {
     BlockPosition positionLeast = new BlockPosition(Math.min(positionA_.x, positionB_.x), Math.min(positionA_.y, positionB_.y), Math.min(positionA_.l, positionB_.l));
     BlockPosition positionMost = new BlockPosition(Math.max(positionA_.x, positionB_.x), Math.max(positionA_.y, positionB_.y), Math.max(positionA_.l, positionB_.l)).add(new BlockPosition(1, 1, 1));
-
-    BlockPosition minimumBlockPosition = new BlockPosition(grid.width, grid.height, grid.layers);
-    BlockPosition maximumBlockPosition = new BlockPosition(-1, -1, -1);
-    for (int x = positionLeast.x; x < positionMost.x; x++) {
-      for (int y = positionLeast.y; y < positionMost.y; y++) {
-        for (int l = positionLeast.l; l < positionMost.l; l++) {
-          Block block = grid.blockAt(new BlockPosition(x, y, l));
-          if (block != null) {
-            if (block.position.x > maximumBlockPosition.x) maximumBlockPosition.x = block.position.x;
-            if (block.position.y > maximumBlockPosition.y) maximumBlockPosition.y = block.position.y;
-            if (block.position.l > maximumBlockPosition.l) maximumBlockPosition.l = block.position.l;
-
-            if (block.position.x < minimumBlockPosition.x) minimumBlockPosition.x = block.position.x;
-            if (block.position.y < minimumBlockPosition.y) minimumBlockPosition.y = block.position.y;
-            if (block.position.l < minimumBlockPosition.l) minimumBlockPosition.l = block.position.l;
-          }
-        }
-      }
-    }
+    BlockPosition minimumBlockPosition = minimumPosition(positionLeast, positionMost, grid);
+    BlockPosition maximumBlockPosition = maximumPosition(positionLeast, positionMost, grid);
 
     if (maximumBlockPosition.isEqual(new BlockPosition(-1, -1, -1))) {
       blocks = null;
@@ -82,6 +65,7 @@ public class Snippet {
             Block block = grid.blockAt(new BlockPosition(x, y, l));
             if (block != null) {
               Block newBlock = new Block(new BlockPosition(x, y, l).subtract(positionLeast));
+              newBlock.position.r = block.position.r;
               newBlock.type = block.type;
               newBlock.charge = block.charge;
               newBlock.lastCharge = block.lastCharge;
@@ -135,5 +119,39 @@ public class Snippet {
         err.printStackTrace();
       }
     }
+  }
+
+  private BlockPosition minimumPosition(BlockPosition positionLeast, BlockPosition positionMost, Grid grid) {
+    BlockPosition minimumBlockPosition = new BlockPosition(grid.width, grid.height, grid.layers);
+    for (int x = positionLeast.x; x < positionMost.x; x++) {
+      for (int y = positionLeast.y; y < positionMost.y; y++) {
+        for (int l = positionLeast.l; l < positionMost.l; l++) {
+          Block block = grid.blockAt(new BlockPosition(x, y, l));
+          if (block != null) {
+            if (block.position.x < minimumBlockPosition.x) minimumBlockPosition.x = block.position.x;
+            if (block.position.y < minimumBlockPosition.y) minimumBlockPosition.y = block.position.y;
+            if (block.position.l < minimumBlockPosition.l) minimumBlockPosition.l = block.position.l;
+          }
+        }
+      }
+    }
+    return minimumBlockPosition;
+  }
+
+  private BlockPosition maximumPosition(BlockPosition positionLeast, BlockPosition positionMost, Grid grid) {
+    BlockPosition maximumBlockPosition = new BlockPosition(-1, -1, -1);
+    for (int x = positionLeast.x; x < positionMost.x; x++) {
+      for (int y = positionLeast.y; y < positionMost.y; y++) {
+        for (int l = positionLeast.l; l < positionMost.l; l++) {
+          Block block = grid.blockAt(new BlockPosition(x, y, l));
+          if (block != null) {
+            if (block.position.x > maximumBlockPosition.x) maximumBlockPosition.x = block.position.x;
+            if (block.position.y > maximumBlockPosition.y) maximumBlockPosition.y = block.position.y;
+            if (block.position.l > maximumBlockPosition.l) maximumBlockPosition.l = block.position.l;
+          }
+        }
+      }
+    }
+    return maximumBlockPosition;
   }
 }

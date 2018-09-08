@@ -98,8 +98,45 @@ public class Grid {
     return null;
   }
 
+  public void place(Snippet snippet, BlockPosition placePosition) {
+    for (int x = 0; x < snippet.width; x++) {
+      for (int y = 0; y < snippet.height; y++) {
+        for (int l = 0; l < snippet.layers; l++) {
+          Block snippetBlock = snippet.blocks[x][y][l];
+          if (snippetBlock != null) {
+            BlockPosition position = new BlockPosition(x, y, snippetBlock.position.r, l).add(placePosition);
+            Block block = Block.fromType(snippetBlock.type, position);
+            block.charge = snippetBlock.charge;
+            block.lastCharge = snippetBlock.lastCharge;
+            block.tickCharge = snippetBlock.tickCharge;
+
+            block.saveInputPositions = new ArrayList<BlockPosition>();
+            for (Block inputBlock : snippetBlock.inputs) {
+              block.saveInputPositions.add(inputBlock.position.add(placePosition));
+            }
+
+            blocks[position.x][position.y][position.l] = block;
+          }
+        }
+      }
+    }
+
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        for (int l = 0; l < layers; l++) {
+          Block block = blocks[x][y][l];
+          if (block != null) {
+            for (BlockPosition inputPosition : block.saveInputPositions) {
+              block.inputs.add(blocks[inputPosition.x][inputPosition.y][inputPosition.l]);
+            }
+          }
+        }
+      }
+    }
+  }
+
   public void place(BlockType type, BlockPosition position) {
-    blocks[position.x][position.y][position.l] = Block.fromType(type, position);;
+    blocks[position.x][position.y][position.l] = Block.fromType(type, position);
     Block block = blocks[position.x][position.y][position.l];
     block.update(this, block);
   }

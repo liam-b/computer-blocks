@@ -116,4 +116,24 @@ public class Block {
   }
 
   public boolean tick() { return false; }
+
+  // public Block(Block block, BlockPosition position) {
+  //   BlockPosition difference = position.subtract(block.position);
+  //
+  //   this.position = position;
+  //   newBlock.type = block.type;
+  //   newBlock.charge = block.charge;
+  //   newBlock.lastCharge = block.lastCharge;
+  //   newBlock.tickCharge = block.tickCharge;
+  //
+  //   ArrayList<BlockPosition> inputs = new ArrayList<BlockPosition>();
+  //   for (Block inputBlock : block.inputs) {
+  //     inputs.add(inputBlock.position.subtract(positionLeast));
+  //   }
+  //   newBlock.saveInputPositions = inputs;
+  //
+  //   for (BlockPosition inputPosition : block.saveInputPositions) {
+  //     block.inputs.add(blocks[inputPosition.x][inputPosition.y][inputPosition.l]);
+  //   }
+  // }
 }
