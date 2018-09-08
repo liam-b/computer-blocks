@@ -86,16 +86,16 @@ public class Player {
   }
 
   public void mousePressed() {
-    if (state != State.SELECT && keyboard.held(Keyboard.SHIFT) && grid.mouseOverBlock(this) != null) {
+    if (state != State.SELECT && keyboard.held(Keyboard.SHIFT)) {
       state = State.SELECT;
-      selection = new Selection(grid, this);
+      if (grid.mouseOverBlock(this) != null) selection = new Selection(grid, this);
     }
   }
 
   public void mouseReleased() {
-    if (state == State.SELECT && grid.mouseOverBlock(this) != null) {
+    if (state == State.SELECT) {
       state = State.GAME;
-      new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid).saveToFile("../saves/", "save");
+      if (selection != null && grid.mouseOverBlock(this) != null) new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid).saveToFile("../saves/", "save");
       selection = null;
       grid.unselect();
     }

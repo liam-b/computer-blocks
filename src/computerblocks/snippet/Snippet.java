@@ -45,65 +45,92 @@ public class Snippet {
 
   public Snippet(BlockPosition positionA_, BlockPosition positionB_, Grid grid) {
     BlockPosition positionLeast = new BlockPosition(Math.min(positionA_.x, positionB_.x), Math.min(positionA_.y, positionB_.y), Math.min(positionA_.l, positionB_.l));
-    BlockPosition positionMost = new BlockPosition(Math.max(positionA_.x, positionB_.x), Math.max(positionA_.y, positionB_.y), Math.max(positionA_.l, positionB_.l));
-    positionMost = positionMost.add(new BlockPosition(1, 1, 1));
-    BlockPosition size = positionMost.subtract(positionLeast);
+    BlockPosition positionMost = new BlockPosition(Math.max(positionA_.x, positionB_.x), Math.max(positionA_.y, positionB_.y), Math.max(positionA_.l, positionB_.l)).add(new BlockPosition(1, 1, 1));
 
-    this.blocks = new Block[size.x][size.y][size.l];
+    BlockPosition minimumBlockPosition = new BlockPosition(grid.width, grid.height, grid.layers);
+    BlockPosition maximumBlockPosition = new BlockPosition(-1, -1, -1);
     for (int x = positionLeast.x; x < positionMost.x; x++) {
       for (int y = positionLeast.y; y < positionMost.y; y++) {
         for (int l = positionLeast.l; l < positionMost.l; l++) {
           Block block = grid.blockAt(new BlockPosition(x, y, l));
           if (block != null) {
-            Block newBlock = new Block(new BlockPosition(x, y, l).subtract(positionLeast));
-            newBlock.type = block.type;
-            newBlock.charge = block.charge;
-            newBlock.lastCharge = block.lastCharge;
-            newBlock.tickCharge = block.tickCharge;
+            if (block.position.x > maximumBlockPosition.x) maximumBlockPosition.x = block.position.x;
+            if (block.position.y > maximumBlockPosition.y) maximumBlockPosition.y = block.position.y;
+            if (block.position.l > maximumBlockPosition.l) maximumBlockPosition.l = block.position.l;
 
-            ArrayList<BlockPosition> inputs = new ArrayList<BlockPosition>();
-            for (Block inputBlock : block.inputs) {
-              inputs.add(inputBlock.position.subtract(positionLeast));
-            }
-            newBlock.saveInputPositions = inputs;
-
-            blocks[x - positionLeast.x][y - positionLeast.y][l - positionLeast.l] = newBlock;
+            if (block.position.x < minimumBlockPosition.x) minimumBlockPosition.x = block.position.x;
+            if (block.position.y < minimumBlockPosition.y) minimumBlockPosition.y = block.position.y;
+            if (block.position.l < minimumBlockPosition.l) minimumBlockPosition.l = block.position.l;
           }
         }
       }
     }
 
-    for (int x = 0; x < size.x; x++) {
-      for (int y = 0; y < size.y; y++) {
-        for (int l = 0; l < size.l; l++) {
-          Block block = blocks[x][y][l];
-          if (block != null) {
-            for (BlockPosition inputPosition : block.saveInputPositions) {
-              block.inputs.add(blocks[inputPosition.x][inputPosition.y][inputPosition.l]);
+    if (maximumBlockPosition.isEqual(new BlockPosition(-1, -1, -1))) {
+      blocks = null;
+    } else {
+      positionLeast = minimumBlockPosition;
+      positionMost = maximumBlockPosition.add(new BlockPosition(1, 1, 1));
+      BlockPosition size = positionMost.subtract(positionLeast);
+
+      this.blocks = new Block[size.x][size.y][size.l];
+      for (int x = positionLeast.x; x < positionMost.x; x++) {
+        for (int y = positionLeast.y; y < positionMost.y; y++) {
+          for (int l = positionLeast.l; l < positionMost.l; l++) {
+            Block block = grid.blockAt(new BlockPosition(x, y, l));
+            if (block != null) {
+              Block newBlock = new Block(new BlockPosition(x, y, l).subtract(positionLeast));
+              newBlock.type = block.type;
+              newBlock.charge = block.charge;
+              newBlock.lastCharge = block.lastCharge;
+              newBlock.tickCharge = block.tickCharge;
+
+              ArrayList<BlockPosition> inputs = new ArrayList<BlockPosition>();
+              for (Block inputBlock : block.inputs) {
+                inputs.add(inputBlock.position.subtract(positionLeast));
+              }
+              newBlock.saveInputPositions = inputs;
+
+              blocks[x - positionLeast.x][y - positionLeast.y][l - positionLeast.l] = newBlock;
             }
           }
         }
       }
-    }
 
-    width = size.x;
-    height = size.y;
-    layers = size.l;
+      for (int x = 0; x < size.x; x++) {
+        for (int y = 0; y < size.y; y++) {
+          for (int l = 0; l < size.l; l++) {
+            Block block = blocks[x][y][l];
+            if (block != null) {
+              for (BlockPosition inputPosition : block.saveInputPositions) {
+                block.inputs.add(blocks[inputPosition.x][inputPosition.y][inputPosition.l]);
+              }
+            }
+          }
+        }
+      }
+
+      width = size.x;
+      height = size.y;
+      layers = size.l;
+    }
   }
 
   public void saveToFile(String path, String name) {
-    JSONObject snippetJSON = new JSONObject();
-    snippetJSON.put("name", name);
-    snippetJSON.put("width", width);
-    snippetJSON.put("height", height);
-    snippetJSON.put("layers", layers);
-    snippetJSON.put("blocks", JSON.blocksToJSON(blocks));
+    if (blocks != null) {
+      JSONObject snippetJSON = new JSONObject();
+      snippetJSON.put("name", name);
+      snippetJSON.put("width", width);
+      snippetJSON.put("height", height);
+      snippetJSON.put("layers", layers);
+      snippetJSON.put("blocks", JSON.blocksToJSON(blocks));
 
-    try (FileWriter file = new FileWriter(path + name + EXTENSION)) {
-      file.write(snippetJSON.toString());
-      file.flush();
-    } catch (IOException err) {
-      err.printStackTrace();
+      try (FileWriter file = new FileWriter(path + name + EXTENSION)) {
+        file.write(snippetJSON.toString());
+        file.flush();
+      } catch (IOException err) {
+        err.printStackTrace();
+      }
     }
   }
 }
