@@ -43,6 +43,16 @@ public class Grid {
     }
   }
 
+  public void unselect() {
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        for (int l = 0; l < layers; l++) {
+          if (blocks[x][y][l] != null) blocks[x][y][l].selected = false;
+        }
+      }
+    }
+  }
+
   public void tick() {
     ArrayList<Block> queue = new ArrayList<Block>();
     for (int x = 0; x < width; x++) {
