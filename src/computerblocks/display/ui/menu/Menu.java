@@ -15,16 +15,16 @@ public class Menu {
   private String title;
   public int width, height;
   private int border = 8;
-  public ArrayList<Button> buttons;
+  public ArrayList<MenuElement> elements;
 
-  private TextField focusedField;
+  // private MenuElement focusedField;
 
   private Image logo;
 
   public Menu(float width, float height, String header) {
     this.width = (int) width;
     this.height = (int) height;
-    buttons = new ArrayList<Button>();
+    elements = new ArrayList<MenuElement>();
 
     if (header != null) loadImages(header);
   }
@@ -51,15 +51,19 @@ public class Menu {
     // draw title logo
     display.image(logo, display.width/2 - width/2, display.height/2 - height/2, width, width*0.18f);
 
-    for (Button button : buttons) {
-      button.draw(display, this);
-      button.checkPress(display, player, menuController);
+    for (MenuElement element : elements) {
+      element.draw(display, this);
+      element.checkPress(display, player, menuController);
     }
   }
 
-  public void addElement(Button button) {
-    buttons.add(button);
-    button.slot = buttons.size() - 1;
+  public void addElement(MenuElement element) {
+    elements.add(element);
+    element.slot = elements.size() - 1;
+  }
+  public void addElement(Button element) {
+    elements.add(element);
+    element.slot = elements.size() - 1;
   }
 
   public void addTextField(TextField textField) {

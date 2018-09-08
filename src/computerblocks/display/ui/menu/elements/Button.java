@@ -6,25 +6,45 @@ import computerblocks.display.ui.menu.*;
 import computerblocks.display.ui.menu.elements.*;
 import computerblocks.player.*;
 
-public class Button {
+public class Button extends MenuElement {
 
   public String text;
-  public float x, y, width, height, offset = 0;
-  public int slot, textSize = 25;
+  public int textSize = 25;
 
   public Color color = null;
   public String font = Fonts.pixelmix;
-  public int buttonSpacing = 8;
 
   public Button(String text) {
+    super(0, 0, 1);
     this.text = text;
+  }
+
+  public Button(String text, float yOffset) {
+    super(0, yOffset, 1);
+    this.text = text;
+  }
+
+  public Button(String text, float xOffset, float yOffset) {
+    super(xOffset, yOffset, 1);
+    this.text = text;
+  }
+
+  public Button(String text, float xOffset, float yOffset, float widthModifier) {
+    super(xOffset, yOffset, widthModifier);
+    this.text = text;
+  }
+
+  public Button(String text, float xOffset, float yOffset, float widthModifier, int ID) {
+    super(xOffset, yOffset, widthModifier);
+    this.text = text;
+    this.ID = ID;
   }
 
   public void draw(Display display, Menu menu) {
     height = (menu.height - menu.width * 0.18f) / 6;
-    width = menu.width * 0.9f;
-    x = display.width / 2 - width / 2;
-    y = display.height / 2 - menu.height / 2 + menu.width * 0.18f + (height + buttonSpacing) * slot;
+    width = menu.width * 0.9f * widthModifier;
+    x = display.width / 2 - width / 2 + width * xOffset;
+    y = display.height / 2 - menu.height / 2 + menu.width * 0.18f + (height + buttonSpacing) * (slot + yOffset);
 
     display.color(Color.UI_BORDER);
     display.rect(x, y + 4, width, height);
@@ -37,29 +57,15 @@ public class Button {
                         y + height / 2 + display.getFontHeight(font, textSize) / 2);
   }
 
-  private boolean pointOver(float x, float y) {
-    if (x > this.x && x < this.x + width &&
-        y > this.y && y < this.y + height) {
-      return true;
-    }
-    return false;
-  }
-
-  public void checkPress(Display display, Player player, MenuController menuController) {
-    if (pointOver(player.mouse.position.x, player.mouse.position.y)) {
-      if (player.mouse.left) {
-        buttonPress(player, menuController);
-      }
-      display.color(new Color(255, 255, 255, 0.2f));
-      display.rect(x, y, width, height);
-    }
-  }
-
-  private void buttonPress(Player player, MenuController menuController) {
+  public void buttonPress(Player player, MenuController menuController) {
     switch (text) {
       case "Exit":      System.exit(0);
       case "Saves":     menuController.currentMenu = menuController.saveMenu; break;
       case "Credits":   menuController.currentMenu = menuController.creditsMenu; break;
+      case "Save":      if (ID == 0) System.exit(0);
+                        if (ID == 1) menuController.currentMenu = menuController.creditsMenu;
+                        if (ID == 2) menuController.currentMenu = menuController.pauseMenu;
+                        break;
     }
   }
 }

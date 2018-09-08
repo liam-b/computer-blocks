@@ -6,27 +6,31 @@ import computerblocks.display.ui.menu.*;
 import computerblocks.display.ui.menu.elements.*;
 import computerblocks.player.*;
 
-public class Label extends Button {
-  public Label(String text) {
-    super(text);
-  }
+public class Label extends MenuElement {
 
   public Label(String text, Color color) {
-    super(text);
+    super(0, 0, 1);
     this.color = color;
+    this.text = text;
   }
 
-  public Label(String text, Color color, float offset) {
-    super(text);
+  public Label(String text, Color color, float xOffset, float yOffset) {
+    super(xOffset, yOffset, 1);
     this.color = color;
-    this.offset = offset;
+    this.text = text;
+  }
+
+  public Label(String text, Color color, float xOffset, float yOffset, float widthModifier) {
+    super(xOffset, yOffset, widthModifier);
+    this.color = color;
+    this.text = text;
   }
 
   public void draw(Display display, Menu menu) {
     height = (menu.height - menu.width * 0.18f) / 6;
-    width = menu.width * 0.9f;
-    x = display.width / 2 - width / 2;
-    y = display.height / 2 - menu.height / 2 + menu.width * 0.18f + (height + buttonSpacing) * (slot + offset);
+    width = menu.width * 0.9f * widthModifier;
+    x = display.width / 2 - width / 2 + width * xOffset;
+    y = display.height / 2 - menu.height / 2 + menu.width * 0.18f + (height + buttonSpacing) * (slot + yOffset);
 
     if (color == null) display.color(Color.UI_BORDER);
     else display.color(color);
