@@ -53,8 +53,6 @@ public class Snippet {
     for (int x = positionLeast.x; x < positionMost.x; x++) {
       for (int y = positionLeast.y; y < positionMost.y; y++) {
         for (int l = positionLeast.l; l < positionMost.l; l++) {
-          // System.out.println(new BlockPosition(x, y, l).toString());
-          // System.out.println(new BlockPosition(x - positionLeast.x, y - positionLeast.y, l - positionLeast.l).toString());
           Block block = grid.blockAt(new BlockPosition(x, y, l));
           if (block != null) {
             Block newBlock = new Block(new BlockPosition(x, y, l).subtract(positionLeast));

@@ -97,6 +97,7 @@ public class Player {
       state = State.GAME;
       new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid).saveToFile("../saves/", "save");
       selection = null;
+      grid.unselect();
     }
   }
 }
