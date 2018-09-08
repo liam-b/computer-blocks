@@ -66,12 +66,12 @@ public class Player {
   }
 
   private void updateInteraction(Grid grid) {
-    if (mouse.held(Mouse.LEFT)) {
+    if (mouse.held(Mouse.LEFT) && !mouse.down(Mouse.LEFT)) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
       if (mouseBlockPosition != null && grid.blockAt(mouseBlockPosition) == null) grid.place(selectedType, mouseBlockPosition);
     }
 
-    if (mouse.held(Mouse.RIGHT)) {
+    if (mouse.held(Mouse.RIGHT) && !mouse.down(Mouse.RIGHT)) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
       if (mouseBlockPosition != null) grid.erase(mouseBlockPosition);
     }
@@ -86,28 +86,21 @@ public class Player {
 
   private void updateSelection(Grid grid) {
     if (mouse.down(Mouse.LEFT)) {
-      // if (state != State.SELECT && keyboard.held(Keyboard.SHIFT)) {
-      //   state = State.SELECT;
-      //   if (grid.mouseOverBlock(this) != null) selection = new Selection(grid, this);
-      // }
-      System.out.println("down left");
+      if (state != State.SELECT && keyboard.held(Keyboard.SHIFT)) {
+        state = State.SELECT;
+        if (grid.mouseOverBlock(this) != null) selection = new Selection(grid, this);
+      }
     }
 
     if (mouse.up(Mouse.LEFT)) {
-      // if (state == State.SELECT) {
-      //   state = State.GAME;
-      //   grid.unselect();
-      //   System.out.println(selection != null);
-      //   System.out.println(grid.mouseOverBlock(this) != null);
-      //   if (selection != null && grid.mouseOverBlock(this) != null) { // for some reason blocks is null so when saveToFile is called the save is aborted
-      //     Snippet snip = new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid);
-      //     snip.saveToFile("../saves/", "save");
-      //     snip = null;
-      //   }
-      //   selection = null;
-      // }
-
-      System.out.println("up left");
+      if (state == State.SELECT) {
+        state = State.GAME;
+        grid.unselect();
+        if (selection != null && grid.mouseOverBlock(this) != null) { // for some reason blocks is null so when saveToFile is called the save is aborted
+          new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid).saveToFile("../saves/", "save");
+        }
+        selection = null;
+      }
     }
   }
 }

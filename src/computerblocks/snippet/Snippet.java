@@ -36,10 +36,12 @@ public class Snippet {
     } finally {
       JSONObject snippetJSON = new JSONObject(content);
 
-      this.width = snippetJSON.getInt("width");
-      this.height = snippetJSON.getInt("height");
-      this.layers = snippetJSON.getInt("layers");
-      this.blocks = JSON.JSONToBlocks(snippetJSON.getJSONArray("blocks"), width, height, layers);
+      if (snippetJSON.getJSONArray("blocks").length() != 0) {
+        this.width = snippetJSON.getInt("width");
+        this.height = snippetJSON.getInt("height");
+        this.layers = snippetJSON.getInt("layers");
+        this.blocks = JSON.JSONToBlocks(snippetJSON.getJSONArray("blocks"), width, height, layers);
+      }
     }
   }
 
@@ -128,6 +130,7 @@ public class Snippet {
       try (FileWriter file = new FileWriter(path + name + EXTENSION)) {
         file.write(snippetJSON.toString());
         file.flush();
+        file.close();
       } catch (IOException err) {
         err.printStackTrace();
       }

@@ -58,7 +58,7 @@ public class Game {
 
   private void setup() {
     grid = new Grid(300, 300, 6);
-    player = new Player(display, grid);
+    player = new Player(display);
     ui = new UserInterface();
     menuController = new MenuController(display);
     Fonts.addFont(new Fonts("Paloseco-Medium.ttf"));
@@ -69,7 +69,9 @@ public class Game {
 
   private void update() {
     player.update(display, grid, menuController);
-    if (player.keyboard.down('E')) grid = new Grid(new Snippet("../saves/", "save"));
+    if (player.keyboard.down('E')) {
+      grid = new Grid(new Snippet("../saves/", "save"));
+    }
   }
 
   private void tick() {
