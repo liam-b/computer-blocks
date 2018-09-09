@@ -14,7 +14,7 @@ public class Player {
   public static final float ZOOM_SPEED = 80f;
 
   public RealPosition translate = new RealPosition(50, 0);
-  public float zoom = 5;
+  public float zoom = 1;
 
   public int selectedLayer = 0;
   public BlockType selectedType = BlockType.CABLE;
@@ -35,7 +35,7 @@ public class Player {
 
   public void draw(Display display, Grid grid) {
     if (selection != null) selection.draw(display, grid, this);
-    if (state == State.PASTE && grid.mouseOverBlock(this) != null) snippet.ghost(display, this, grid.mouseOverBlock(this));
+    if (state == State.PASTE && snippet != null) snippet.ghost(display, this, grid.mouseOverBlock(this));
   }
 
   public void update(Display display, Grid grid, MenuController menuController) {
@@ -113,6 +113,7 @@ public class Player {
     if (state == State.PASTE && mouse.up(Mouse.LEFT) && grid.mouseOverBlock(this) != null) {
       state = State.GAME;
       grid.paste(snippet, grid.mouseOverBlock(this));
+      snippet = null;
     }
   }
 }

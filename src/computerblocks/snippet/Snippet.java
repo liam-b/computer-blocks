@@ -22,6 +22,8 @@ public class Snippet {
   public Block[][][] blocks;
   public int width, height, layers;
 
+  private BlockPosition lastOffset = new BlockPosition();
+
   public Snippet(Grid grid) {
     this.width = grid.width;
     this.height = grid.height;
@@ -106,6 +108,9 @@ public class Snippet {
 
   public void ghost(Display display, Player player, BlockPosition offset) {
     if (blocks != null) {
+      if (offset == null) offset = lastOffset;
+      lastOffset = offset;
+      
       Block[][][] ghostBlocks = new Block[width][height][layers];
 
       for (int x = 0; x < width; x++) {
