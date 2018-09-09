@@ -11,6 +11,8 @@ import java.nio.file.Paths;
 import computerblocks.Grid;
 import computerblocks.block.*;
 import computerblocks.position.*;
+import computerblocks.display.Display;
+import computerblocks.player.Player;
 
 public class Snippet {
   public static final String SAVE_PATH = "./";
@@ -99,6 +101,33 @@ public class Snippet {
       width = size.x;
       height = size.y;
       layers = size.l;
+    }
+  }
+
+  public void ghost(Display display, Player player, BlockPosition offset) {
+    if (blocks != null) {
+      Block[][][] ghostBlocks = new Block[width][height][layers];
+
+      for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+          Block snippetBlock = blocks[x][y][0];
+          if (snippetBlock != null) {
+            Block block = Block.fromType(snippetBlock.type, snippetBlock.position.add(offset));
+            block.charge = snippetBlock.charge;
+            block.ghost = true;
+
+            ghostBlocks[x][y][0] = block;
+          }
+        }
+      }
+
+      for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+          if (ghostBlocks[x][y][0] != null) {
+            ghostBlocks[x][y][0].draw(display, player);
+          }
+        }
+      }
     }
   }
 

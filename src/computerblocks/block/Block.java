@@ -18,6 +18,7 @@ public class Block {
   public Color color;
   public Color chargeColor;
   public boolean selected = false;
+  public boolean ghost = false;
 
   public BlockPosition position;
   public ArrayList<Block> inputs = new ArrayList<Block>();
@@ -66,7 +67,8 @@ public class Block {
 
     if (withinScreenBounds(display, rectSize, drawPosition)) {
       if (selected) highlightBlock(display, player, rectSize, drawPosition);
-      display.color((charge) ? chargeColor : color);
+      Color drawColor = (charge) ? chargeColor : color;
+      display.color((ghost) ? new Color(drawColor, 0.5f) : drawColor);
       display.rect((int)drawPosition.x, (int)drawPosition.y, (int)rectSize, (int)rectSize);
     }
   }
@@ -116,24 +118,4 @@ public class Block {
   }
 
   public boolean tick() { return false; }
-
-  // public Block(Block block, BlockPosition position) {
-  //   BlockPosition difference = position.subtract(block.position);
-  //
-  //   this.position = position;
-  //   newBlock.type = block.type;
-  //   newBlock.charge = block.charge;
-  //   newBlock.lastCharge = block.lastCharge;
-  //   newBlock.tickCharge = block.tickCharge;
-  //
-  //   ArrayList<BlockPosition> inputs = new ArrayList<BlockPosition>();
-  //   for (Block inputBlock : block.inputs) {
-  //     inputs.add(inputBlock.position.subtract(positionLeast));
-  //   }
-  //   newBlock.saveInputPositions = inputs;
-  //
-  //   for (BlockPosition inputPosition : block.saveInputPositions) {
-  //     block.inputs.add(blocks[inputPosition.x][inputPosition.y][inputPosition.l]);
-  //   }
-  // }
 }

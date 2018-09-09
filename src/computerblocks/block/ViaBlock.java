@@ -28,7 +28,8 @@ public class ViaBlock extends Block {
 
     if (withinScreenBounds(display, rectSize, drawPosition)) {
       if (selected) highlightBlock(display, player, rectSize, drawPosition);
-      display.color((charge) ? chargeColor : color);
+      Color drawColor = (charge) ? chargeColor : color;
+      display.color((ghost) ? new Color(drawColor, 0.5f) : drawColor);
       display.rect((int)drawPosition.x, (int)drawPosition.y, (int)rectSize, (int)rectSize);
       drawCore(rectSize, drawPosition, display);
     }

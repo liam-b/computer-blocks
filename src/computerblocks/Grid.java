@@ -98,7 +98,7 @@ public class Grid {
     return null;
   }
 
-  public void place(Snippet snippet, BlockPosition placePosition) {
+  public void paste(Snippet snippet, BlockPosition placePosition) {
     for (int x = 0; x < snippet.width; x++) {
       for (int y = 0; y < snippet.height; y++) {
         for (int l = 0; l < snippet.layers; l++) {

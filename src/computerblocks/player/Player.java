@@ -19,7 +19,9 @@ public class Player {
   public int selectedLayer = 0;
   public BlockType selectedType = BlockType.CABLE;
   public Rotation selectedRotation = Rotation.UP;
+
   public Selection selection;
+  public Snippet snippet;
 
   public Keyboard keyboard;
   public Mouse mouse;
@@ -33,12 +35,13 @@ public class Player {
 
   public void draw(Display display, Grid grid) {
     if (selection != null) selection.draw(display, grid, this);
+    if (state == State.PASTE && grid.mouseOverBlock(this) != null) snippet.ghost(display, this, grid.mouseOverBlock(this));
   }
 
   public void update(Display display, Grid grid, MenuController menuController) {
     updateMenu(menuController);
     updateSelection(grid);
-    updatePaste(grid);
+    updatePaste(grid, display);
 
     if (state.doPlayerTranslate) updateTranslate(grid);
     if (state.doPlayerInteraction) updateInteraction(grid);
@@ -68,7 +71,7 @@ public class Player {
   }
 
   private void updateInteraction(Grid grid) {
-    if (mouse.held(Mouse.LEFT)) {
+    if (mouse.held(Mouse.LEFT) && !keyboard.held(Keyboard.SHIFT)) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
       if (mouseBlockPosition != null && grid.blockAt(mouseBlockPosition) == null) grid.place(selectedType, mouseBlockPosition);
     }
@@ -87,26 +90,29 @@ public class Player {
   }
 
   private void updateSelection(Grid grid) {
-    if (mouse.down(Mouse.LEFT)) {
-      if (state == State.GAME && keyboard.held(Keyboard.SHIFT)) {
-        state = State.SELECT;
-        if (grid.mouseOverBlock(this) != null) selection = new Selection(grid, this);
-      }
+    if (state == State.GAME && mouse.down(Mouse.LEFT) && keyboard.held(Keyboard.SHIFT)) {
+      state = State.SELECT;
+      if (grid.mouseOverBlock(this) != null) selection = new Selection(grid, this);
     }
 
-    if (mouse.up(Mouse.LEFT)) {
-      if (state == State.SELECT) {
-        state = State.GAME;
-        grid.unselect();
-        if (selection != null && grid.mouseOverBlock(this) != null) new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid).saveToFile("../saves/", "save");
-        selection = null;
-      }
+    if (state == State.SELECT && mouse.up(Mouse.LEFT)) {
+      state = State.GAME;
+      grid.unselect();
+      if (selection != null && grid.mouseOverBlock(this) != null) new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid).saveToFile("../saves/", "save");
+      selection = null;
     }
   }
 
-  private void updatePaste(Grid grid) {
-    if (keyboard.down('P')) {
-      grid.place(new Snippet("../saves/", "save"), new BlockPosition(10, 10, 0));
+  private void updatePaste(Grid grid, Display display) {
+    if (state == State.GAME && mouse.down(Mouse.RIGHT) && keyboard.held(Keyboard.SHIFT)) {
+    // if (state == State.GAME && keyboard.down('P')) {
+      state = State.PASTE;
+      snippet = new Snippet("../saves/", "save");
+    }
+
+    if (state == State.PASTE && mouse.up(Mouse.LEFT) && grid.mouseOverBlock(this) != null) {
+      state = State.GAME;
+      grid.paste(snippet, grid.mouseOverBlock(this));
     }
   }
 }

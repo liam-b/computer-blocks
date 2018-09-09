@@ -22,6 +22,10 @@ public class Color {
     data = new java.awt.Color(temp.getRed() / 255f, temp.getGreen() / 255f, temp.getBlue() / 255f, alpha);
   }
 
+  public Color(Color color, float alpha) {
+    data = new java.awt.Color(color.data.getRed() / 255f, color.data.getGreen() / 255f, color.data.getBlue() / 255f, alpha);
+  }
+
   public Color(float r, float g, float b, float a) {
     data = new java.awt.Color(r / 255, g / 255, b / 255, a);
   }
