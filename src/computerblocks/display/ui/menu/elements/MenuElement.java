@@ -5,6 +5,7 @@ import computerblocks.display.*;
 import computerblocks.display.ui.menu.*;
 import computerblocks.display.ui.menu.elements.*;
 import computerblocks.player.*;
+import computerblocks.player.io.*;
 
 public class MenuElement {
 
@@ -32,7 +33,7 @@ public class MenuElement {
 
   public void checkPress(Display display, Player player, MenuController menuController) {
     if (pointOver(player.mouse.position.x, player.mouse.position.y)) {
-      if (player.mouse.left) {
+      if (player.mouse.held(Mouse.LEFT)) {
         buttonPress(player, menuController);
       }
       display.color(new Color(255, 255, 255, 0.2f));
