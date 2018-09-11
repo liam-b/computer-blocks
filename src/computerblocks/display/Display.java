@@ -18,7 +18,7 @@ public class Display {
   public JFrame frame;
   public Canvas canvas;
   private BufferStrategy strategy;
-  private Graphics graphics;
+  private Graphics2D graphics;
 
   public Display(String title, int width, int height, int screen) {
     this.title = title;
@@ -49,7 +49,12 @@ public class Display {
 
     canvas.createBufferStrategy(3);
     strategy = canvas.getBufferStrategy();
-    graphics = strategy.getDrawGraphics();
+    graphics = (Graphics2D)strategy.getDrawGraphics();
+    graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    graphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+    graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+    graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+    // graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
   }
 
@@ -63,7 +68,12 @@ public class Display {
   }
 
   public void reset(Color backgroundColor) {
-    graphics = strategy.getDrawGraphics();
+    graphics = (Graphics2D)strategy.getDrawGraphics();
+    graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    graphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+    graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+    graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+    // graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
     graphics.clearRect(0, 0, width, height);
     graphics.setColor(backgroundColor.data);
@@ -80,11 +90,11 @@ public class Display {
   }
 
   public void rect(float x, float y, float width, float height) {
-    graphics.fillRect((int)x, (int)y, (int)width, (int)height);
+    graphics.fill(new Rectangle2D.Float(x, y, width, height));
   }
 
   public void rect(RealPosition position, float width, float height) {
-    graphics.fillRect((int)position.x, (int)position.y, (int)width, (int)height);
+    graphics.fill(new Rectangle2D.Float(position.x, position.y, width, height));
   }
 
   public void image(Image image, float x, float y, float width, float height) {
