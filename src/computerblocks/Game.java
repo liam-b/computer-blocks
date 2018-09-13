@@ -57,7 +57,7 @@ public class Game {
   }
 
   private void setup() {
-    grid = new Grid(300, 300, 6);
+    grid = new Grid(300, 300, 3);
     player = new Player(display);
     ui = new UserInterface();
     menuController = new MenuController(display);

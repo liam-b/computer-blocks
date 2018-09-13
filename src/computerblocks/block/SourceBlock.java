@@ -16,7 +16,6 @@ public class SourceBlock extends Block {
   }
 
   public void update(Grid grid, Block updater) {
-    inputs = new ArrayList<Block>();
     ArrayList<Block> surroundingBlocks = getSurroundingBlocks(grid);
     surroundingBlocks.remove(updater);
     charge = true;

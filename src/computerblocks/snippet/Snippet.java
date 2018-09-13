@@ -93,7 +93,7 @@ public class Snippet {
             Block block = blocks[x][y][l];
             if (block != null) {
               for (BlockPosition inputPosition : block.saveInputPositions) {
-                block.inputs.add(blocks[inputPosition.x][inputPosition.y][inputPosition.l]);
+                if (inputPosition.isWithin(new BlockPosition(), size.subtract(new BlockPosition(1, 1, 1)))) block.inputs.add(blocks[inputPosition.x][inputPosition.y][inputPosition.l]);
               }
             }
           }
@@ -110,7 +110,7 @@ public class Snippet {
     if (blocks != null) {
       if (offset == null) offset = lastOffset;
       lastOffset = offset;
-      
+
       Block[][][] ghostBlocks = new Block[width][height][layers];
 
       for (int x = 0; x < width; x++) {

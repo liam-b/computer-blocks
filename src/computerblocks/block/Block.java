@@ -23,6 +23,7 @@ public class Block {
   public BlockPosition position;
   public ArrayList<Block> inputs = new ArrayList<Block>();
   public ArrayList<BlockPosition> saveInputPositions = new ArrayList<BlockPosition>();
+  // public ArrayList<Path> paths = new ArrayList<Path>();
 
   public boolean charge = false;
   public boolean lastCharge = false;
@@ -44,15 +45,20 @@ public class Block {
   public void update(Grid grid, Block updater) {
     inputs = new ArrayList<Block>();
     ArrayList<Block> surroundingBlocks = getSurroundingBlocks(grid);
+    ArrayList<Block> removeQueue = new ArrayList<Block>();
 
     for (Block block : surroundingBlocks) {
       boolean onlyItemInSurroundingBlockInputs = block.inputs.size() == 1 && block.inputs.get(0) == this;
       if (block.type.isDirectional()) {
-        if (block.position.isFacing(position) && block.charge) inputs.add(block);
+        if (block.position.isFacing(position)) {
+          if (block.charge) inputs.add(block);
+          removeQueue.add(block);
+        }
       }
       else if (block.charge && !onlyItemInSurroundingBlockInputs) inputs.add(block);
     }
     surroundingBlocks.remove(updater);
+    surroundingBlocks.removeAll(removeQueue);
 
     charge = inputs.size() != 0;
     updateSurroundingBlocks(grid, surroundingBlocks);

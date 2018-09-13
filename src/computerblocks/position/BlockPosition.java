@@ -34,6 +34,10 @@ public class BlockPosition {
     return new BlockPosition(x + pos.x, y + pos.y, r, l + pos.l);
   }
 
+  // public BlockPosition add(RelativeBlockPosition pos) {
+  //   return new BlockPosition(x + pos.offset.x, y + pos.offset.y, r, l + pos.offset.l);
+  // }
+
   public boolean isEqual(BlockPosition pos) {
     return pos != null && (x == pos.x && y == pos.y && l == pos.l);
   }
