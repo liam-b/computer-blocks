@@ -3,11 +3,11 @@ package computerblocks.position;
 import java.awt.Point;
 
 public class RealPosition {
-  public float x = 0, y = 0;
+  public double x = 0, y = 0;
 
   public RealPosition() {}
 
-  public RealPosition(float x, float y) {
+  public RealPosition(double x, double y) {
     this.x = x;
     this.y = y;
   }

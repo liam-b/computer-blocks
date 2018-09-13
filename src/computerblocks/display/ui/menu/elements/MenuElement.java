@@ -10,20 +10,20 @@ import computerblocks.player.io.*;
 public class MenuElement {
 
   public String text;
-  public float x, y, width, height, yOffset = 0, xOffset = 0, widthModifier = 1;
+  public double x, y, width, height, yOffset = 0, xOffset = 0, widthModifier = 1;
   public int slot, textSize = 25, ID = 0;
 
   public Color color = null;
   public String font = Fonts.pixelmix;
   public int buttonSpacing = 8;
 
-  public MenuElement(float xOffset, float yOffset, float widthModifier) {
+  public MenuElement(double xOffset, double yOffset, double widthModifier) {
     this.yOffset = yOffset;
     this.xOffset = xOffset;
     this.widthModifier = widthModifier;
   }
 
-  public boolean pointOver(float x, float y) {
+  public boolean pointOver(double x, double y) {
     if (x > this.x && x < this.x + width &&
         y > this.y && y < this.y + height) {
       return true;

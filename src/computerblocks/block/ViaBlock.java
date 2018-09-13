@@ -20,10 +20,10 @@ public class ViaBlock extends Block {
   }
 
   public void draw(Display display, Player player) {
-    float rectSize = (float)BLOCK_SIZE * player.zoom;
+    double rectSize = (double)BLOCK_SIZE * player.zoom;
     RealPosition drawPosition = new RealPosition(
-      player.translate.x + (float)BLOCK_RATIO * (float)position.x * player.zoom,
-      player.translate.y + (float)BLOCK_RATIO * (float)position.y * player.zoom
+      player.translate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom,
+      player.translate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom
     );
 
     if (withinScreenBounds(display, rectSize, drawPosition)) {
@@ -35,8 +35,8 @@ public class ViaBlock extends Block {
     }
   }
 
-  void drawCore(float rectSize, RealPosition drawPosition, Display display) {
-    float coreSize = rectSize / 6f;
+  void drawCore(double rectSize, RealPosition drawPosition, Display display) {
+    double coreSize = rectSize / 6f;
 
     display.color(coreColor);
     display.rect(drawPosition.x + rectSize / 2f - coreSize / 2f, drawPosition.y + rectSize / 2f - coreSize / 2f, coreSize, coreSize);

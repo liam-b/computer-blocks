@@ -42,10 +42,10 @@ public class UserInterface {
     display.rect(BORDER + SCALE*1.5f + SPACING - SCALE*0.9f/2, display.height - BORDER - SCALE/2 - SCALE*0.9f/2 + (grid.layers - player.selectedLayer - 1) * (SCALE*0.9f / grid.layers), SCALE*0.9f, SCALE*0.9f / grid.layers);
   }
 
-  void drawDirectionMarker(float rectSize, RealPosition drawPosition, Display display, Rotation rotation) {
-    float markerHeight = rectSize / 12f;
-    float markerWidth = rectSize / 2f;
-    float markerOffset = rectSize / 8f;
+  void drawDirectionMarker(double rectSize, RealPosition drawPosition, Display display, Rotation rotation) {
+    double markerHeight = rectSize / 12f;
+    double markerWidth = rectSize / 2f;
+    double markerOffset = rectSize / 8f;
 
     display.color(Color.SOURCE);
     if (rotation == Rotation.UP) display.rect(drawPosition.x + markerWidth / 2f, drawPosition.y + markerOffset, markerWidth, markerHeight);
@@ -54,8 +54,8 @@ public class UserInterface {
     if (rotation == Rotation.LEFT) display.rect(drawPosition.x + markerOffset, drawPosition.y + markerWidth / 2f, markerHeight, markerWidth);
   }
 
-  void drawCore(float rectSize, RealPosition drawPosition, Display display) {
-    float coreSize = rectSize / 6f;
+  void drawCore(double rectSize, RealPosition drawPosition, Display display) {
+    double coreSize = rectSize / 6f;
 
     display.color(Color.SOURCE);
     display.rect(drawPosition.x + rectSize / 2f - coreSize / 2f, drawPosition.y + rectSize / 2f - coreSize / 2f, coreSize, coreSize);

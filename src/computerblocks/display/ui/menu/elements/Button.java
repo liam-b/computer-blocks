@@ -19,22 +19,22 @@ public class Button extends MenuElement {
     this.text = text;
   }
 
-  public Button(String text, float yOffset) {
+  public Button(String text, double yOffset) {
     super(0, yOffset, 1);
     this.text = text;
   }
 
-  public Button(String text, float xOffset, float yOffset) {
+  public Button(String text, double xOffset, double yOffset) {
     super(xOffset, yOffset, 1);
     this.text = text;
   }
 
-  public Button(String text, float xOffset, float yOffset, float widthModifier) {
+  public Button(String text, double xOffset, double yOffset, double widthModifier) {
     super(xOffset, yOffset, widthModifier);
     this.text = text;
   }
 
-  public Button(String text, float xOffset, float yOffset, float widthModifier, int ID) {
+  public Button(String text, double xOffset, double yOffset, double widthModifier, int ID) {
     super(xOffset, yOffset, widthModifier);
     this.text = text;
     this.ID = ID;

@@ -14,13 +14,13 @@ public class Label extends MenuElement {
     this.text = text;
   }
 
-  public Label(String text, Color color, float xOffset, float yOffset) {
+  public Label(String text, Color color, double xOffset, double yOffset) {
     super(xOffset, yOffset, 1);
     this.color = color;
     this.text = text;
   }
 
-  public Label(String text, Color color, float xOffset, float yOffset, float widthModifier) {
+  public Label(String text, Color color, double xOffset, double yOffset, double widthModifier) {
     super(xOffset, yOffset, widthModifier);
     this.color = color;
     this.text = text;

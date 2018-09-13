@@ -21,7 +21,7 @@ public class Menu {
 
   private Image logo;
 
-  public Menu(float width, float height, String header) {
+  public Menu(double width, double height, String header) {
     this.width = (int) width;
     this.height = (int) height;
     elements = new ArrayList<MenuElement>();

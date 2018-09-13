@@ -12,7 +12,7 @@ public class Block {
   public static final int BLOCK_SPACING = 1;
   public static final int BLOCK_OFFSET = BLOCK_RATIO / 2;
   public static final int BLOCK_SIZE = BLOCK_RATIO - BLOCK_SPACING;
-  public static final float BLOCK_HIGHLIGHT_OFFSET = 0.5f;
+  public static final double BLOCK_HIGHLIGHT_OFFSET = 0.5f;
 
   public BlockType type;
   public Color color;
@@ -65,10 +65,10 @@ public class Block {
   }
 
   public void draw(Display display, Player player) {
-    float rectSize = (float)BLOCK_SIZE * player.zoom;
+    double rectSize = (double)BLOCK_SIZE * player.zoom;
     RealPosition drawPosition = new RealPosition(
-      player.translate.x + (float)BLOCK_RATIO * (float)position.x * player.zoom,
-      player.translate.y + (float)BLOCK_RATIO * (float)position.y * player.zoom
+      player.translate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom,
+      player.translate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom
     );
 
     if (withinScreenBounds(display, rectSize, drawPosition)) {
@@ -96,8 +96,8 @@ public class Block {
     }
   }
 
-  public void highlightBlock(Display display, Player player, float size, RealPosition position) {
-    float highlightOffset = BLOCK_HIGHLIGHT_OFFSET * player.zoom;
+  public void highlightBlock(Display display, Player player, double size, RealPosition position) {
+    double highlightOffset = BLOCK_HIGHLIGHT_OFFSET * player.zoom;
     display.color(new Color("#31c831"));
     display.rect(
       (int)(position.x - highlightOffset / 2f),
@@ -107,7 +107,7 @@ public class Block {
     );
   }
 
-  public boolean withinScreenBounds(Display display, float size, RealPosition position) {
+  public boolean withinScreenBounds(Display display, double size, RealPosition position) {
     return
       (int)position.x > 0 - (int)size &&
       (int)position.x < display.width + (int)size / 2 &&
@@ -117,10 +117,10 @@ public class Block {
 
   public boolean mouseOver(Player player) {
     return
-      player.mouse.position.x > player.translate.x + (float)BLOCK_RATIO * (float)position.x * player.zoom &&
-      player.mouse.position.x < player.translate.x + (float)BLOCK_RATIO * (float)position.x * player.zoom + (float)BLOCK_SIZE * player.zoom &&
-      player.mouse.position.y > player.translate.y + (float)BLOCK_RATIO * (float)position.y * player.zoom &&
-      player.mouse.position.y < player.translate.y + (float)BLOCK_RATIO * (float)position.y * player.zoom + (float)BLOCK_SIZE * player.zoom;
+      player.mouse.position.x > player.translate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom &&
+      player.mouse.position.x < player.translate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom + (double)BLOCK_SIZE * player.zoom &&
+      player.mouse.position.y > player.translate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom &&
+      player.mouse.position.y < player.translate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom + (double)BLOCK_SIZE * player.zoom;
   }
 
   public boolean tick() { return false; }

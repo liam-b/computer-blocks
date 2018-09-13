@@ -11,10 +11,10 @@ import computerblocks.display.ui.menu.*;
 
 public class Player {
   public static final int PAN_SPEED = 8;
-  public static final float ZOOM_SPEED = 80f;
+  public static final double ZOOM_SPEED = 80f;
 
   public RealPosition translate = new RealPosition(50, 0);
-  public float zoom = 1;
+  public double zoom = 1;
 
   public int selectedLayer = 0;
   public BlockType selectedType = BlockType.CABLE;

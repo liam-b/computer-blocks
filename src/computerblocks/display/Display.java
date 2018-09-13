@@ -50,12 +50,6 @@ public class Display {
     canvas.createBufferStrategy(3);
     strategy = canvas.getBufferStrategy();
     graphics = (Graphics2D)strategy.getDrawGraphics();
-    graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-    graphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-    graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-    graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-    // graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-
   }
 
   public void showOnScreen(JFrame frame, int screen) {
@@ -70,10 +64,6 @@ public class Display {
   public void reset(Color backgroundColor) {
     graphics = (Graphics2D)strategy.getDrawGraphics();
     graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-    graphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-    graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-    graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-    // graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
     graphics.clearRect(0, 0, width, height);
     graphics.setColor(backgroundColor.data);
@@ -89,19 +79,19 @@ public class Display {
     graphics.setColor(color.data);
   }
 
-  public void rect(float x, float y, float width, float height) {
-    graphics.fill(new Rectangle2D.Float(x, y, width, height));
+  public void rect(double x, double y, double width, double height) {
+    graphics.fill(new Rectangle2D.Double(x, y, width, height));
   }
 
-  public void rect(RealPosition position, float width, float height) {
-    graphics.fill(new Rectangle2D.Float(position.x, position.y, width, height));
+  public void rect(RealPosition position, double width, double height) {
+    rect(position.x, position.y, width, height);
   }
 
-  public void image(Image image, float x, float y, float width, float height) {
+  public void image(Image image, double x, double y, double width, double height) {
     graphics.drawImage(image, (int) x, (int) y, (int) width, (int) height, null);
   }
 
-  public void text(String text, float x, float y) {
+  public void text(String text, double x, double y) {
     graphics.drawString(text, (int) x, (int) y);
   }
 

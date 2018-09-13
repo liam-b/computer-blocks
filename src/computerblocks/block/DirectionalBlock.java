@@ -14,10 +14,10 @@ public class DirectionalBlock extends Block {
   }
 
   public void draw(Display display, Player player) {
-    float rectSize = (float)BLOCK_SIZE * player.zoom;
+    double rectSize = (double)BLOCK_SIZE * player.zoom;
     RealPosition drawPosition = new RealPosition(
-      player.translate.x + (float)BLOCK_RATIO * (float)position.x * player.zoom,
-      player.translate.y + (float)BLOCK_RATIO * (float)position.y * player.zoom
+      player.translate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom,
+      player.translate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom
     );
 
     if (withinScreenBounds(display, rectSize, drawPosition)) {
@@ -29,10 +29,10 @@ public class DirectionalBlock extends Block {
     }
   }
 
-  void drawDirectionMarker(float rectSize, RealPosition drawPosition, Display display) {
-    float markerHeight = rectSize / 12f;
-    float markerWidth = rectSize / 2f;
-    float markerOffset = rectSize / 8f;
+  void drawDirectionMarker(double rectSize, RealPosition drawPosition, Display display) {
+    double markerHeight = rectSize / 12f;
+    double markerWidth = rectSize / 2f;
+    double markerOffset = rectSize / 8f;
 
     display.color(markerColor);
     if (position.r == Rotation.UP) display.rect(drawPosition.x + markerWidth / 2f, drawPosition.y + markerOffset, markerWidth, markerHeight);
