@@ -3,6 +3,7 @@ package computerblocks.display.ui.menu;
 import computerblocks.display.*;
 import computerblocks.display.ui.menu.elements.*;
 import computerblocks.player.*;
+import computerblocks.Grid;
 
 public class MenuController {
   public Menu currentMenu;
@@ -30,14 +31,14 @@ public class MenuController {
     saveMenu.addElement(new Button("Load", 1.5f, -4, 0.25f));
     saveMenu.addElement(new Label("JUST A TEMP SCREEN", Color.INVERTER_OFF, 0, 0));
 
-    creditsMenu = new Menu(display.width*0.7f, display.height*0.9f, "credits_title.png");
-    // creditsMenu.addElement(new Label("By Liam Brennan and Joshua Briant"));
-    // creditsMenu.addElement(new Label("Assisted by Roizi Boi"));
+    creditsMenu = new Menu(display.width*0.7, display.height*0.9f, "credits_title.png");
+    creditsMenu.addElement(new Label("By Liam Brennan and Joshua Briant", Color.CABLE_OFF));
+    creditsMenu.addElement(new Label("Assisted by Roizi Boi", Color.CABLE_OFF));
 
     currentMenu = pauseMenu;
   }
 
-  public void update(Display display, Player player) {
-    if (currentMenu != null) currentMenu.draw(display, player, this);
+  public void update(Display display, Player player, Grid grid) {
+    if (currentMenu != null) currentMenu.draw(display, player, this, grid);
   }
 }

@@ -84,7 +84,7 @@ public class Game {
     grid.draw(display, player);
     player.draw(display, grid);
     ui.draw(display, player, grid);
-    if (player.state == State.MENU) menuController.update(display, player);
+    if (player.state == State.MENU) menuController.update(display, player, grid);
     display.draw();
   }
 }

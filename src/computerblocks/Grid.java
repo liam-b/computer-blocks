@@ -72,6 +72,16 @@ public class Grid {
     }
   }
 
+  public void fromSnippet(Snippet snippet) {
+    this.width = snippet.width;
+    this.height = snippet.height;
+    this.layers = snippet.layers;
+
+    System.out.println(Integer.toString(width) + ", " +  Integer.toString(width));
+
+    blocks = snippet.blocks;
+  }
+
   public Block blockAt(BlockPosition position) {
     if (
       position.x < 0 || position.x >= width ||

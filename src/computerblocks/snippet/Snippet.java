@@ -40,12 +40,11 @@ public class Snippet {
     } finally {
       JSONObject snippetJSON = new JSONObject(content);
 
-      if (snippetJSON.getJSONArray("blocks").length() != 0) {
-        this.width = snippetJSON.getInt("width");
-        this.height = snippetJSON.getInt("height");
-        this.layers = snippetJSON.getInt("layers");
-        this.blocks = JSON.JSONToBlocks(snippetJSON.getJSONArray("blocks"), width, height, layers);
-      }
+      // if (snippetJSON.getJSONArray("blocks").length() != 0) {
+      this.width = snippetJSON.getInt("width");
+      this.height = snippetJSON.getInt("height");
+      this.layers = snippetJSON.getInt("layers");
+      this.blocks = JSON.JSONToBlocks(snippetJSON.getJSONArray("blocks"), width, height, layers);
     }
   }
 

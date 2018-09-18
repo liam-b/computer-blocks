@@ -5,6 +5,8 @@ import computerblocks.display.*;
 import computerblocks.display.ui.menu.*;
 import computerblocks.display.ui.menu.elements.*;
 import computerblocks.player.*;
+import computerblocks.snippet.*;
+import computerblocks.Grid;
 
 public class Button extends MenuElement {
 
@@ -57,14 +59,14 @@ public class Button extends MenuElement {
                         y + height / 2 + display.getFontHeight(font, textSize) / 2);
   }
 
-  public void buttonPress(Player player, MenuController menuController) {
+  public void buttonPress(Player player, MenuController menuController, Grid grid) {
     switch (text) {
       case "Exit":      System.exit(0);
       case "Saves":     menuController.currentMenu = menuController.saveMenu; break;
       case "Credits":   menuController.currentMenu = menuController.creditsMenu; break;
-      case "Save":      if (ID == 0) System.exit(0);
-                        if (ID == 1) menuController.currentMenu = menuController.creditsMenu;
-                        if (ID == 2) menuController.currentMenu = menuController.pauseMenu;
+      case "Save":      new Snippet(grid).saveToFile("../saves/", "save_" + ID); break;
+      case "Load":      grid.fromSnippet(new Snippet("../saves/", "save_" + ID));
+                        player.state = State.GAME;
                         break;
     }
   }

@@ -6,6 +6,7 @@ import computerblocks.display.ui.menu.*;
 import computerblocks.display.ui.menu.elements.*;
 import computerblocks.player.*;
 import computerblocks.player.io.*;
+import computerblocks.Grid;
 
 public class MenuElement {
 
@@ -31,10 +32,10 @@ public class MenuElement {
     return false;
   }
 
-  public void checkPress(Display display, Player player, MenuController menuController) {
+  public void checkPress(Display display, Player player, MenuController menuController, Grid grid) {
     if (pointOver(player.mouse.position.x, player.mouse.position.y)) {
-      if (player.mouse.held(Mouse.LEFT)) {
-        buttonPress(player, menuController);
+      if (player.mouse.down(Mouse.LEFT)) {
+        buttonPress(player, menuController, grid);
       }
       display.color(new Color(255, 255, 255, 0.2f));
       display.rect(x, y, width, height);
@@ -42,5 +43,5 @@ public class MenuElement {
   }
 
   public void draw(Display display, Menu menu) {}
-  public void buttonPress(Player player, MenuController menuController) {}
+  public void buttonPress(Player player, MenuController menuController, Grid grid) {}
 }

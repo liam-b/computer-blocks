@@ -3,6 +3,7 @@ package computerblocks.display.ui.menu;
 import computerblocks.display.*;
 import computerblocks.display.ui.menu.elements.*;
 import computerblocks.player.*;
+import computerblocks.Grid;
 
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
@@ -37,7 +38,7 @@ public class Menu {
     }
   }
 
-  public void draw(Display display, Player player, MenuController menuController) {
+  public void draw(Display display, Player player, MenuController menuController, Grid grid) {
     // darken game
     display.color(new Color(0f, 0f, 0f, 0.4f));
     display.rect(0, 0, display.width, display.height);
@@ -53,7 +54,7 @@ public class Menu {
 
     for (MenuElement element : elements) {
       element.draw(display, this);
-      element.checkPress(display, player, menuController);
+      element.checkPress(display, player, menuController, grid);
     }
   }
 
