@@ -138,7 +138,12 @@ public class Grid {
   public void place(BlockType type, BlockPosition position) {
     blocks[position.x][position.y][position.l] = Block.fromType(type, position);
     Block block = blocks[position.x][position.y][position.l];
-    block.update(this, block);
+    try {
+      block.update(this, block);
+    }
+    catch(StackOverflowError e) {
+      blocks[position.x][position.y][position.l] = null;
+    }
   }
 
   public void erase(BlockPosition position) {

@@ -98,7 +98,7 @@ public class Player {
     if (state == State.SELECT && mouse.up(Mouse.LEFT)) {
       state = State.GAME;
       grid.unselect();
-      if (selection != null && grid.mouseOverBlock(this) != null) new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid).saveToFile("../saves/", "save");
+      if (selection != null && grid.mouseOverBlock(this) != null) new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid).saveToFile("../saves/", "snippet");
       selection = null;
     }
   }
@@ -107,7 +107,7 @@ public class Player {
     if (state == State.GAME && mouse.down(Mouse.RIGHT) && keyboard.held(Keyboard.SHIFT)) {
     // if (state == State.GAME && keyboard.down('P')) {
       state = State.PASTE;
-      snippet = new Snippet("../saves/", "save");
+      snippet = new Snippet("../saves/", "snippet");
     }
 
     if (state == State.PASTE && mouse.up(Mouse.LEFT) && grid.mouseOverBlock(this) != null) {
