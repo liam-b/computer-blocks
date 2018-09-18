@@ -17,6 +17,7 @@ public class DelayBlock extends DirectionalBlock {
   }
 
   public void update(Grid grid, Block updater) {
+    inputs = new ArrayList<Block>();
     ArrayList<Block> surroundingBlocks = getSurroundingBlocks(grid);
     ArrayList<Block> removeQueue = new ArrayList<Block>();
 

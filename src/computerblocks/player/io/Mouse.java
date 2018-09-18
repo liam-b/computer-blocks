@@ -13,7 +13,7 @@ public class Mouse implements MouseListener {
   public static final int LEFT = MouseEvent.BUTTON1;
 
   public boolean onScreen;
-  public RealPosition position;
+  public RealPosition position = new RealPosition();
 
   private boolean[] held;
   private boolean[] down;
