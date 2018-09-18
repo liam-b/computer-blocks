@@ -14,9 +14,9 @@ public class ViaBlock extends Block {
     super(position);
 
     this.type = BlockType.VIA;
-    this.color = new Color("#589ec9");
-    this.chargeColor = new Color("#75bdea");
-    this.coreColor = new Color("#f2e24f");
+    this.color = Color.VIA;
+    this.chargeColor = Color.VIA_CHARGE;
+    this.coreColor = Color.SOURCE;
   }
 
   public void draw(Display display, Player player) {

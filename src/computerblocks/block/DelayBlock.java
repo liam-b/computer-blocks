@@ -11,12 +11,13 @@ public class DelayBlock extends DirectionalBlock {
     super(position);
 
     this.type = BlockType.DELAY;
-    this.color = new Color("#59c664");
-    this.chargeColor = new Color("#62db6e");
-    this.markerColor = new Color("#f2e24f");
+    this.color = Color.DELAY;
+    this.chargeColor = Color.DELAY_CHARGE;
+    this.markerColor = Color.SOURCE;
   }
 
   public void update(Grid grid, Block updater) {
+    inputs = new ArrayList<Block>();
     ArrayList<Block> surroundingBlocks = getSurroundingBlocks(grid);
     ArrayList<Block> removeQueue = new ArrayList<Block>();
 
