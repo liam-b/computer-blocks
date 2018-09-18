@@ -28,7 +28,7 @@ public class MenuController {
     saveMenu.addElement(new Label("Slot 2", Color.UI_BORDER, -0.5f, -2, 0.5f));
     saveMenu.addElement(new Button("Save", 0.45f, -3, 0.25f, 1));
     saveMenu.addElement(new Button("Load", 1.5f, -4, 0.25f));
-    saveMenu.addElement(new Label("JUST A TEMP SCREEN", Color.INVERTER_OFF, 0, 0));
+    saveMenu.addElement(new Label("JUST A TEMP SCREEN", Color.INVERTER, 0, 0));
 
     creditsMenu = new Menu(display.width*0.7f, display.height*0.9f, "credits_title.png");
     // creditsMenu.addElement(new Label("By Liam Brennan and Joshua Briant"));

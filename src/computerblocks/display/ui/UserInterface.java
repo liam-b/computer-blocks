@@ -16,17 +16,17 @@ public class UserInterface {
   public UserInterface() { }
 
   Color getColorFromType(BlockType type) {
-    if (type == BlockType.CABLE) return Color.CABLE_OFF;
+    if (type == BlockType.CABLE) return Color.CABLE;
     if (type == BlockType.SOURCE) return Color.SOURCE;
-    if (type == BlockType.INVERTER) return Color.INVERTER_OFF;
-    if (type == BlockType.VIA) return Color.VIA_OFF;
-    if (type == BlockType.DELAY) return Color.DELAY_OFF;
-    return Color.BACKGROUND;
+    if (type == BlockType.INVERTER) return Color.INVERTER;
+    if (type == BlockType.VIA) return Color.VIA;
+    if (type == BlockType.DELAY) return Color.DELAY;
+    return Color.UI_BACKGROUND;
   }
 
   public void draw (Display display, Player player, Grid grid) {
     // block selected
-    display.color(Color.BACKGROUND);
+    display.color(Color.UI_BACKGROUND);
     display.rect(BORDER, display.height - BORDER - SCALE, SCALE, SCALE);
     display.color(getColorFromType(player.selectedType));
     display.rect(BORDER + SCALE/2 - SCALE*0.9f/2, display.height - BORDER - SCALE/2 - SCALE*0.9f/2, SCALE*0.9f, SCALE*0.9f);
@@ -36,9 +36,9 @@ public class UserInterface {
     if (player.selectedType == BlockType.VIA) drawCore(SCALE*0.9f, new RealPosition(BORDER + SCALE/2 - SCALE*0.9f/2, display.height - BORDER - SCALE/2 - SCALE*0.9f/2), display);
 
     // draw layers
-    display.color(Color.BACKGROUND);
+    display.color(Color.UI_BACKGROUND);
     display.rect(BORDER + SCALE + SPACING, display.height - BORDER - SCALE, SCALE, SCALE);
-    display.color(Color.CABLE_OFF);
+    display.color(Color.CABLE);
     display.rect(BORDER + SCALE*1.5f + SPACING - SCALE*0.9f/2, display.height - BORDER - SCALE/2 - SCALE*0.9f/2 + (grid.layers - player.selectedLayer - 1) * (SCALE*0.9f / grid.layers), SCALE*0.9f, SCALE*0.9f / grid.layers);
   }
 

@@ -48,7 +48,7 @@ public class Button extends MenuElement {
 
     display.color(Color.UI_BORDER);
     display.rect(x, y + 4, width, height);
-    display.color(Color.CABLE_OFF);
+    display.color(Color.CABLE);
     display.rect(x, y, width, height);
 
     display.color(Color.UI_BORDER);

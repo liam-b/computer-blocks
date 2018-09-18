@@ -8,7 +8,7 @@ public class CableBlock extends Block {
     super(position);
 
     this.type = BlockType.CABLE;
-    this.color = new Color("#b4b4b4");
-    this.chargeColor = new Color("#dbd44e");
+    this.color = Color.CABLE;
+    this.chargeColor = Color.CABLE_CHARGE;
   }
 }

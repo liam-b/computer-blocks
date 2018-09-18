@@ -11,8 +11,8 @@ public class SourceBlock extends Block {
     super(position);
 
     this.type = BlockType.SOURCE;
-    this.color = new Color("#f2e24f");
-    this.chargeColor = new Color("#f2e24f");
+    this.color = Color.SOURCE;
+    this.chargeColor = Color.SOURCE;
   }
 
   public void update(Grid grid, Block updater) {

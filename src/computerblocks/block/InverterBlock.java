@@ -11,9 +11,9 @@ public class InverterBlock extends DirectionalBlock {
     super(position);
 
     this.type = BlockType.INVERTER;
-    this.color = new Color("#ce4e4a");
-    this.chargeColor = new Color("#f95e59");
-    this.markerColor = new Color("#f2e24f");
+    this.color = Color.INVERTER;
+    this.chargeColor = Color.INVERTER_CHARGE;
+    this.markerColor = Color.SOURCE;
   }
 
   public void update(Grid grid, Block updater) {
