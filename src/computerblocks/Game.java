@@ -19,6 +19,8 @@ public class Game {
   private UserInterface ui;
   private MenuController menuController;
 
+  String demoText = "";
+
   private Player player;
   private Grid grid;
 
@@ -69,9 +71,9 @@ public class Game {
 
   private void update() {
     player.update(display, grid, menuController);
-    if (player.keyboard.down('E')) {
-      grid = new Grid(new Snippet("../saves/", "save"));
-    }
+    // if (player.keyboard.down('E')) {
+    //   grid = new Grid(new Snippet("../saves/", "save"));
+    // }
   }
 
   private void tick() {

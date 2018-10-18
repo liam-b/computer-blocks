@@ -3,6 +3,7 @@ package computerblocks.display.ui.menu;
 import computerblocks.display.*;
 import computerblocks.display.ui.menu.elements.*;
 import computerblocks.player.*;
+import computerblocks.player.io.*;
 import computerblocks.Grid;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Menu {
   private int border = 8;
   public ArrayList<MenuElement> elements;
 
-  // private MenuElement focusedField;
+  public MenuElement focusedField;
 
   private Image logo;
 
@@ -56,22 +57,34 @@ public class Menu {
       element.draw(display, this);
       element.checkPress(display, player, menuController, grid);
     }
+
+    if (focusedField != null) {
+      if (focusedField.getClass().getName() == "computerblocks.display.ui.menu.elements.TextField") {
+        focusedField.text = player.keyboard.keyStream(focusedField.text);
+      }
+      if (player.keyboard.down(10) || player.keyboard.down(13)) {
+        focusedField = null;
+      }
+    }
+    // if (focusedField != null) System.out.println(focusedField.getClass().getName());
+
   }
 
   public void addElement(MenuElement element) {
     elements.add(element);
     element.slot = elements.size() - 1;
   }
-  public void addElement(Button element) {
-    elements.add(element);
-    element.slot = elements.size() - 1;
-  }
 
-  public void addTextField(TextField textField) {
-
-  }
-
-  public void addLabel(Label label) {
-
-  }
+  // public void addElement(Button element) {
+  //   elements.add(element);
+  //   element.slot = elements.size() - 1;
+  // }
+  //
+  // public void addTextField(TextField textField) {
+  //
+  // }
+  //
+  // public void addLabel(Label label) {
+  //
+  // }
 }

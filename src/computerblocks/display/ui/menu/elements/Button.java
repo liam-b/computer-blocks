@@ -64,7 +64,9 @@ public class Button extends MenuElement {
       case "Exit":      System.exit(0);
       case "Saves":     menuController.currentMenu = menuController.saveMenu; break;
       case "Credits":   menuController.currentMenu = menuController.creditsMenu; break;
-      case "Save":      new Snippet(grid).saveToFile("../saves/", "save_" + ID); break;
+      case "Save":      new Snippet(grid).saveToFile("../saves/", "save_" + ID);
+                        player.state = State.GAME;
+                        break;
       case "Load":      grid.fromSnippet(new Snippet("../saves/", "save_" + ID));
                         player.state = State.GAME;
                         break;

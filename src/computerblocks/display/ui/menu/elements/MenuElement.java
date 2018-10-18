@@ -10,7 +10,7 @@ import computerblocks.Grid;
 
 public class MenuElement {
 
-  public String text;
+  public String text = "";
   public double x, y, width, height, yOffset = 0, xOffset = 0, widthModifier = 1;
   public int slot, textSize = 25, ID = 0;
 

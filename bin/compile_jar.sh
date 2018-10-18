@@ -1,0 +1,1 @@
+jar.exe cvfe computerblocks.jar Index $(find . -type f -name "*.class")
