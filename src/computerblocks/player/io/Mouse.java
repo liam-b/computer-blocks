@@ -17,6 +17,7 @@ public class Mouse implements MouseListener {
 
   private boolean[] held;
   private boolean[] down;
+  private boolean[] buffer;
   private boolean[] up;
 
   public Mouse(Display display) {
@@ -24,6 +25,7 @@ public class Mouse implements MouseListener {
 
     this.held = new boolean[10];
     this.down = new boolean[10];
+    this.buffer = new boolean[10];
     this.up = new boolean[10];
   }
 
@@ -35,7 +37,11 @@ public class Mouse implements MouseListener {
     for (int i = 0; i < held.length; i++) {
       down[i] = false;
       up[i] = false;
-    }
+      if (buffer[i]) {
+        down[i] = true;
+        buffer[i] = false;
+      }
+    };
   }
 
   public boolean held(int key) {
@@ -53,7 +59,8 @@ public class Mouse implements MouseListener {
   public void mousePressed(MouseEvent e) {
     int button = e.getButton();
     held[button] = true;
-    down[button] = true;
+    // down[button] = true;
+    buffer[button] = true;
     up[button] = false;
   }
 
