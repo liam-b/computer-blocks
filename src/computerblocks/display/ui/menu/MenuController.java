@@ -31,10 +31,10 @@ public class MenuController {
     // saveMenu.addElement(new Label("JUST A TEMP SCREEN", Color.INVERTER, 0, 0));
 
     saveMenu = new Menu(display.width/3, display.height*0.7f, "logo.png");
-    saveMenu.addElement(new TextField("Slot 1", Color.UI_BORDER, 0, 0.25, 1));
+    saveMenu.addElement(new TextField("Slot 1", Color.UI_BORDER, 0, 0.25, 1, 1));
     saveMenu.addElement(new Button("Save", -0.5, 0, 0.5, 1));
     saveMenu.addElement(new Button("Load", 0.5, -1, 0.5, 1));
-    saveMenu.addElement(new TextField("Slot 2", Color.UI_BORDER, 0, -0.75, 1));
+    saveMenu.addElement(new TextField("Slot 2", Color.UI_BORDER, 0, -0.75, 1, 2));
     saveMenu.addElement(new Button("Save", -0.5, -1, 0.5, 2));
     saveMenu.addElement(new Button("Load", 0.5, -2, 0.5, 2));
 

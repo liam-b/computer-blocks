@@ -30,6 +30,13 @@ public class TextField extends MenuElement {
     this.defaultText = text;
   }
 
+  public TextField(String text, Color color, double xOffset, double yOffset, double widthModifier, int ID) {
+    super(xOffset, yOffset, widthModifier);
+    this.color = color;
+    this.defaultText = text;
+    this.ID = ID;
+  }
+
   public void draw(Display display, Menu menu) {
     height = (menu.height - menu.width * 0.18f) / 6;
     width = menu.width * 0.9f * widthModifier;

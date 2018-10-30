@@ -5,6 +5,7 @@ public class State {
   public static final State MENU = new State(false, false);
   public static final State SELECT = new State(true, false);
   public static final State PASTE = new State(true, false);
+  public static final State SNIPPET = new State(false, false);
 
   public boolean doPlayerTranslate;
   public boolean doPlayerInteraction;

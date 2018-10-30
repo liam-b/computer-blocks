@@ -64,7 +64,17 @@ public class Button extends MenuElement {
       case "Exit":      System.exit(0);
       case "Saves":     menuController.currentMenu = menuController.saveMenu; break;
       case "Credits":   menuController.currentMenu = menuController.creditsMenu; break;
-      case "Save":      new Snippet(grid).saveToFile("../saves/", "save_" + ID);
+      case "Save":      for (MenuElement i : menuController.saveMenu.elements) {
+                          if (i.getClass().getName() == "computerblocks.display.ui.menu.elements.TextField") {
+                            if (i.ID == this.ID) {
+                              if (i.text != "") {
+                                new Snippet(grid).saveToFile("../saves/", i.text);
+                              } else {
+                                new Snippet(grid).saveToFile("../saves/", i.defaultText);
+                              }
+                            }
+                          }
+                        }
                         player.state = State.GAME;
                         break;
       case "Load":      grid.fromSnippet(new Snippet("../saves/", "save_" + ID));
