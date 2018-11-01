@@ -22,8 +22,8 @@ public class ViaBlock extends Block {
   public void draw(Display display, Player player) {
     double rectSize = (double)BLOCK_SIZE * player.zoom;
     RealPosition drawPosition = new RealPosition(
-      player.translate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom,
-      player.translate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom
+      player.drawTranslate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom,
+      player.drawTranslate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom
     );
 
     if (withinScreenBounds(display, rectSize, drawPosition)) {

@@ -10,9 +10,10 @@ import computerblocks.player.*;
 import computerblocks.display.ui.menu.*;
 
 public class Player {
-  public static final int PAN_SPEED = 8;
+  public static final int PAN_SPEED = 5;
   public static final double ZOOM_SPEED = 80f;
 
+  public RealPosition drawTranslate = new RealPosition(0, 0);
   public RealPosition translate = new RealPosition(50, 0);
   public double zoom = 1;
 
@@ -43,7 +44,7 @@ public class Player {
     updateSelection(grid);
     updatePaste(grid, display);
 
-    if (state.doPlayerTranslate) updateTranslate(grid);
+    if (state.doPlayerTranslate) updateTranslate(grid, display);
     if (state.doPlayerInteraction) updateInteraction(grid);
 
     mouse.update(display);
@@ -61,10 +62,15 @@ public class Player {
     }
   }
 
-  private void updateTranslate(Grid grid) {
+  private void updateTranslate(Grid grid, Display display) {
     translate.x += ((keyboard.held('A') ? 1 : 0) - (keyboard.held('D') ? 1 : 0)) * PAN_SPEED;
     translate.y += ((keyboard.held('W') ? 1 : 0) - (keyboard.held('S') ? 1 : 0)) * PAN_SPEED;
+
     zoom += ((keyboard.held('.') ? 1 : 0) - (keyboard.held(',') ? 1 : 0)) * zoom / ZOOM_SPEED;
+    drawTranslate.x = (translate.x - (display.width / 2)) * zoom + (display.width / 2);
+    drawTranslate.y = (translate.y - (display.height / 2)) * zoom + (display.height / 2);
+    // zoomTranslate.x = zoom / ZOOM_SPEED * -translate.x;
+    // zoomTranslate.y = zoom / ZOOM_SPEED * -translate.y;
 
     if (keyboard.down('[')) selectedLayer = Math.max(0, selectedLayer - 1);
     if (keyboard.down(']')) selectedLayer = Math.min(selectedLayer + 1, grid.layers - 1);

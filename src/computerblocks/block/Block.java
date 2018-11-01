@@ -67,8 +67,8 @@ public class Block {
   public void draw(Display display, Player player) {
     double rectSize = (double)BLOCK_SIZE * player.zoom;
     RealPosition drawPosition = new RealPosition(
-      player.translate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom,
-      player.translate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom
+      player.drawTranslate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom,
+      player.drawTranslate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom
     );
 
     if (withinScreenBounds(display, rectSize, drawPosition)) {
@@ -117,10 +117,10 @@ public class Block {
 
   public boolean mouseOver(Player player) {
     return
-      player.mouse.position.x > player.translate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom &&
-      player.mouse.position.x < player.translate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom + (double)BLOCK_SIZE * player.zoom &&
-      player.mouse.position.y > player.translate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom &&
-      player.mouse.position.y < player.translate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom + (double)BLOCK_SIZE * player.zoom;
+      player.mouse.position.x > player.drawTranslate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom &&
+      player.mouse.position.x < player.drawTranslate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom + (double)BLOCK_SIZE * player.zoom &&
+      player.mouse.position.y > player.drawTranslate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom &&
+      player.mouse.position.y < player.drawTranslate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom + (double)BLOCK_SIZE * player.zoom;
   }
 
   public boolean tick() { return false; }

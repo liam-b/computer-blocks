@@ -70,7 +70,8 @@ public class Button extends MenuElement {
                               if (i.text != "") {
                                 new Snippet(grid).saveToFile("../saves/", i.text);
                               } else {
-                                new Snippet(grid).saveToFile("../saves/", i.defaultText);
+                                new Snippet(grid).saveToFile("../saves/", "save");
+                                // new Snippet(grid).saveToFile("../saves/", i.defaultText);
                               }
                             }
                           }

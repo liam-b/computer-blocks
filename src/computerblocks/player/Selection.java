@@ -13,14 +13,14 @@ public class Selection {
 
   public Selection(Grid grid, Player player) {
     this.initialPosition = new RealPosition(player.mouse.position);
-    // this.initialTranslation = new RealPosition(player.translate);
+    // this.initialTranslation = new RealPosition(player.drawTranslate);
     this.initialBlockPosition = grid.mouseOverBlock(player);
   }
 
   public void draw(Display display, Grid grid, Player player) {
     // RealPosition drawPosition = new RealPosition(
-    //   player.translate.x - initialTranslation.x + initialPosition.x * player.zoom,
-    //   player.translate.y - initialTranslation.y + initialPosition.y * player.zoom
+    //   player.drawTranslate.x - initialTranslation.x + initialPosition.x * player.zoom,
+    //   player.drawTranslate.y - initialTranslation.y + initialPosition.y * player.zoom
     // );
 
     RealPosition positionLeast = new RealPosition(Math.min(initialPosition.x, player.mouse.position.x), Math.min(initialPosition.y, player.mouse.position.y));
