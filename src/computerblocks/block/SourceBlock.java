@@ -16,11 +16,12 @@ public class SourceBlock extends Block {
     this.chargeColor = Color.SOURCE;
   }
 
-  public void update(Grid grid, Block updater, Display display, Player player) {
+  public ArrayList<Block> update(Grid grid, Block updater, Display display, Player player) {
     ArrayList<Block> surroundingBlocks = getSurroundingBlocks(grid);
     surroundingBlocks.remove(updater);
     charge = true;
 
-    updateSurroundingBlocks(grid, surroundingBlocks, display, player);
+    // updateSurroundingBlocks(grid, surroundingBlocks, display, player);
+    return surroundingBlocks;
   }
 }

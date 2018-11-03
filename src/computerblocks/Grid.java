@@ -68,7 +68,10 @@ public class Grid {
     }
 
     for (Block block : queue) {
-      block.updateSurroundingBlocks(this, block.getSurroundingBlocks(this), display, player);
+      ArrayList<Block> surroundingBlocks = block.getSurroundingBlocks(this);
+      for (Block surroundingBlock : surroundingBlocks) {
+        propagate(surroundingBlock, display, player);
+      }
     }
   }
 
@@ -148,20 +151,36 @@ public class Grid {
   public void place(BlockType type, BlockPosition position, Display display, Player player) {
     blocks[position.x][position.y][position.l] = Block.fromType(type, position);
     Block block = blocks[position.x][position.y][position.l];
-    block.update(this, block, display, player);
-    // try {
-    //   block.update(this, block);
-    // }
-    // catch(StackOverflowError e) {
-    //   blocks[position.x][position.y][position.l] = null;
-    // }
+    propagate(block, display, player);
   }
 
   public void erase(BlockPosition position, Display display, Player player) {
     Block block = blockAt(position);
     if (block != null) {
       blocks[position.x][position.y][position.l] = null;
-      block.updateSurroundingBlocks(this, block.getSurroundingBlocks(this), display, player);
+
+      ArrayList<Block> surroundingBlocks = block.getSurroundingBlocks(this);
+      for (Block surroundingBlock : surroundingBlocks) {
+        propagate(surroundingBlock, display, player);
+      }
+    }
+  }
+
+  public void propagate(Block source, Display display, Player player) {
+    ArrayList<BlockUpdate> updateQueue = new ArrayList<BlockUpdate>();
+
+    ArrayList<Block> surroundingBlocks = new ArrayList<Block>();
+    surroundingBlocks.add(source);
+    updateQueue.add(new BlockUpdate(surroundingBlocks, source));
+
+    while (updateQueue.size() > 0) {
+      ArrayList<BlockUpdate> nextUpdateQueue = new ArrayList<BlockUpdate>();
+
+      for (BlockUpdate blockUpdate : updateQueue) {
+        nextUpdateQueue.addAll(blockUpdate.update(this, display, player));
+      }
+
+      updateQueue = nextUpdateQueue;
     }
   }
 }

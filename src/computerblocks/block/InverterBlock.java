@@ -17,7 +17,7 @@ public class InverterBlock extends DirectionalBlock {
     this.markerColor = Color.SOURCE;
   }
 
-  public void update(Grid grid, Block updater, Display display, Player player) {
+  public ArrayList<Block> update(Grid grid, Block updater, Display display, Player player) {
     inputs = new ArrayList<Block>();
     ArrayList<Block> surroundingBlocks = getSurroundingBlocks(grid);
     ArrayList<Block> removeQueue = new ArrayList<Block>();
@@ -35,6 +35,8 @@ public class InverterBlock extends DirectionalBlock {
     charge = !(inputs.size() != 0);
     boolean willUpdateSurroundingBlocks = charge != lastCharge;
     lastCharge = charge;
-    if (willUpdateSurroundingBlocks) updateSurroundingBlocks(grid, surroundingBlocks, display, player);
+    // if (willUpdateSurroundingBlocks) updateSurroundingBlocks(grid, surroundingBlocks, display, player);
+    if (willUpdateSurroundingBlocks) return surroundingBlocks;
+    else return new ArrayList<Block>();
   }
 }
