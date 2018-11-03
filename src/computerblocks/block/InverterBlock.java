@@ -32,10 +32,21 @@ public class InverterBlock extends DirectionalBlock {
     surroundingBlocks.remove(updater);
     surroundingBlocks.removeAll(removeQueue);
 
+    // selected = true;
+    // if (position.l == player.selectedLayer) {
+    //   display.fing();
+    //   draw(display, player);
+    //   display.draw();
+    // }
+    //
+    // try { Thread.sleep(100); }
+    // catch (InterruptedException ex) { Thread.currentThread().interrupt(); }
+    //
+    // selected = false;
+
     charge = !(inputs.size() != 0);
     boolean willUpdateSurroundingBlocks = charge != lastCharge;
     lastCharge = charge;
-    // if (willUpdateSurroundingBlocks) updateSurroundingBlocks(grid, surroundingBlocks, display, player);
     if (willUpdateSurroundingBlocks) return surroundingBlocks;
     else return new ArrayList<Block>();
   }

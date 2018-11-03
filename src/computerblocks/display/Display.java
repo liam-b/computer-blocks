@@ -89,8 +89,8 @@ public class Display {
   }
 
   public void outline(double x, double y, double width, double height) {
-    // graphics.drawRect((int) x, (int) y, (int) width, (int) height);
-    rect(x, y, width, height);
+    graphics.drawRect((int) x, (int) y, (int) width, (int) height);
+    // rect(x, y, width, height);
   }
 
   public void rect(RealPosition position, double width, double height) {

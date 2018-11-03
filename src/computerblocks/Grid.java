@@ -80,8 +80,6 @@ public class Grid {
     this.height = snippet.height;
     this.layers = snippet.layers;
 
-    System.out.println(Integer.toString(width) + ", " +  Integer.toString(width));
-
     blocks = snippet.blocks;
   }
 
@@ -151,7 +149,13 @@ public class Grid {
   public void place(BlockType type, BlockPosition position, Display display, Player player) {
     blocks[position.x][position.y][position.l] = Block.fromType(type, position);
     Block block = blocks[position.x][position.y][position.l];
-    propagate(block, display, player);
+
+    try {
+      propagate(block, display, player);
+    }
+    catch(StackOverflowError e) {
+      blocks[position.x][position.y][position.l] = null;
+    }
   }
 
   public void erase(BlockPosition position, Display display, Player player) {
@@ -173,7 +177,9 @@ public class Grid {
     surroundingBlocks.add(source);
     updateQueue.add(new BlockUpdate(surroundingBlocks, source));
 
-    while (updateQueue.size() > 0) {
+    int iterations = 0;
+    while (updateQueue.size() > 0 && iterations < 10000) {
+      iterations += 1;
       ArrayList<BlockUpdate> nextUpdateQueue = new ArrayList<BlockUpdate>();
 
       for (BlockUpdate blockUpdate : updateQueue) {

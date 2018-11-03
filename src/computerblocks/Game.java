@@ -71,9 +71,13 @@ public class Game {
 
   private void update() {
     player.update(display, grid, menuController);
-    // if (player.keyboard.down('E')) {
-    //   grid = new Grid(new Snippet("../saves/", "save"));
-    // }
+    if (player.keyboard.down('Q')) {
+      grid = new Grid(new Snippet("../saves/", "save"));
+    }
+
+    if (player.keyboard.down('E')) {
+      new Snippet(grid).saveToFile("../saves/", "save");
+    }
   }
 
   private void tick() {

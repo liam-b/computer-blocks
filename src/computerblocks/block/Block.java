@@ -60,18 +60,19 @@ public class Block {
     surroundingBlocks.remove(updater);
     surroundingBlocks.removeAll(removeQueue);
 
-    charge = inputs.size() != 0;
-
     // selected = true;
-    // display.fing();
-    // draw(display, player);
-    // display.draw();
+    // if (position.l == player.selectedLayer) {
+    //   display.fing();
+    //   draw(display, player);
+    //   display.draw();
+    // }
     //
     // try { Thread.sleep(100); }
     // catch (InterruptedException ex) { Thread.currentThread().interrupt(); }
     //
     // selected = false;
-    //
+
+    charge = inputs.size() != 0;
     return surroundingBlocks;
   }
 
