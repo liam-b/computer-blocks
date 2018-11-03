@@ -17,7 +17,7 @@ public class DelayBlock extends DirectionalBlock {
     this.markerColor = Color.SOURCE;
   }
 
-  public void update(Grid grid, Block updater, Display display, Player player) {
+  public ArrayList<Block> update(Grid grid, Block updater, Display display, Player player) {
     inputs = new ArrayList<Block>();
     ArrayList<Block> surroundingBlocks = getSurroundingBlocks(grid);
     ArrayList<Block> removeQueue = new ArrayList<Block>();
@@ -33,6 +33,7 @@ public class DelayBlock extends DirectionalBlock {
     surroundingBlocks.removeAll(removeQueue);
 
     tickCharge = inputs.size() != 0;
+    return new ArrayList<Block>();
   }
 
   public boolean tick() {

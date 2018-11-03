@@ -42,7 +42,7 @@ public class Block {
     return block;
   }
 
-  public void update(Grid grid, Block updater, Display display, Player player) {
+  public ArrayList<Block> update(Grid grid, Block updater, Display display, Player player) {
     inputs = new ArrayList<Block>();
     ArrayList<Block> surroundingBlocks = getSurroundingBlocks(grid);
     ArrayList<Block> removeQueue = new ArrayList<Block>();
@@ -62,15 +62,17 @@ public class Block {
 
     charge = inputs.size() != 0;
 
-    display.fing();
-    draw(display, player);
-    display.draw();
-
-    System.out.println(position.toString());
-    try { Thread.sleep(100); }
-    catch (InterruptedException ex) { Thread.currentThread().interrupt(); }
-
-    updateSurroundingBlocks(grid, surroundingBlocks, display, player);
+    // selected = true;
+    // display.fing();
+    // draw(display, player);
+    // display.draw();
+    //
+    // try { Thread.sleep(100); }
+    // catch (InterruptedException ex) { Thread.currentThread().interrupt(); }
+    //
+    // selected = false;
+    //
+    // return surroundingBlocks;
   }
 
   public void draw(Display display, Player player) {
@@ -97,12 +99,6 @@ public class Block {
 
     while (blocks.remove(null));
     return blocks;
-  }
-
-  public void updateSurroundingBlocks(Grid grid, ArrayList<Block> surroundingBlocks, Display display, Player player) {
-    for (Block block : surroundingBlocks) {
-      if (block != null) block.update(grid, this, display, player);
-    }
   }
 
   public void highlightBlock(Display display, Player player, double size, RealPosition position) {
