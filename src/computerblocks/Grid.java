@@ -53,7 +53,7 @@ public class Grid {
     }
   }
 
-  public void tick() {
+  public void tick(Display display, Player player) {
     ArrayList<Block> queue = new ArrayList<Block>();
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
@@ -68,7 +68,7 @@ public class Grid {
     }
 
     for (Block block : queue) {
-      block.updateSurroundingBlocks(this, block.getSurroundingBlocks(this));
+      block.updateSurroundingBlocks(this, block.getSurroundingBlocks(this), display, player);
     }
   }
 
@@ -145,22 +145,23 @@ public class Grid {
     }
   }
 
-  public void place(BlockType type, BlockPosition position) {
+  public void place(BlockType type, BlockPosition position, Display display, Player player) {
     blocks[position.x][position.y][position.l] = Block.fromType(type, position);
     Block block = blocks[position.x][position.y][position.l];
-    try {
-      block.update(this, block);
-    }
-    catch(StackOverflowError e) {
-      blocks[position.x][position.y][position.l] = null;
-    }
+    block.update(this, block, display, player);
+    // try {
+    //   block.update(this, block);
+    // }
+    // catch(StackOverflowError e) {
+    //   blocks[position.x][position.y][position.l] = null;
+    // }
   }
 
-  public void erase(BlockPosition position) {
+  public void erase(BlockPosition position, Display display, Player player) {
     Block block = blockAt(position);
     if (block != null) {
       blocks[position.x][position.y][position.l] = null;
-      block.updateSurroundingBlocks(this, block.getSurroundingBlocks(this));
+      block.updateSurroundingBlocks(this, block.getSurroundingBlocks(this), display, player);
     }
   }
 }

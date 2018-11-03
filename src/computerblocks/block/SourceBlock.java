@@ -2,9 +2,10 @@ package computerblocks.block;
 
 import java.util.ArrayList;
 
-import computerblocks.display.Color;
+import computerblocks.display.*;
 import computerblocks.position.*;
 import computerblocks.Grid;
+import computerblocks.player.*;
 
 public class SourceBlock extends Block {
   public SourceBlock(BlockPosition position) {
@@ -15,11 +16,11 @@ public class SourceBlock extends Block {
     this.chargeColor = Color.SOURCE;
   }
 
-  public void update(Grid grid, Block updater) {
+  public void update(Grid grid, Block updater, Display display, Player player) {
     ArrayList<Block> surroundingBlocks = getSurroundingBlocks(grid);
     surroundingBlocks.remove(updater);
     charge = true;
 
-    updateSurroundingBlocks(grid, surroundingBlocks);
+    updateSurroundingBlocks(grid, surroundingBlocks, display, player);
   }
 }

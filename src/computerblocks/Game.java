@@ -77,7 +77,7 @@ public class Game {
   }
 
   private void tick() {
-    grid.tick();
+    grid.tick(display, player);
   }
 
   private synchronized void render() {

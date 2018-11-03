@@ -70,6 +70,11 @@ public class Display {
     graphics.fillRect(0, 0, width, height);
   }
 
+  public void fing() {
+    graphics = (Graphics2D)strategy.getDrawGraphics();
+    graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+  }
+
   public void draw() {
     strategy.show();
     graphics.dispose();
@@ -84,7 +89,8 @@ public class Display {
   }
 
   public void outline(double x, double y, double width, double height) {
-    graphics.drawRect((int) x, (int) y, (int) width, (int) height);
+    // graphics.drawRect((int) x, (int) y, (int) width, (int) height);
+    rect(x, y, width, height);
   }
 
   public void rect(RealPosition position, double width, double height) {

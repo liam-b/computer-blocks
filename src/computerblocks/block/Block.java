@@ -12,7 +12,7 @@ public class Block {
   public static final int BLOCK_SPACING = 1;
   public static final int BLOCK_OFFSET = BLOCK_RATIO / 2;
   public static final int BLOCK_SIZE = BLOCK_RATIO - BLOCK_SPACING;
-  public static final double BLOCK_HIGHLIGHT_OFFSET = 0.5f;
+  public static final double BLOCK_HIGHLIGHT_OFFSET = 1f;
 
   public BlockType type;
   public Color color;
@@ -42,7 +42,7 @@ public class Block {
     return block;
   }
 
-  public void update(Grid grid, Block updater) {
+  public void update(Grid grid, Block updater, Display display, Player player) {
     inputs = new ArrayList<Block>();
     ArrayList<Block> surroundingBlocks = getSurroundingBlocks(grid);
     ArrayList<Block> removeQueue = new ArrayList<Block>();
@@ -61,7 +61,16 @@ public class Block {
     surroundingBlocks.removeAll(removeQueue);
 
     charge = inputs.size() != 0;
-    updateSurroundingBlocks(grid, surroundingBlocks);
+
+    display.fing();
+    draw(display, player);
+    display.draw();
+
+    System.out.println(position.toString());
+    try { Thread.sleep(100); }
+    catch (InterruptedException ex) { Thread.currentThread().interrupt(); }
+
+    updateSurroundingBlocks(grid, surroundingBlocks, display, player);
   }
 
   public void draw(Display display, Player player) {
@@ -90,9 +99,9 @@ public class Block {
     return blocks;
   }
 
-  public void updateSurroundingBlocks(Grid grid, ArrayList<Block> surroundingBlocks) {
+  public void updateSurroundingBlocks(Grid grid, ArrayList<Block> surroundingBlocks, Display display, Player player) {
     for (Block block : surroundingBlocks) {
-      if (block != null) block.update(grid, this);
+      if (block != null) block.update(grid, this, display, player);
     }
   }
 

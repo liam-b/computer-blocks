@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import computerblocks.display.*;
 import computerblocks.position.*;
 import computerblocks.Grid;
+import computerblocks.player.*;
 
 public class InverterBlock extends DirectionalBlock {
   public InverterBlock(BlockPosition position) {
@@ -16,7 +17,7 @@ public class InverterBlock extends DirectionalBlock {
     this.markerColor = Color.SOURCE;
   }
 
-  public void update(Grid grid, Block updater) {
+  public void update(Grid grid, Block updater, Display display, Player player) {
     inputs = new ArrayList<Block>();
     ArrayList<Block> surroundingBlocks = getSurroundingBlocks(grid);
     ArrayList<Block> removeQueue = new ArrayList<Block>();
@@ -34,6 +35,6 @@ public class InverterBlock extends DirectionalBlock {
     charge = !(inputs.size() != 0);
     boolean willUpdateSurroundingBlocks = charge != lastCharge;
     lastCharge = charge;
-    if (willUpdateSurroundingBlocks) updateSurroundingBlocks(grid, surroundingBlocks);
+    if (willUpdateSurroundingBlocks) updateSurroundingBlocks(grid, surroundingBlocks, display, player);
   }
 }

@@ -42,7 +42,7 @@ public class ViaBlock extends Block {
     display.rect(drawPosition.x + rectSize / 2f - coreSize / 2f, drawPosition.y + rectSize / 2f - coreSize / 2f, coreSize, coreSize);
   }
 
-  public void update(Grid grid, Block updater) {
+  public void update(Grid grid, Block updater, Display display, Player player) {
     inputs = new ArrayList<Block>();
     ArrayList<Block> surroundingBlocks = getSurroundingBlocks(grid);
     ArrayList<Block> removeQueue = new ArrayList<Block>();
@@ -67,6 +67,6 @@ public class ViaBlock extends Block {
     surroundingBlocks.removeAll(removeQueue);
 
     charge = inputs.size() != 0;
-    updateSurroundingBlocks(grid, surroundingBlocks);
+    updateSurroundingBlocks(grid, surroundingBlocks, display, player);
   }
 }

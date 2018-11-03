@@ -45,7 +45,7 @@ public class Player {
     updatePaste(grid, display);
 
     if (state.doPlayerTranslate) updateTranslate(grid, display);
-    if (state.doPlayerInteraction) updateInteraction(grid);
+    if (state.doPlayerInteraction) updateInteraction(grid, display);
 
     mouse.update(display);
   }
@@ -76,15 +76,15 @@ public class Player {
     if (keyboard.down(']')) selectedLayer = Math.min(selectedLayer + 1, grid.layers - 1);
   }
 
-  private void updateInteraction(Grid grid) {
+  private void updateInteraction(Grid grid, Display display) {
     if (mouse.held(Mouse.LEFT) && !keyboard.held(Keyboard.SHIFT)) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
-      if (mouseBlockPosition != null && grid.blockAt(mouseBlockPosition) == null) grid.place(selectedType, mouseBlockPosition);
+      if (mouseBlockPosition != null && grid.blockAt(mouseBlockPosition) == null) grid.place(selectedType, mouseBlockPosition, display, this);
     }
 
     if (mouse.held(Mouse.RIGHT)) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
-      if (mouseBlockPosition != null) grid.erase(mouseBlockPosition);
+      if (mouseBlockPosition != null) grid.erase(mouseBlockPosition, display, this);
     }
 
     if (keyboard.down('1')) selectedType = BlockType.CABLE;
@@ -93,6 +93,8 @@ public class Player {
     if (keyboard.down('4')) selectedType = BlockType.DELAY;
     if (keyboard.down('5')) selectedType = BlockType.VIA;
     if (keyboard.down('R')) selectedRotation = Rotation.values()[(selectedRotation.ordinal() + 1) > 3 ? 0 : selectedRotation.ordinal() + 1];
+
+    // if (keyboard.held('B')) System.out.println("-----------");
   }
 
   private void updateSelection(Grid grid) {
