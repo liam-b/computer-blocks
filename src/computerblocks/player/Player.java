@@ -10,12 +10,12 @@ import computerblocks.player.*;
 import computerblocks.display.ui.menu.*;
 
 public class Player {
-  public static final int PAN_SPEED = 5;
-  public static final double ZOOM_SPEED = 80f;
+  public static final double PAN_SPEED = 6;
+  public static final double ZOOM_SPEED = 100;
 
   public RealPosition drawTranslate = new RealPosition(0, 0);
   public RealPosition translate = new RealPosition(50, 0);
-  public double zoom = 1;
+  public double zoom = 3;
 
   public int selectedLayer = 0;
   public BlockType selectedType = BlockType.CABLE;
@@ -63,8 +63,8 @@ public class Player {
   }
 
   private void updateTranslate(Grid grid, Display display) {
-    translate.x += ((keyboard.held('A') ? 1 : 0) - (keyboard.held('D') ? 1 : 0)) * PAN_SPEED;
-    translate.y += ((keyboard.held('W') ? 1 : 0) - (keyboard.held('S') ? 1 : 0)) * PAN_SPEED;
+    translate.x += ((keyboard.held('A') ? 1 : 0) - (keyboard.held('D') ? 1 : 0)) * PAN_SPEED * (1 / zoom);
+    translate.y += ((keyboard.held('W') ? 1 : 0) - (keyboard.held('S') ? 1 : 0)) * PAN_SPEED * (1 / zoom);
 
     zoom += ((keyboard.held('.') ? 1 : 0) - (keyboard.held(',') ? 1 : 0)) * zoom / ZOOM_SPEED;
     drawTranslate.x = (translate.x - (display.width / 2)) * zoom + (display.width / 2);

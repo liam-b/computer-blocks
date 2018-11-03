@@ -17,11 +17,13 @@ public class Keyboard implements KeyListener {
   }
 
   public void keyPressed(KeyEvent e) {
-    keys[e.getKeyCode()] = true;
+    int code = e.getKeyCode();
+    if (code <= 256) keys[code] = true;
   }
 
   public void keyReleased(KeyEvent e) {
-    keys[e.getKeyCode()] = false;
+    int code = e.getKeyCode();
+    if (code <= 256) keys[code] = false;
   }
 
   public boolean held(int code) {
