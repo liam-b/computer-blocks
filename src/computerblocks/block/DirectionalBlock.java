@@ -24,20 +24,20 @@ public class DirectionalBlock extends Block {
       if (selected) highlightBlock(display, player, rectSize, drawPosition);
       Color drawColor = (charge) ? chargeColor : color;
       display.color((ghost) ? new Color(drawColor, 0.5f) : drawColor);
-      display.rect((int)drawPosition.x, (int)drawPosition.y, (int)rectSize, (int)rectSize);
+      display.rect(drawPosition.x, drawPosition.y, rectSize, rectSize);
       drawDirectionMarker(rectSize, drawPosition, display);
     }
   }
 
   void drawDirectionMarker(double rectSize, RealPosition drawPosition, Display display) {
-    double markerHeight = rectSize / 12f;
-    double markerWidth = rectSize / 2f;
-    double markerOffset = rectSize / 8f;
+    double markerHeight = rectSize / 12.0;
+    double markerWidth = rectSize / 2.0;
+    double markerOffset = rectSize / 8.0;
 
     display.color(markerColor);
-    if (position.r == Rotation.UP) display.rect(drawPosition.x + markerWidth / 2f, drawPosition.y + markerOffset, markerWidth, markerHeight);
-    if (position.r == Rotation.RIGHT) display.rect(drawPosition.x + rectSize - markerOffset - markerHeight / 2f, drawPosition.y + markerWidth / 2f, markerHeight, markerWidth);
-    if (position.r == Rotation.DOWN) display.rect(drawPosition.x + markerWidth / 2f, drawPosition.y + rectSize - markerOffset - markerHeight / 2f, markerWidth, markerHeight);
-    if (position.r == Rotation.LEFT) display.rect(drawPosition.x + markerOffset, drawPosition.y + markerWidth / 2f, markerHeight, markerWidth);
+    if (position.r == Rotation.UP) display.rect(drawPosition.x + markerWidth / 2.0, drawPosition.y + markerOffset, markerWidth, markerHeight);
+    if (position.r == Rotation.RIGHT) display.rect(drawPosition.x + rectSize - markerOffset - markerHeight / 2.0, drawPosition.y + markerWidth / 2.0, markerHeight, markerWidth);
+    if (position.r == Rotation.DOWN) display.rect(drawPosition.x + markerWidth / 2.0, drawPosition.y + rectSize - markerOffset - markerHeight / 2.0, markerWidth, markerHeight);
+    if (position.r == Rotation.LEFT) display.rect(drawPosition.x + markerOffset, drawPosition.y + markerWidth / 2.0, markerHeight, markerWidth);
   }
 }

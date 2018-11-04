@@ -87,7 +87,7 @@ public class Block {
       if (selected) highlightBlock(display, player, rectSize, drawPosition);
       Color drawColor = (charge) ? chargeColor : color;
       display.color((ghost) ? new Color(drawColor, 0.5f) : drawColor);
-      display.rect((int)drawPosition.x, (int)drawPosition.y, (int)rectSize, (int)rectSize);
+      display.rect(drawPosition.x, drawPosition.y, rectSize, rectSize);
     }
   }
 
@@ -106,19 +106,19 @@ public class Block {
     double highlightOffset = BLOCK_HIGHLIGHT_OFFSET * player.zoom;
     display.color(new Color("#31c831"));
     display.rect(
-      (int)(position.x - highlightOffset / 2f),
-      (int)(position.y - highlightOffset / 2f),
-      (int)(size + highlightOffset),
-      (int)(size + highlightOffset)
+      position.x - highlightOffset / 2.0,
+      position.y - highlightOffset / 2.0,
+      size + highlightOffset,
+      size + highlightOffset
     );
   }
 
   public boolean withinScreenBounds(Display display, double size, RealPosition position) {
     return
-      (int)position.x > 0 - (int)size &&
-      (int)position.x < display.width + (int)size / 2 &&
-      (int)position.y > 0 - (int)size &&
-      (int)position.y < display.height + (int)size / 2;
+      position.x > 0 - size &&
+      position.x < display.width + size / 2.0 &&
+      position.y > 0 - size &&
+      position.y < display.height + size / 2.0;
   }
 
   public boolean mouseOver(Player player) {

@@ -30,16 +30,16 @@ public class ViaBlock extends Block {
       if (selected) highlightBlock(display, player, rectSize, drawPosition);
       Color drawColor = (charge) ? chargeColor : color;
       display.color((ghost) ? new Color(drawColor, 0.5f) : drawColor);
-      display.rect((int)drawPosition.x, (int)drawPosition.y, (int)rectSize, (int)rectSize);
+      display.rect(drawPosition.x, drawPosition.y, rectSize, rectSize);
       drawCore(rectSize, drawPosition, display);
     }
   }
 
   void drawCore(double rectSize, RealPosition drawPosition, Display display) {
-    double coreSize = rectSize / 6f;
+    double coreSize = rectSize / 6.0;
 
     display.color(coreColor);
-    display.rect(drawPosition.x + rectSize / 2f - coreSize / 2f, drawPosition.y + rectSize / 2f - coreSize / 2f, coreSize, coreSize);
+    display.rect(drawPosition.x + rectSize / 2.0 - coreSize / 2.0, drawPosition.y + rectSize / 2.0 - coreSize / 2.0, coreSize, coreSize);
   }
 
   public ArrayList<Block> update(Grid grid, Block updater, Display display, Player player) {
