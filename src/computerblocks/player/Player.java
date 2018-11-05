@@ -40,12 +40,24 @@ public class Player {
   }
 
   public void update(Display display, Grid grid, MenuController menuController, SnippetTray snippetTray) {
-    if (state != State.SNIPPET) updateMenu(menuController, snippetTray);
+    if (state != State.SNIPPET && state != State.PASTE) updateMenu(menuController, snippetTray);
     updateSelection(grid);
     updatePaste(grid, display);
     if (state == State.SNIPPET) {
       if (keyboard.down(Keyboard.ESC) || keyboard.down('P')) {
         state = State.GAME;
+      }
+    }
+    if (state == State.PASTE) {
+      if (keyboard.down(Keyboard.ESC)) {
+        state = State.GAME;
+        snippet = null;
+      }
+      if (keyboard.down('P')) {
+        snippet = null;
+        snippetTray.lifeTime = 0;
+        snippetTray.scroll = 0;
+        state = State.SNIPPET;
       }
     }
     if (state.doPlayerTranslate) updateTranslate(grid, display);
@@ -126,15 +138,17 @@ public class Player {
 
   private void updatePaste(Grid grid, Display display) {
     if (state == State.GAME && mouse.down(Mouse.RIGHT) && keyboard.held(Keyboard.SHIFT)) {
-    // if (state == State.GAME && keyboard.down('P')) {
-    state = State.PASTE;
-    snippet = new Snippet("../saves/", "snippet");
+      // if (state == State.GAME && keyboard.down('P')) {
+      state = State.PASTE;
+      snippet = new Snippet("../saves/", "snippet");
+    } else if (state == State.PASTE && mouse.up(Mouse.LEFT) && grid.mouseOverBlock(this) != null) {
+        grid.paste(snippet, grid.mouseOverBlock(this));
     }
 
-    if (state == State.PASTE && mouse.up(Mouse.LEFT) && grid.mouseOverBlock(this) != null) {
-      state = State.GAME;
-      grid.paste(snippet, grid.mouseOverBlock(this));
-      snippet = null;
-    }
+    // if (state == State.PASTE && mouse.up(Mouse.LEFT) && grid.mouseOverBlock(this) != null) {
+    //   state = State.GAME;
+    //   grid.paste(snippet, grid.mouseOverBlock(this));
+    //   snippet = null;
+    // }
   }
 }
