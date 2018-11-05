@@ -55,9 +55,12 @@ public class Player {
   }
 
   private void updateMenu(MenuController menuController, SnippetTray snippetTray) {
-    if (keyboard.down('P')) {
-      snippetTray.lifeTime = 0;
-      state = State.SNIPPET;
+    if (state == State.GAME) {
+      if (keyboard.down('P')) {
+        snippetTray.lifeTime = 0;
+        snippetTray.scroll = 0;
+        state = State.SNIPPET;
+      }
     }
     if (keyboard.down(Keyboard.ESC)) {
       if (state == State.GAME) {

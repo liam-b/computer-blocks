@@ -18,14 +18,20 @@ public class SnippetTray {
   public int x, y, width, height;
   private int border = 8;
 
-  private int animationTime = 10;
+  public int scroll;
+  private int scrollSpeed = 3;
 
-  public SnippetTray() {
-    System.out.println("SnippetTrat Init");
+  private boolean alreadyExecuted = false;
+
+  public ArrayList<SnippetButton> snippets;
+
+  private int animationTime = 25;
+
+  public SnippetTray(Display display) {
+    snippets = new ArrayList<SnippetButton>();
   }
 
   public void update(Display display, Player player, Grid grid) {
-    System.out.println("lifeTime: " + lifeTime);
 
     height = display.height * 8 / 10;
     width = display.width / 6;
@@ -39,9 +45,23 @@ public class SnippetTray {
     display.rect(display.width - (width+border)/2 - width/2 + animX(), display.height/2 - (height+border)/2, width+border, height+border);
     display.color(Color.BACKGROUND);
     display.rect(display.width - width + animX(), display.height/2 - height/2, width, height);
+
+    if (!alreadyExecuted) {
+      snippets.add(new SnippetButton(display, this, "AWDAAWD"));
+      snippets.add(new SnippetButton(display, this, "AWDAAWD"));
+      snippets.add(new SnippetButton(display, this, "AWDAAWD"));
+      alreadyExecuted = true;
+    }
+
+    for (SnippetButton i : snippets) {
+      i.draw(display, this);
+    }
+
+    if (player.keyboard.held(40)) scroll += scrollSpeed;
+    if (player.keyboard.held(38)) scroll -= scrollSpeed;
   }
 
-  private int animX() {
+  public int animX() {
     if (lifeTime < animationTime) {
       lifeTime += 1;
       return width/animationTime*(animationTime - lifeTime);
