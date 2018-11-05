@@ -34,8 +34,12 @@ public class Display {
     frame.setSize(width, height);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setResizable(false);
-    frame.setLocationRelativeTo(null);
     frame.setVisible(true);
+    frame.setLocationRelativeTo(null);
+
+    // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    // frame.setUndecorated(true);
+    // frame.setVisible(true);
 
     showOnScreen(frame, screen);
 

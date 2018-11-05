@@ -10,8 +10,8 @@ import computerblocks.player.*;
 import computerblocks.display.ui.menu.*;
 
 public class Player {
-  public static final double PAN_SPEED = 6;
-  public static final double ZOOM_SPEED = 100;
+  public static final double PAN_SPEED = 6.5;
+  public static final double ZOOM_SPEED = 70.0;
 
   public RealPosition drawTranslate = new RealPosition(0, 0);
   public RealPosition translate = new RealPosition(50, 0);
