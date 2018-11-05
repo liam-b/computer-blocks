@@ -25,7 +25,6 @@ public class SnippetTray {
   }
 
   public void update(Display display, Player player, Grid grid) {
-    lifeTime += 1;
     System.out.println("lifeTime: " + lifeTime);
 
     height = display.height * 8 / 10;
@@ -44,6 +43,7 @@ public class SnippetTray {
 
   private int animX() {
     if (lifeTime < animationTime) {
+      lifeTime += 1;
       return width/animationTime*(animationTime - lifeTime);
     } else return 0;
   }
