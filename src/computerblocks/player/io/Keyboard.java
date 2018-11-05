@@ -8,6 +8,7 @@ import computerblocks.display.Display;
 public class Keyboard implements KeyListener {
   public static final int SHIFT = 16;
   public static final int ESC = 27;
+  public static final int TAB = 9;
 
   public boolean[] keys;
 
