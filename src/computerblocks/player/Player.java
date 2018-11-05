@@ -4,7 +4,7 @@ import computerblocks.player.io.*;
 import computerblocks.position.*;
 import computerblocks.display.Display;
 import computerblocks.Grid;
-import computerblocks.block.BlockType;
+import computerblocks.block.*;
 import computerblocks.snippet.Snippet;
 import computerblocks.player.*;
 import computerblocks.display.ui.menu.*;
@@ -93,6 +93,22 @@ public class Player {
     if (mouse.held(Mouse.RIGHT)) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
       if (mouseBlockPosition != null) grid.erase(mouseBlockPosition, display, this);
+    }
+
+    if (keyboard.down('X')) {
+      BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
+      Block mouseBlock = grid.blockAt(mouseBlockPosition);
+      if (mouseBlockPosition != null && mouseBlock != null) {
+        System.out.println("----------");
+        System.out.println("block pos: " + mouseBlockPosition.toString());
+        System.out.println("charge: " + mouseBlock.charge);
+        System.out.println("");
+        System.out.println("inputs:");
+        for (Block block : mouseBlock.inputs) {
+          System.out.println("  " + block.position.toString());
+        }
+        System.out.println("----------");
+      }
     }
 
     if (keyboard.down('1')) selectedType = BlockType.CABLE;

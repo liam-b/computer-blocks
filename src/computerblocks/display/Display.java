@@ -51,7 +51,7 @@ public class Display {
     frame.add(canvas);
     frame.pack();
 
-    canvas.createBufferStrategy(3);
+    canvas.createBufferStrategy(2);
     strategy = canvas.getBufferStrategy();
     graphics = (Graphics2D)strategy.getDrawGraphics();
   }
