@@ -60,7 +60,7 @@ public class Menu {
 
     if (focusedField != null) {
       if (focusedField.getClass().getName() == "computerblocks.display.ui.menu.elements.TextField") {
-        focusedField.text = player.keyboard.keyStream(focusedField.text);
+        focusedField.text = player.keyboard.keyStream(focusedField.text, 20);
       }
       if (player.keyboard.down(10) || player.keyboard.down(13)) {
         focusedField = null;

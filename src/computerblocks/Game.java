@@ -63,7 +63,7 @@ public class Game {
     grid = new Grid(300, 300, 3);
     player = new Player(display);
     ui = new UserInterface();
-    snippetTray = new SnippetTray();
+    snippetTray = new SnippetTray(display);
     menuController = new MenuController(display);
     Fonts.addFont(new Fonts("Paloseco-Medium.ttf"));
     Fonts.addFont(new Fonts("Roboto-Regular.ttf"));
