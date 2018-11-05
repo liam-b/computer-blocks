@@ -1,4 +1,5 @@
 *.class
 *.snip
 *.snip.zip
+*.jar
 .DS_Store
