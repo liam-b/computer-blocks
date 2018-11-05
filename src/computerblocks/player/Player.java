@@ -39,18 +39,26 @@ public class Player {
     if (state == State.PASTE && snippet != null) snippet.ghost(display, this, grid.mouseOverBlock(this));
   }
 
-  public void update(Display display, Grid grid, MenuController menuController) {
-    updateMenu(menuController);
+  public void update(Display display, Grid grid, MenuController menuController, SnippetTray snippetTray) {
+    if (state != State.SNIPPET) updateMenu(menuController, snippetTray);
     updateSelection(grid);
     updatePaste(grid, display);
-
+    if (state == State.SNIPPET) {
+      if (keyboard.down(Keyboard.ESC) || keyboard.down('P')) {
+        state = State.GAME;
+      }
+    }
     if (state.doPlayerTranslate) updateTranslate(grid, display);
     if (state.doPlayerInteraction) updateInteraction(grid, display);
 
     mouse.update(display);
   }
 
-  private void updateMenu(MenuController menuController) {
+  private void updateMenu(MenuController menuController, SnippetTray snippetTray) {
+    if (keyboard.down('P')) {
+      snippetTray.lifeTime = 0;
+      state = State.SNIPPET;
+    }
     if (keyboard.down(Keyboard.ESC)) {
       if (state == State.GAME) {
         menuController.currentMenu = menuController.pauseMenu;

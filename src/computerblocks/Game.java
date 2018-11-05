@@ -18,6 +18,7 @@ public class Game {
   private Display display;
   private UserInterface ui;
   private MenuController menuController;
+  private SnippetTray snippetTray;
 
   String demoText = "";
 
@@ -62,6 +63,7 @@ public class Game {
     grid = new Grid(300, 300, 3);
     player = new Player(display);
     ui = new UserInterface();
+    snippetTray = new SnippetTray();
     menuController = new MenuController(display);
     Fonts.addFont(new Fonts("Paloseco-Medium.ttf"));
     Fonts.addFont(new Fonts("Roboto-Regular.ttf"));
@@ -70,7 +72,7 @@ public class Game {
   }
 
   private void update() {
-    player.update(display, grid, menuController);
+    player.update(display, grid, menuController, snippetTray);
     if (player.keyboard.down('Q')) {
       grid = new Grid(new Snippet("../saves/", "save"));
     }
@@ -91,6 +93,7 @@ public class Game {
     player.draw(display, grid);
     ui.draw(display, player, grid);
     if (player.state == State.MENU) menuController.update(display, player, grid);
+    if (player.state == State.SNIPPET) snippetTray.update(display, player, grid);
     display.draw();
   }
 }
