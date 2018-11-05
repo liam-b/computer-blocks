@@ -21,8 +21,6 @@ public class SnippetTray {
   public int scroll;
   private int scrollSpeed = 3;
 
-  private boolean alreadyExecuted = false;
-
   public ArrayList<SnippetButton> snippets;
 
   private int animationTime = 25;
@@ -46,15 +44,9 @@ public class SnippetTray {
     display.color(Color.BACKGROUND);
     display.rect(display.width - width + animX(), display.height/2 - height/2, width, height);
 
-    if (!alreadyExecuted) {
-      snippets.add(new SnippetButton(display, this, "AWDAAWD"));
-      snippets.add(new SnippetButton(display, this, "AWDAAWD"));
-      snippets.add(new SnippetButton(display, this, "AWDAAWD"));
-      alreadyExecuted = true;
-    }
-
     for (SnippetButton i : snippets) {
       i.draw(display, this);
+      i.checkPress(display, player, this);
     }
 
     if (player.keyboard.held(40)) scroll += scrollSpeed;

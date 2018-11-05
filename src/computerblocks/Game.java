@@ -2,6 +2,15 @@ package computerblocks;
 
 import java.lang.*;
 
+// import java.util.ArrayList;
+// import org.json.JSONArray;
+// import org.json.JSONObject;
+// import java.io.FileWriter;
+// import java.io.IOException;
+// import java.nio.file.Files;
+// import java.nio.file.Paths;
+import java.io.*;
+
 import computerblocks.display.*;
 import computerblocks.block.*;
 import computerblocks.position.*;
@@ -9,6 +18,7 @@ import computerblocks.player.*;
 import computerblocks.display.ui.*;
 import computerblocks.snippet.Snippet;
 import computerblocks.display.ui.menu.*;
+import computerblocks.display.ui.menu.elements.*;
 
 public class Game {
   private boolean running = true;
@@ -69,6 +79,15 @@ public class Game {
     Fonts.addFont(new Fonts("Roboto-Regular.ttf"));
     Fonts.addFont(new Fonts("SUPERSCR.ttf"));
     Fonts.addFont(new Fonts("pixelmix.ttf"));
+
+    snippetTray.update(display, player, grid);
+    for (final File fileEntry : new File("../saves/snippets").listFiles()) {
+        if (!fileEntry.isDirectory()) {
+          snippetTray.snippets.add(new SnippetButton(display, snippetTray, fileEntry.getName().replaceAll(".snip", "")));
+          System.out.println(fileEntry.getName());
+        }
+    }
+
   }
 
   private void update() {
