@@ -78,17 +78,20 @@ public class SnippetButton {
 
   public void checkPress(Display display, Player player, SnippetTray snippetTray) {
     if (pointOver(player.mouse.position.x, player.mouse.position.y - snippetTray.scroll)) {
-      if (player.mouse.down(Mouse.LEFT)) {
-        buttonPress(player, snippetTray);
+      if (y + snippetTray.scroll < maxY - height && y + snippetTray.scroll > minY + height) {
+        if (player.mouse.down(Mouse.LEFT)) {
+          buttonPress(player, snippetTray);
+        }
+        display.color(new Color(255, 255, 255, 0.2f));
+        display.rect(x, y + snippetTray.scroll, width, height);
       }
-      display.color(new Color(255, 255, 255, 0.2f));
-      display.rect(x, y + snippetTray.scroll, width, height);
     }
   }
 
   public void buttonPress(Player player, SnippetTray snippetTray) {
     player.state = State.PASTE;
     player.snippet = new Snippet("../saves/snippets/", text);
+    player.snipTime = 0;
     System.out.println("snip");
   }
 }

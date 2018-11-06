@@ -28,7 +28,7 @@ public class Game {
   private Display display;
   private UserInterface ui;
   private MenuController menuController;
-  private SnippetTray snippetTray;
+  public SnippetTray snippetTray;
 
   String demoText = "";
 
@@ -71,7 +71,7 @@ public class Game {
 
   private void setup() {
     grid = new Grid(300, 300, 3);
-    player = new Player(display);
+    player = new Player(display, this);
     ui = new UserInterface();
     snippetTray = new SnippetTray(display);
     menuController = new MenuController(display);

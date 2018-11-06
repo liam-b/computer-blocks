@@ -8,6 +8,12 @@ import computerblocks.block.*;
 import computerblocks.snippet.Snippet;
 import computerblocks.player.*;
 import computerblocks.display.ui.menu.*;
+import computerblocks.display.ui.menu.elements.*;
+import computerblocks.display.*;
+import computerblocks.*;
+
+import java.io.*;
+import java.util.ArrayList;
 
 public class Player {
   public static final double PAN_SPEED = 6.5;
@@ -17,6 +23,9 @@ public class Player {
   public RealPosition translate = new RealPosition(50, 0);
   public double zoom = 3;
 
+  public int snipTime = 0;
+  public SnippetSave snipSaveButton;
+
   public int selectedLayer = 0;
   public BlockType selectedType = BlockType.CABLE;
   public Rotation selectedRotation = Rotation.UP;
@@ -24,28 +33,51 @@ public class Player {
   public Selection selection;
   public Snippet snippet;
 
+  public int placeTime = 0;
+  private Game game;
+
   public Keyboard keyboard;
   public Mouse mouse;
 
   public State state = State.GAME;
 
-  public Player(Display display) {
+  public Player(Display display, Game game) {
     this.keyboard = new Keyboard(display);
     this.mouse = new Mouse(display);
+    this.game = game;
+    snipSaveButton = new SnippetSave(display.width - display.width / 25 * 1.2, display.width / 25 * 0.2, display.width / 25, display.width / 25);
   }
 
   public void draw(Display display, Grid grid) {
     if (selection != null) selection.draw(display, grid, this);
-    if (state == State.PASTE && snippet != null) snippet.ghost(display, this, grid.mouseOverBlock(this));
+    if (state == State.PASTE && snippet != null) {
+      snippet.ghost(display, this, grid.mouseOverBlock(this));
+      snipSaveButton.draw(display);
+      snipSaveButton.checkPress(display, this);
+    }
   }
 
   public void update(Display display, Grid grid, MenuController menuController, SnippetTray snippetTray) {
-    if (state != State.SNIPPET) updateMenu(menuController, snippetTray);
+    if (state != State.SNIPPET && state != State.PASTE) updateMenu(menuController, snippetTray);
     updateSelection(grid);
     updatePaste(grid, display);
     if (state == State.SNIPPET) {
       if (keyboard.down(Keyboard.ESC) || keyboard.down('P')) {
         state = State.GAME;
+        placeTime = 0;
+      }
+    }
+    if (state == State.PASTE) {
+      if (keyboard.down(Keyboard.ESC)) {
+        state = State.GAME;
+        placeTime = 0;
+        snippet = null;
+      }
+      if (keyboard.down('P')) {
+        snippet = null;
+        snippetTray.lifeTime = 0;
+        snippetTray.scroll = 0;
+        state = State.SNIPPET;
       }
     }
     if (state.doPlayerTranslate) updateTranslate(grid, display);
@@ -67,8 +99,10 @@ public class Player {
         menuController.currentMenu = menuController.pauseMenu;
         state = State.MENU;
       } else if (state == State.MENU) {
-        if (menuController.currentMenu == menuController.pauseMenu) state = State.GAME;
-        else menuController.currentMenu = menuController.pauseMenu;
+        if (menuController.currentMenu == menuController.pauseMenu) {
+          state = State.GAME;
+          placeTime = 0;
+        } else menuController.currentMenu = menuController.pauseMenu;
       }
     }
   }
@@ -88,7 +122,8 @@ public class Player {
   }
 
   private void updateInteraction(Grid grid, Display display) {
-    if (mouse.held(Mouse.LEFT) && !keyboard.held(Keyboard.SHIFT)) {
+    placeTime += 1;
+    if (mouse.held(Mouse.LEFT) && !keyboard.held(Keyboard.SHIFT) && placeTime > 15) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
       if (mouseBlockPosition != null && grid.blockAt(mouseBlockPosition) == null) grid.place(selectedType, mouseBlockPosition, display, this);
     }
@@ -132,25 +167,43 @@ public class Player {
 
     if (state == State.SELECT && mouse.up(Mouse.LEFT)) {
       state = State.GAME;
+      placeTime = 0;
       grid.unselect();
       if (selection != null && grid.mouseOverBlock(this) != null) new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid).saveToFile("../saves/", "snippet");
       selection = null;
-      // state = State.PASTE;
-      // snippet = new Snippet("../saves/", "snippet");
+      state = State.PASTE;
+      snippet = new Snippet("../saves/", "snippet");
     }
   }
 
   private void updatePaste(Grid grid, Display display) {
+    if (state == State.PASTE) snipTime += 1;
     if (state == State.GAME && mouse.down(Mouse.RIGHT) && keyboard.held(Keyboard.SHIFT)) {
-    // if (state == State.GAME && keyboard.down('P')) {
-    state = State.PASTE;
-    snippet = new Snippet("../saves/", "snippet");
+      // if (state == State.GAME && keyboard.down('P')) {
+      state = State.PASTE;
+      snippet = new Snippet("../saves/", "snippet");
+    } else if (state == State.PASTE && mouse.down(Mouse.LEFT) && grid.mouseOverBlock(this) != null && snipTime > 5) {
+      if (!snipSaveButton.pointOver(mouse.position.x, mouse.position.y)) {
+        grid.paste(snippet, grid.mouseOverBlock(this));
+      }
+    }
+    if (state == State.PASTE && mouse.down(Mouse.LEFT) && snipTime > 5) {
+      snippet.saveToFile("../saves/snippets/", "testSave");
+      game.snippetTray.snippets = new ArrayList<SnippetButton>();
+      for (final File fileEntry : new File("../saves/snippets").listFiles()) {
+        if (!fileEntry.isDirectory()) {
+          game.snippetTray.snippets.add(new SnippetButton(display, game.snippetTray, fileEntry.getName().replaceAll(".snip", "")));
+        }
+      }
+      snippet = null;
+      placeTime = 0;
+      state = State.GAME;
     }
 
-    if (state == State.PASTE && mouse.up(Mouse.LEFT) && grid.mouseOverBlock(this) != null) {
-      state = State.GAME;
-      grid.paste(snippet, grid.mouseOverBlock(this));
-      snippet = null;
-    }
+    // if (state == State.PASTE && mouse.up(Mouse.LEFT) && grid.mouseOverBlock(this) != null) {
+    //   state = State.GAME;
+    //   grid.paste(snippet, grid.mouseOverBlock(this));
+    //   snippet = null;
+    // }
   }
 }
