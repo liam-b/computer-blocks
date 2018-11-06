@@ -34,12 +34,19 @@ public class Block {
   }
 
   public static Block fromType(BlockType type, BlockPosition position) {
-    Block block = new CableBlock(position);
-    if (type == BlockType.SOURCE) block = new SourceBlock(position);
-    if (type == BlockType.INVERTER) block = new InverterBlock(position);
-    if (type == BlockType.VIA) block = new ViaBlock(position);
-    if (type == BlockType.DELAY) block = new DelayBlock(position);
-    return block;
+    switch(type) {
+      case CABLE:
+        return new CableBlock(position);
+      case SOURCE:
+        return new SourceBlock(position);
+      case INVERTER:
+        return new InverterBlock(position);
+      case VIA:
+        return new ViaBlock(position);
+      case DELAY:
+        return new DelayBlock(position);
+    }
+    return null;
   }
 
   public ArrayList<Block> update(Grid grid, Block updater, Display display, Player player) {
@@ -78,47 +85,50 @@ public class Block {
 
   public void draw(Display display, Player player) {
     double rectSize = (double)BLOCK_SIZE * player.zoom;
-    RealPosition drawPosition = new RealPosition(
-      player.drawTranslate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom,
-      player.drawTranslate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom
-    );
+    double x = player.drawTranslate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom;
+    double y = player.drawTranslate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom;
 
-    if (withinScreenBounds(display, rectSize, drawPosition)) {
-      if (selected) highlightBlock(display, player, rectSize, drawPosition);
+    if (withinScreenBounds(display, rectSize, x, y)) {
+      if (selected) highlightBlock(display, player, rectSize, x, y);
       Color drawColor = (charge) ? chargeColor : color;
       display.color((ghost) ? new Color(drawColor, 0.5f) : drawColor);
-      display.rect(drawPosition.x, drawPosition.y, rectSize, rectSize);
+      display.rect(x, y, rectSize, rectSize);
     }
   }
 
   public ArrayList<Block> getSurroundingBlocks(Grid grid) {
     ArrayList<Block> blocks = new ArrayList<Block>();
-    blocks.add(grid.blockAt(new BlockPosition(position.x + 1, position.y, position.l)));
-    blocks.add(grid.blockAt(new BlockPosition(position.x - 1, position.y, position.l)));
-    blocks.add(grid.blockAt(new BlockPosition(position.x, position.y + 1, position.l)));
-    blocks.add(grid.blockAt(new BlockPosition(position.x, position.y - 1, position.l)));
-
-    while (blocks.remove(null));
+    putBlock(blocks, grid, position.x + 1, position.y, position.l);
+    putBlock(blocks, grid, position.x - 1, position.y, position.l);
+    putBlock(blocks, grid, position.x, position.y + 1, position.l);
+    putBlock(blocks, grid, position.x, position.y - 1, position.l);
     return blocks;
   }
 
-  public void highlightBlock(Display display, Player player, double size, RealPosition position) {
+  private void putBlock(ArrayList<Block> blocks, Grid grid, int x, int y, int l) {
+    Block block = grid.blockAt(x, y, l);
+    if (block != null) {
+      blocks.add(block);
+    }
+  }
+
+  public void highlightBlock(Display display, Player player, double size, double x, double y) {
     double highlightOffset = BLOCK_HIGHLIGHT_OFFSET * player.zoom;
-    display.color(new Color("#31c831"));
+    display.color(Color.HIGHLIGHT);
     display.rect(
-      position.x - highlightOffset / 2.0,
-      position.y - highlightOffset / 2.0,
+      x - highlightOffset / 2.0,
+      y - highlightOffset / 2.0,
       size + highlightOffset,
       size + highlightOffset
     );
   }
 
-  public boolean withinScreenBounds(Display display, double size, RealPosition position) {
+  public boolean withinScreenBounds(Display display, double size, double x, double y) {
     return
-      position.x > 0 - size &&
-      position.x < display.width + size / 2.0 &&
-      position.y > 0 - size &&
-      position.y < display.height + size / 2.0;
+      x > 0 - size &&
+      x < display.width + size / 2.0 &&
+      y > 0 - size &&
+      y < display.height + size / 2.0;
   }
 
   public boolean mouseOver(Player player) {

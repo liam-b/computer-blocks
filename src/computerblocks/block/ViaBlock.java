@@ -21,25 +21,23 @@ public class ViaBlock extends Block {
 
   public void draw(Display display, Player player) {
     double rectSize = (double)BLOCK_SIZE * player.zoom;
-    RealPosition drawPosition = new RealPosition(
-      player.drawTranslate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom,
-      player.drawTranslate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom
-    );
+    double x = player.drawTranslate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom;
+    double y = player.drawTranslate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom;
 
-    if (withinScreenBounds(display, rectSize, drawPosition)) {
-      if (selected) highlightBlock(display, player, rectSize, drawPosition);
+    if (withinScreenBounds(display, rectSize, x, y)) {
+      if (selected) highlightBlock(display, player, rectSize, x, y);
       Color drawColor = (charge) ? chargeColor : color;
       display.color((ghost) ? new Color(drawColor, 0.5f) : drawColor);
-      display.rect(drawPosition.x, drawPosition.y, rectSize, rectSize);
-      drawCore(rectSize, drawPosition, display);
+      display.rect(x, y, rectSize, rectSize);
+      drawCore(rectSize, x, y, display);
     }
   }
 
-  void drawCore(double rectSize, RealPosition drawPosition, Display display) {
+  void drawCore(double rectSize, double x, double y, Display display) {
     double coreSize = rectSize / 6.0;
 
     display.color(coreColor);
-    display.rect(drawPosition.x + rectSize / 2.0 - coreSize / 2.0, drawPosition.y + rectSize / 2.0 - coreSize / 2.0, coreSize, coreSize);
+    display.rect(x + rectSize / 2.0 - coreSize / 2.0, y + rectSize / 2.0 - coreSize / 2.0, coreSize, coreSize);
   }
 
   public ArrayList<Block> update(Grid grid, Block updater, Display display, Player player) {
@@ -48,7 +46,7 @@ public class ViaBlock extends Block {
     ArrayList<Block> removeQueue = new ArrayList<Block>();
 
     for (int l = 0; l < grid.layers; l++) {
-      Block block = grid.blockAt(new BlockPosition(position.x, position.y, l));
+      Block block = grid.blockAt(position.x, position.y, l);
 
       if (block != null && block.type == BlockType.VIA && block.position.l != position.l) surroundingBlocks.add(block);
     }

@@ -20,6 +20,8 @@ public class Display {
   private BufferStrategy strategy;
   private Graphics2D graphics;
 
+  private Rectangle2D.Double rectangle = new Rectangle2D.Double(0, 0, 0, 0);
+
   public Display(String title, int width, int height, int screen) {
     this.title = title;
     this.width = width;
@@ -89,7 +91,12 @@ public class Display {
   }
 
   public void rect(double x, double y, double width, double height) {
-    graphics.fill(new Rectangle2D.Double(x, y, width, height));
+    rectangle.x = x;
+    rectangle.y = y;
+    rectangle.width = width;
+    rectangle.height = height;
+
+    graphics.fill(rectangle);
   }
 
   public void outline(double x, double y, double width, double height) {

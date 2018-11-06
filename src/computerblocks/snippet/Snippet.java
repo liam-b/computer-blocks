@@ -65,7 +65,7 @@ public class Snippet {
       for (int x = positionLeast.x; x < positionMost.x; x++) {
         for (int y = positionLeast.y; y < positionMost.y; y++) {
           for (int l = positionLeast.l; l < positionMost.l; l++) {
-            Block block = grid.blockAt(new BlockPosition(x, y, l));
+            Block block = grid.blockAt(x, y, l);
             if (block != null) {
               Block newBlock = new Block(new BlockPosition(x, y, l).subtract(positionLeast));
               newBlock.position.r = block.position.r;
@@ -159,7 +159,7 @@ public class Snippet {
     for (int x = positionLeast.x; x < positionMost.x; x++) {
       for (int y = positionLeast.y; y < positionMost.y; y++) {
         for (int l = positionLeast.l; l < positionMost.l; l++) {
-          Block block = grid.blockAt(new BlockPosition(x, y, l));
+          Block block = grid.blockAt(x, y, l);
           if (block != null) {
             if (block.position.x < minimumBlockPosition.x) minimumBlockPosition.x = block.position.x;
             if (block.position.y < minimumBlockPosition.y) minimumBlockPosition.y = block.position.y;
@@ -176,7 +176,7 @@ public class Snippet {
     for (int x = positionLeast.x; x < positionMost.x; x++) {
       for (int y = positionLeast.y; y < positionMost.y; y++) {
         for (int l = positionLeast.l; l < positionMost.l; l++) {
-          Block block = grid.blockAt(new BlockPosition(x, y, l));
+          Block block = grid.blockAt(x, y, l);
           if (block != null) {
             if (block.position.x > maximumBlockPosition.x) maximumBlockPosition.x = block.position.x;
             if (block.position.y > maximumBlockPosition.y) maximumBlockPosition.y = block.position.y;
