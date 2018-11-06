@@ -91,6 +91,7 @@ public class SnippetButton {
   public void buttonPress(Player player, SnippetTray snippetTray) {
     player.state = State.PASTE;
     player.snippet = new Snippet("../saves/snippets/", text);
+    player.snipTime = 0;
     System.out.println("snip");
   }
 }

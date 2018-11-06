@@ -77,9 +77,11 @@ public class Button extends MenuElement {
                           }
                         }
                         player.state = State.GAME;
+                        player.placeTime = 0;
                         break;
       case "Load":      grid.fromSnippet(new Snippet("../saves/", "save_" + ID));
                         player.state = State.GAME;
+                        player.placeTime = 0;
                         break;
     }
   }
