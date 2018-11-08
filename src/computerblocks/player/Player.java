@@ -212,9 +212,9 @@ public class Player {
           game.snippetTray.snippets.add(new SnippetButton(display, game.snippetTray, fileEntry.getName().replaceAll(".snip", "")));
         }
       }
-      snippet = null;
+      // snippet = null;
       placeTime = 0;
-      state = State.GAME;
+      // state = State.GAME;
     }
 
     // if (state == State.PASTE && mouse.up(Mouse.LEFT) && grid.mouseOverBlock(this) != null) {
