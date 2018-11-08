@@ -170,6 +170,7 @@ public class Player {
     if (keyboard.down('3')) selectedType = BlockType.INVERTER;
     if (keyboard.down('4')) selectedType = BlockType.DELAY;
     if (keyboard.down('5')) selectedType = BlockType.VIA;
+    if (keyboard.down('9')) selectedType = BlockType.LABEL;
     if (keyboard.down('R')) selectedRotation = Rotation.values()[(selectedRotation.ordinal() + 1) > 3 ? 0 : selectedRotation.ordinal() + 1];
 
     // if (keyboard.held('B')) System.out.println("-----------");

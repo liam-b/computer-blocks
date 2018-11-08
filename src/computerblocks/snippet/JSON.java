@@ -20,6 +20,7 @@ public class JSON {
             JSONObject blockJSON = new JSONObject();
             blockJSON.put("type", block.type.ordinal());
             blockJSON.put("position", getJSONFromPosition(block.position));
+            if (block.type == BlockType.LABEL) blockJSON.put("labelText", block.labelText);
 
             JSONArray inputsJSON = new JSONArray();
             for (int j = 0; j < block.inputs.size(); j++) {
@@ -57,6 +58,7 @@ public class JSON {
       block.charge = blockJSON.getBoolean("charge");
       block.lastCharge = blockJSON.getBoolean("lastCharge");
       block.tickCharge = blockJSON.getBoolean("tickCharge");
+      if (block.type == BlockType.LABEL) block.labelText = blockJSON.getString("labelText");
 
       ArrayList<BlockPosition> inputs = new ArrayList<BlockPosition>();
       JSONArray inputsJSON = blockJSON.getJSONArray("inputs");

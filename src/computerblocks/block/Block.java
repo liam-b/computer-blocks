@@ -20,6 +20,8 @@ public class Block {
   public boolean selected = false;
   public boolean ghost = false;
 
+  public String labelText = "";
+
   public BlockPosition position;
   public ArrayList<Block> inputs = new ArrayList<Block>();
   public ArrayList<BlockPosition> saveInputPositions = new ArrayList<BlockPosition>();
@@ -45,6 +47,8 @@ public class Block {
         return new ViaBlock(position);
       case DELAY:
         return new DelayBlock(position);
+      case LABEL:
+        return new LabelBlock(position);
     }
     return null;
   }
