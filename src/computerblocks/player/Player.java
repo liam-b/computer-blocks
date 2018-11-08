@@ -41,6 +41,9 @@ public class Player {
 
   public State state = State.GAME;
 
+  public boolean getTextInput = false;
+  public String lastTextInput;
+
   public Player(Display display, Game game) {
     this.keyboard = new Keyboard(display);
     this.mouse = new Mouse(display);
@@ -99,6 +102,7 @@ public class Player {
         menuController.currentMenu = menuController.pauseMenu;
         state = State.MENU;
       } else if (state == State.MENU) {
+        menuController.saveMenuElement.scroll = 0;
         if (menuController.currentMenu == menuController.pauseMenu) {
           state = State.GAME;
           placeTime = 0;

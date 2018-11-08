@@ -13,6 +13,8 @@ public class Grid {
   public int width, height, layers;
   private Block dummyBlock = new EmptyBlock(new BlockPosition(0, 0, 0));
 
+  public Grid newGrid;
+
   public Grid(int width, int height, int layers) {
     this.width = width;
     this.height = height;

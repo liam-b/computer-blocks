@@ -32,7 +32,7 @@ public class SnippetButton {
     x = display.width - snippetTray.width / 2 + snippetTray.animX() - width / 2;
 
     // middle
-    if (y + snippetTray.scroll < maxY - height && y + snippetTray.scroll > minY + height) {
+    if (y + snippetTray.scroll <= maxY - height && y + snippetTray.scroll >= minY + height) {
       display.color(Color.UI_BORDER);
       display.rect(x, y + 4 + snippetTray.scroll, width, height);
       display.color(Color.CABLE);
@@ -92,6 +92,5 @@ public class SnippetButton {
     player.state = State.PASTE;
     player.snippet = new Snippet("../saves/snippets/", text);
     player.snipTime = 0;
-    System.out.println("snip");
   }
 }
