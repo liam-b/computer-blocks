@@ -79,7 +79,7 @@ public class SnippetSave {
       if (!saveName.equals("")) {
         if (snippetAlreadyExists(saveName, snippetTray)) {
           display.color(Color.INVERTER);
-          String warningText = "WARINING! - THIS WILL REPLACE PREVIOUS SNIPPET";
+          String warningText = "WARINING! - THIS WILL REPLACE EXISTING SNIPPET";
           display.text(warningText,  (display.width / 2) - display.getStringWidth(warningText, font, textSize) / 2, (display.height / 2) + display.getFontHeight(font, textSize) / 2  + display.height / 8);
         }
         display.color(Color.UI_BORDER);

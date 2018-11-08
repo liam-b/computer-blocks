@@ -75,7 +75,7 @@ public class CreateSave {
       if (!saveName.equals("")) {
         if (saveAlreadyExists(saveName, saveMenu)) {
           display.color(Color.INVERTER);
-          String warningText = "WARINING! - THIS WILL REPLACE PREVIOUS SAVE";
+          String warningText = "WARINING! - THIS WILL REPLACE EXISTING SAVE";
           display.text(warningText,  (display.width / 2) - display.getStringWidth(warningText, font, textSize) / 2, (display.height / 2) + display.getFontHeight(font, textSize) / 2  + display.height / 8);
         }
         display.color(Color.UI_BORDER);
