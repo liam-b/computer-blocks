@@ -21,7 +21,10 @@ public class SnippetTray {
   public int scroll;
   private int scrollSpeed = 3;
 
+  public boolean refreshSaveNames = false;
+
   public ArrayList<SnippetButton> snippets;
+  public ArrayList<SnippetButton> snippetsRemovalQueue;
 
   private int animationTime = 25;
 
@@ -30,6 +33,15 @@ public class SnippetTray {
   }
 
   public void update(Display display, Player player, Grid grid) {
+
+    if (refreshSaveNames) {
+      snippets = new ArrayList<SnippetButton>();
+      for (final File fileEntry : new File("../saves/snippets").listFiles()) {
+        if (!fileEntry.isDirectory()) {
+          snippets.add(new SnippetButton(display, this, fileEntry.getName().substring(0, fileEntry.getName().length() - 5)));
+        }
+      }
+    }
 
     height = display.height * 8 / 10;
     width = display.width / 6;

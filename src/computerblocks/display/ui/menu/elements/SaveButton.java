@@ -96,7 +96,7 @@ public class SaveButton {
             display.draw();
 
             if (player.keyboard.enterDown) {
-              saveMenu.savesRemovalQueue.add(this);
+              saveMenu.refreshSaveNames = true;
               new File("../saves/grids/" + text + ".snip").delete();
               break;
             }

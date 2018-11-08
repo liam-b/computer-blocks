@@ -51,12 +51,12 @@ public class Player {
     snipSaveButton = new SnippetSave(display.width - display.width / 25 * 1.2, display.width / 25 * 0.2, display.width / 25, display.width / 25);
   }
 
-  public void draw(Display display, Grid grid) {
+  public void draw(Display display, Grid grid, SnippetTray snippetTray) {
     if (selection != null) selection.draw(display, grid, this);
     if (state == State.PASTE && snippet != null) {
       snippet.ghost(display, this, grid.mouseOverBlock(this));
       snipSaveButton.draw(display);
-      snipSaveButton.checkPress(display, this);
+      snipSaveButton.checkPress(display, this, snippetTray);
     }
   }
 

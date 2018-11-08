@@ -10,6 +10,8 @@ public class MenuController {
   public Menu pauseMenu, saveMenu, settingsMenu, creditsMenu;
   public SaveMenu saveMenuElement;
 
+  public SnippetTray snippetTray;
+
   public MenuController(Display display) {
     init(display);
   }

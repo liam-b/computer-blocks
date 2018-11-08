@@ -110,7 +110,7 @@ public class Game {
     display.reset(Color.BACKGROUND);
 
     grid.draw(display, player);
-    player.draw(display, grid);
+    player.draw(display, grid, snippetTray);
     ui.draw(display, player, grid);
     if (player.state == State.MENU) menuController.update(display, player, grid);
     if (player.state == State.SNIPPET) snippetTray.update(display, player, grid);

@@ -22,27 +22,18 @@ public class SaveMenu {
   private int scrollSpeed = 3;
 
   public ArrayList<SaveButton> saves;
-  public ArrayList<SaveButton> savesRemovalQueue;
   private CreateSave saveButton;
 
   public boolean refreshSaveNames = true;
 
   public SaveMenu(Display display) {
     saves = new ArrayList<SaveButton>();
-    savesRemovalQueue = new ArrayList<SaveButton>();
     height = display.height * 7 / 10;
     width = display.width / 3;
     saveButton = new CreateSave(display, this);
   }
 
   public void update(Display display, Player player, Grid grid) {
-
-    for (SaveButton i : savesRemovalQueue) {
-      refreshSaveNames = true;
-      savesRemovalQueue.remove(i);
-      break;
-    }
-
     if (refreshSaveNames) {
       saves = new ArrayList<SaveButton>();
       for (final File fileEntry : new File("../saves/grids").listFiles()) {
