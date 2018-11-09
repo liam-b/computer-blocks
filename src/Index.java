@@ -16,6 +16,7 @@ public class Index {
 
     System.out.println("Initializing save folders...");
     new File("../saves/snippets").mkdirs();
+    new File("../saves/grids").mkdirs();
     System.out.println("Pre-Init Complete");
 
 
