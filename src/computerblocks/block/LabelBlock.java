@@ -21,7 +21,7 @@ public class LabelBlock extends DecorationalBlock {
     double x = player.drawTranslate.x + (double)BLOCK_RATIO * (double)position.x * player.zoom;
     double y = player.drawTranslate.y + (double)BLOCK_RATIO * (double)position.y * player.zoom;
 
-    if (labelText.equals("")) {
+    if (labelText.equals("") && !ghost) {
       String font = Fonts.pixelmix;
       int textSize = 20;
       String text = "New Label";
@@ -34,6 +34,7 @@ public class LabelBlock extends DecorationalBlock {
 
         display.reset(Color.BACKGROUND);
         display.font(font, textSize);
+
         if (!tempText.equals("")) {
           display.color(Color.UI_BORDER);
           display.text(tempText,  (display.width / 2) - display.getStringWidth(tempText, font, textSize) / 2, (display.height / 2) + display.getFontHeight(font, textSize) / 2);
@@ -62,7 +63,7 @@ public class LabelBlock extends DecorationalBlock {
       display.rect(x, y, rectSize, rectSize);
     }
 
-    if (mouseOver(player)) {
+    if (mouseOver(player) && !ghost) {
       String font = Fonts.pixelmix;
       int textSize = 20;
 

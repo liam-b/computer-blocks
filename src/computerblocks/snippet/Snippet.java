@@ -73,6 +73,7 @@ public class Snippet {
               newBlock.charge = block.charge;
               newBlock.lastCharge = block.lastCharge;
               newBlock.tickCharge = block.tickCharge;
+              if (newBlock.type == BlockType.LABEL) newBlock.labelText = block.labelText;
 
               ArrayList<BlockPosition> inputs = new ArrayList<BlockPosition>();
               for (Block inputBlock : block.inputs) {
