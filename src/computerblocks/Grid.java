@@ -139,9 +139,23 @@ public class Grid {
       for (int y = 0; y < height; y++) {
         for (int l = 0; l < layers; l++) {
           Block block = blocks[x][y][l];
-          if (block != null && block.saveInputPositions != null) {
-            for (BlockPosition inputPosition : block.saveInputPositions) {
-              block.inputs.add(blocks[inputPosition.x][inputPosition.y][inputPosition.l]);
+          if (block != null) {
+            if (block.saveInputPositions != null) {
+              for (BlockPosition inputPosition : block.saveInputPositions) {
+                block.inputs.add(blocks[inputPosition.x][inputPosition.y][inputPosition.l]);
+
+                System.out.println("---------");
+                System.out.println("position: " + block.position.toString());
+                System.out.println("inputs:");
+                for (Block inp : block.inputs) {
+                  System.out.println("  " + inp.position.toString());
+                }
+                System.out.println("save inputs:");
+                for (BlockPosition inp : block.saveInputPositions) {
+                  System.out.println("  " + inp.toString());
+                }
+                System.out.println("---------");
+              }
             }
             block.saveInputPositions = null;
           }
@@ -192,5 +206,6 @@ public class Grid {
 
       updateQueue = nextUpdateQueue;
     }
+    // System.out.println("iters: " + iterations);
   }
 }

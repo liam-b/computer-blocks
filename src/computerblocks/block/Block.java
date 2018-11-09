@@ -22,7 +22,7 @@ public class Block {
 
   public BlockPosition position;
   public ArrayList<Block> inputs = new ArrayList<Block>();
-  public ArrayList<BlockPosition> saveInputPositions = new ArrayList<BlockPosition>();
+  public ArrayList<BlockPosition> saveInputPositions = null;
   // public ArrayList<Path> paths = new ArrayList<Path>();
 
   public boolean charge = false;

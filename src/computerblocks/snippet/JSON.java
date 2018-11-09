@@ -71,13 +71,14 @@ public class JSON {
     for (int x = 0; x < blocks.length; x++) {
       for (int y = 0; y < blocks[x].length; y++) {
         for (int l = 0; l < blocks[x][y].length; l++) {
-          if (blocks[x][y][l] != null) {
+          if (blocks[x][y][l] != null && blocks[x][y][l].saveInputPositions != null) {
             for (BlockPosition inputPosition : blocks[x][y][l].saveInputPositions) {
               Block inputBlock = blocks[inputPosition.x][inputPosition.y][inputPosition.l];
               if (inputBlock != null) {
                 blocks[x][y][l].inputs.add(inputBlock);
               }
             }
+            blocks[x][y][l].saveInputPositions = null;
           }
         }
       }

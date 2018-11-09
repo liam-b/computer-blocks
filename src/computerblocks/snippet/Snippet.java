@@ -90,10 +90,11 @@ public class Snippet {
         for (int y = 0; y < size.y; y++) {
           for (int l = 0; l < size.l; l++) {
             Block block = blocks[x][y][l];
-            if (block != null) {
+            if (block != null && block.saveInputPositions != null) {
               for (BlockPosition inputPosition : block.saveInputPositions) {
                 if (inputPosition.isWithin(new BlockPosition(), size.subtract(new BlockPosition(1, 1, 1)))) block.inputs.add(blocks[inputPosition.x][inputPosition.y][inputPosition.l]);
               }
+              block.saveInputPositions = null;
             }
           }
         }

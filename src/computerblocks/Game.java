@@ -82,10 +82,10 @@ public class Game {
 
     snippetTray.update(display, player, grid);
     for (final File fileEntry : new File("../saves/snippets").listFiles()) {
-        if (!fileEntry.isDirectory()) {
-          snippetTray.snippets.add(new SnippetButton(display, snippetTray, fileEntry.getName().replaceAll(".snip", "")));
-          System.out.println(fileEntry.getName());
-        }
+      if (!fileEntry.isDirectory()) {
+        snippetTray.snippets.add(new SnippetButton(display, snippetTray, fileEntry.getName().replaceAll(".snip", "")));
+        System.out.println(fileEntry.getName());
+      }
     }
 
   }

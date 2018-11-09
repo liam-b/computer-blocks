@@ -133,31 +133,42 @@ public class Player {
       if (mouseBlockPosition != null) grid.erase(mouseBlockPosition, display, this);
     }
 
-    // if (keyboard.down('F')) {
-    //   for (int x = 0; x < grid.width; x++) {
-    //     for (int y = 0; y < grid.height; y++) {
-    //       for (int l = 0; l < grid.layers; l++) {
-    //         if (grid.blocks[x][y][l] != null) {
-    //           grid.blocks[x][y][l].inputs = new ArrayList<Block>();
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+    if (keyboard.down('F')) {
+      for (int x = 0; x < grid.width; x++) {
+        for (int y = 0; y < grid.height; y++) {
+          for (int l = 0; l < grid.layers; l++) {
+            if (grid.blocks[x][y][l] != null) {
+              // grid.blocks[x][y][l].charge = false;
+              // grid.blocks[x][y][l].inputs = new ArrayList<Block>();
+              // System.out.println(grid.blocks[x][y][l].position.toString());
+              grid.blocks[x][y][l].saveInputPositions = null;
+            }
+          }
+        }
+      }
+    }
 
     if (keyboard.down('X')) {
       BlockPosition mouseBlockPosition = grid.mouseOverBlock(this);
-      Block mouseBlock = grid.blockAt(mouseBlockPosition.x, mouseBlockPosition.y, mouseBlockPosition.l);
-      if (mouseBlockPosition != null && mouseBlock != null) {
-        System.out.println("----------");
-        System.out.println("block pos: " + mouseBlockPosition.toString());
-        System.out.println("charge: " + mouseBlock.charge);
-        System.out.println("");
-        System.out.println("inputs:");
-        for (Block block : mouseBlock.inputs) {
-          System.out.println("  " + block.position.toString());
+      if (mouseBlockPosition != null) {
+        Block mouseBlock = grid.blockAt(mouseBlockPosition.x, mouseBlockPosition.y, mouseBlockPosition.l);
+        if (mouseBlock != null) {
+          System.out.println("----------");
+          System.out.println("block pos: " + mouseBlockPosition.toString());
+          System.out.println("charge: " + mouseBlock.charge);
+          System.out.println("");
+          System.out.println("inputs:");
+          for (Block block : mouseBlock.inputs) {
+            System.out.println("  " + block.position.toString());
+          }
+          System.out.println("save inputs:");
+          if (mouseBlock.saveInputPositions != null){
+            for (BlockPosition inp : mouseBlock.saveInputPositions) {
+              System.out.println("  " + inp.toString());
+            }
+          }
+          System.out.println("----------");
         }
-        System.out.println("----------");
       }
     }
 
