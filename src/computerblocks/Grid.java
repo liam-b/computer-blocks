@@ -13,6 +13,8 @@ public class Grid {
   public int width, height, layers;
   private Block dummyBlock = new EmptyBlock(new BlockPosition(0, 0, 0));
 
+  public Grid newGrid;
+
   public Grid(int width, int height, int layers) {
     this.width = width;
     this.height = height;
@@ -33,13 +35,20 @@ public class Grid {
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
         if (blocks[x][y][player.selectedLayer] != null) {
-          blocks[x][y][player.selectedLayer].draw(display, player);
+          if (blocks[x][y][player.selectedLayer].type != BlockType.LABEL) blocks[x][y][player.selectedLayer].draw(display, player);
         }
         else {
           dummyBlock.position.x = x;
           dummyBlock.position.y = y;
           dummyBlock.position.l = player.selectedLayer;
           dummyBlock.draw(display, player);
+        }
+      }
+    }
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        if (blocks[x][y][player.selectedLayer] != null) {
+          if (blocks[x][y][player.selectedLayer].type == BlockType.LABEL) blocks[x][y][player.selectedLayer].draw(display, player);
         }
       }
     }

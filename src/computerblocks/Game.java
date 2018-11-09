@@ -82,23 +82,24 @@ public class Game {
 
     snippetTray.update(display, player, grid);
     for (final File fileEntry : new File("../saves/snippets").listFiles()) {
-      if (!fileEntry.isDirectory()) {
-        snippetTray.snippets.add(new SnippetButton(display, snippetTray, fileEntry.getName().replaceAll(".snip", "")));
-        System.out.println(fileEntry.getName());
-      }
+        if (!fileEntry.isDirectory()) {
+          snippetTray.snippets.add(new SnippetButton(display, snippetTray, fileEntry.getName().substring(0, fileEntry.getName().length() - 5)));
+        }
+    }
+    menuController.saveMenuElement.update(display, player, grid);
+    for (final File fileEntry : new File("../saves/grids").listFiles()) {
+        if (!fileEntry.isDirectory()) {
+          menuController.saveMenuElement.saves.add(new SaveButton(display, menuController.saveMenuElement, fileEntry.getName().substring(0, fileEntry.getName().length() - 5)));
+        }
     }
 
   }
 
   private void update() {
+    if (grid.newGrid != null) {
+      grid = grid.newGrid;
+    }
     player.update(display, grid, menuController, snippetTray);
-    if (player.keyboard.down('Q')) {
-      grid = new Grid(new Snippet("../saves/", "save"));
-    }
-
-    if (player.keyboard.down('E')) {
-      new Snippet(grid).saveToFile("../saves/", "save");
-    }
   }
 
   private void tick() {
@@ -109,7 +110,7 @@ public class Game {
     display.reset(Color.BACKGROUND);
 
     grid.draw(display, player);
-    player.draw(display, grid);
+    player.draw(display, grid, snippetTray);
     ui.draw(display, player, grid);
     if (player.state == State.MENU) menuController.update(display, player, grid);
     if (player.state == State.SNIPPET) snippetTray.update(display, player, grid);

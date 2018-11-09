@@ -9,44 +9,40 @@ import computerblocks.player.io.*;
 import computerblocks.Grid;
 import computerblocks.snippet.*;
 
-import java.util.ArrayList;
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.awt.image.*;
-import java.awt.Image;
-import java.io.IOException;
+public class CreateSave {
 
-public class SnippetSave {
+  public String text = "New Save";
   public double x, y, width, height;
-  private Image icon;
 
   private String font = Fonts.pixelmix;
   private int textSize = 20;
-  private String text = "New Snippet";
 
-  public SnippetSave(double x, double y, double width, double height) {
-    this.x = x;
-    this.y = y;
-    this.height = height;
-    this.width = width;
-
-    loadImage("icon.png");
+  public CreateSave(Display display, SaveMenu saveMenu) {
+    // height = saveMenu.height / 10;
+    // width = saveMenu.width * 6 / 10;
+    height = saveMenu.height / 10 * 3;
+    width = saveMenu.width;
+    y = display.height / 2 + saveMenu.height / 2 - height;
+    x = display.width / 2 - width / 2;
   }
 
-  public void loadImage(String header) {
-    try {
-      icon = ImageIO.read(new File("../assets/" + header));
-    } catch (IOException err) {
-      err.printStackTrace();
-    }
-  }
-
-  public void draw(Display display) {
+  public void draw(Display display, SaveMenu saveMenu) {
     display.color(Color.UI_BORDER);
     display.rect(x, y + 4, width, height);
     display.color(Color.CABLE);
     display.rect(x, y, width, height);
-    display.image(icon, x, y, width, height);
+    drawText(display, 1f);
+
+    // display.color(Color.INVERTER_CHARGE);
+    // display.rect(x, maxY, width, height);
+    // display.rect(x, minY, width, height);
+  }
+
+  private void drawText(Display display, float alpha) {
+    display.color(new Color(Color.UI_BORDER, alpha));
+    display.font(font, textSize);
+    display.text(text,  x + width / 2 - display.getStringWidth(text, font, textSize) / 2,
+                        y + height / 2 + display.getFontHeight(font, textSize) / 2);
   }
 
   public boolean pointOver(double x, double y) {
@@ -57,17 +53,17 @@ public class SnippetSave {
     return false;
   }
 
-  public void checkPress(Display display, Player player, SnippetTray snippetTray) {
+  public void checkPress(Display display, Player player, SaveMenu saveMenu, Grid grid) {
     if (pointOver(player.mouse.position.x, player.mouse.position.y)) {
       if (player.mouse.down(Mouse.LEFT)) {
-        buttonPress(display, player, snippetTray);
+        buttonPress(player, saveMenu, grid, display);
       }
       display.color(new Color(255, 255, 255, 0.2f));
       display.rect(x, y, width, height);
     }
   }
 
-  public void buttonPress(Display display, Player player, SnippetTray snippetTray) {
+  public void buttonPress(Player player, SaveMenu saveMenu, Grid grid, Display display) {
     String saveName = "";
     while (true) {
       saveName = player.keyboard.keyStream(saveName, 20);
@@ -77,9 +73,9 @@ public class SnippetSave {
       display.reset(Color.BACKGROUND);
       display.font(font, textSize);
       if (!saveName.equals("")) {
-        if (snippetAlreadyExists(saveName, snippetTray)) {
+        if (saveAlreadyExists(saveName, saveMenu)) {
           display.color(Color.INVERTER);
-          String warningText = "WARINING! - THIS WILL REPLACE EXISTING SNIPPET";
+          String warningText = "WARINING! - THIS WILL REPLACE EXISTING SAVE";
           display.text(warningText,  (display.width / 2) - display.getStringWidth(warningText, font, textSize) / 2, (display.height / 2) + display.getFontHeight(font, textSize) / 2  + display.height / 8);
         }
         display.color(Color.UI_BORDER);
@@ -92,14 +88,14 @@ public class SnippetSave {
 
       if (player.keyboard.enterDown) {
         if (!saveName.equals("")) {
-          player.snippet.saveToFile("../saves/snippets/", saveName);
-          snippetTray.refreshSaveNames = true;
+          new Snippet(grid).saveToFile("../saves/grids/", saveName);
+          saveMenu.refreshSaveNames = true;
           player.state = State.GAME;
           player.placeTime = 0;
           break;
         } else {
-          player.snippet.saveToFile("../saves/snippets/", text);
-          snippetTray.refreshSaveNames = true;
+          new Snippet(grid).saveToFile("../saves/grids/", text);
+          saveMenu.refreshSaveNames = true;
           player.state = State.GAME;
           player.placeTime = 0;
           break;
@@ -108,8 +104,8 @@ public class SnippetSave {
     }
   }
 
-  public boolean snippetAlreadyExists(String saveName, SnippetTray snippetTray) {
-    for (SnippetButton i : snippetTray.snippets) {
+  public boolean saveAlreadyExists(String saveName, SaveMenu saveMenu) {
+    for (SaveButton i : saveMenu.saves) {
       if (i.text.toLowerCase().equals(saveName.toLowerCase())) {
         return true;
       }

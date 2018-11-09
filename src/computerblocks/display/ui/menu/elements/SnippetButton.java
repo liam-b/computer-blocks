@@ -9,6 +9,8 @@ import computerblocks.player.io.*;
 import computerblocks.Grid;
 import computerblocks.snippet.*;
 
+import java.io.*;
+
 public class SnippetButton {
 
   public String text = "";
@@ -32,7 +34,7 @@ public class SnippetButton {
     x = display.width - snippetTray.width / 2 + snippetTray.animX() - width / 2;
 
     // middle
-    if (y + snippetTray.scroll < maxY - height && y + snippetTray.scroll > minY + height) {
+    if (y + snippetTray.scroll <= maxY - height && y + snippetTray.scroll >= minY + height) {
       display.color(Color.UI_BORDER);
       display.rect(x, y + 4 + snippetTray.scroll, width, height);
       display.color(Color.CABLE);
@@ -82,6 +84,23 @@ public class SnippetButton {
         if (player.mouse.down(Mouse.LEFT)) {
           buttonPress(player, snippetTray);
         }
+        if (player.mouse.down(Mouse.RIGHT)) {
+          while (true) {
+            if (player.keyboard.down(Keyboard.ESC)) break;
+
+            display.reset(Color.BACKGROUND);
+            display.color(Color.INVERTER);
+            display.font(font, 20);
+            display.text("'ENTER' to DELETE save or 'ESC' to CANCEL",  (display.width / 2) - display.getStringWidth("'ENTER' to DELETE save or 'ESC' to CANCEL", font, 20) / 2, (display.height / 2) + display.getFontHeight(font, textSize) / 2);
+            display.draw();
+
+            if (player.keyboard.enterDown) {
+              snippetTray.refreshSaveNames = true;
+              new File("../saves/snippets/" + text + ".snip").delete();
+              break;
+            }
+          }
+        }
         display.color(new Color(255, 255, 255, 0.2f));
         display.rect(x, y + snippetTray.scroll, width, height);
       }
@@ -92,6 +111,5 @@ public class SnippetButton {
     player.state = State.PASTE;
     player.snippet = new Snippet("../saves/snippets/", text);
     player.snipTime = 0;
-    System.out.println("snip");
   }
 }

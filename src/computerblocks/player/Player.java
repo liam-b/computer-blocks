@@ -41,6 +41,9 @@ public class Player {
 
   public State state = State.GAME;
 
+  public boolean getTextInput = false;
+  public String lastTextInput;
+
   public Player(Display display, Game game) {
     this.keyboard = new Keyboard(display);
     this.mouse = new Mouse(display);
@@ -48,12 +51,12 @@ public class Player {
     snipSaveButton = new SnippetSave(display.width - display.width / 25 * 1.2, display.width / 25 * 0.2, display.width / 25, display.width / 25);
   }
 
-  public void draw(Display display, Grid grid) {
+  public void draw(Display display, Grid grid, SnippetTray snippetTray) {
     if (selection != null) selection.draw(display, grid, this);
     if (state == State.PASTE && snippet != null) {
       snippet.ghost(display, this, grid.mouseOverBlock(this));
       snipSaveButton.draw(display);
-      snipSaveButton.checkPress(display, this);
+      snipSaveButton.checkPress(display, this, snippetTray);
     }
   }
 
@@ -99,6 +102,7 @@ public class Player {
         menuController.currentMenu = menuController.pauseMenu;
         state = State.MENU;
       } else if (state == State.MENU) {
+        menuController.saveMenuElement.scroll = 0;
         if (menuController.currentMenu == menuController.pauseMenu) {
           state = State.GAME;
           placeTime = 0;
@@ -177,6 +181,7 @@ public class Player {
     if (keyboard.down('3')) selectedType = BlockType.INVERTER;
     if (keyboard.down('4')) selectedType = BlockType.DELAY;
     if (keyboard.down('5')) selectedType = BlockType.VIA;
+    if (keyboard.down('9')) selectedType = BlockType.LABEL;
     if (keyboard.down('R')) selectedRotation = Rotation.values()[(selectedRotation.ordinal() + 1) > 3 ? 0 : selectedRotation.ordinal() + 1];
 
     // if (keyboard.held('B')) System.out.println("-----------");
@@ -218,9 +223,9 @@ public class Player {
           game.snippetTray.snippets.add(new SnippetButton(display, game.snippetTray, fileEntry.getName().replaceAll(".snip", "")));
         }
       }
-      snippet = null;
+      // snippet = null;
       placeTime = 0;
-      state = State.GAME;
+      // state = State.GAME;
     }
 
     // if (state == State.PASTE && mouse.up(Mouse.LEFT) && grid.mouseOverBlock(this) != null) {

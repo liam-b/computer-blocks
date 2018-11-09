@@ -12,6 +12,8 @@ public class Keyboard implements KeyListener {
 
   public boolean[] keys;
 
+  public boolean enterDown = false;
+
   public Keyboard(Display display) {
     display.frame.addKeyListener(this);
     keys = new boolean[256];
@@ -20,11 +22,13 @@ public class Keyboard implements KeyListener {
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code <= 256) keys[code] = true;
+    if (e.getKeyCode() == KeyEvent.VK_ENTER) enterDown = true;
   }
 
   public void keyReleased(KeyEvent e) {
     int code = e.getKeyCode();
     if (code <= 256) keys[code] = false;
+    if (e.getKeyCode() == KeyEvent.VK_ENTER) enterDown = false;
   }
 
   public boolean held(int code) {

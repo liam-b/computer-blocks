@@ -21,6 +21,7 @@ public class UserInterface {
     if (type == BlockType.INVERTER) return Color.INVERTER;
     if (type == BlockType.VIA) return Color.VIA;
     if (type == BlockType.DELAY) return Color.DELAY;
+    if (type == BlockType.LABEL) return Color.LABEL;
     return Color.UI_BACKGROUND;
   }
 
