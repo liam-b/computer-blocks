@@ -132,6 +132,7 @@ public class Grid {
             block.charge = snippetBlock.charge;
             block.lastCharge = snippetBlock.lastCharge;
             block.tickCharge = snippetBlock.tickCharge;
+            if (block.type == BlockType.LABEL) block.labelText = snippetBlock.labelText;
 
             block.saveInputPositions = new ArrayList<BlockPosition>();
             for (Block inputBlock : snippetBlock.inputs) {
