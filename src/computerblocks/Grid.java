@@ -35,7 +35,7 @@ public class Grid {
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
         if (blocks[x][y][player.selectedLayer] != null) {
-          if (blocks[x][y][player.selectedLayer].type != BlockType.LABEL) blocks[x][y][player.selectedLayer].draw(display, player);
+          blocks[x][y][player.selectedLayer].draw(display, player);
         }
         else {
           dummyBlock.position.x = x;
@@ -48,7 +48,7 @@ public class Grid {
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
         if (blocks[x][y][player.selectedLayer] != null) {
-          if (blocks[x][y][player.selectedLayer].type == BlockType.LABEL) blocks[x][y][player.selectedLayer].draw(display, player);
+          if (blocks[x][y][player.selectedLayer].type == BlockType.LABEL && blocks[x][y][player.selectedLayer].mouseOver(player)) blocks[x][y][player.selectedLayer].draw(display, player);
         }
       }
     }

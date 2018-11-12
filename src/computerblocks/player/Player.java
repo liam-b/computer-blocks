@@ -197,35 +197,20 @@ public class Player {
       state = State.GAME;
       placeTime = 0;
       grid.unselect();
-      if (selection != null && grid.mouseOverBlock(this) != null) new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid).saveToFile("../saves/", "snippet");
+      if (selection != null && grid.mouseOverBlock(this) != null) {
+        snippet = new Snippet(selection.initialBlockPosition, grid.mouseOverBlock(this), grid);
+        state = State.PASTE;
+      }
       selection = null;
-      state = State.PASTE;
-      snippet = new Snippet("../saves/", "snippet");
     }
   }
 
   private void updatePaste(Grid grid, Display display) {
     if (state == State.PASTE) snipTime += 1;
-    if (state == State.GAME && mouse.down(Mouse.RIGHT) && keyboard.held(Keyboard.SHIFT)) {
-      // if (state == State.GAME && keyboard.down('P')) {
-      state = State.PASTE;
-      snippet = new Snippet("../saves/", "snippet");
-    } else if (state == State.PASTE && mouse.down(Mouse.LEFT) && grid.mouseOverBlock(this) != null && snipTime > 5) {
+    if (state == State.PASTE && mouse.down(Mouse.LEFT) && grid.mouseOverBlock(this) != null && snipTime > 5) {
       if (!snipSaveButton.pointOver(mouse.position.x, mouse.position.y)) {
-        grid.paste(snippet, grid.mouseOverBlock(this));
+        if (snippet != null) grid.paste(snippet, grid.mouseOverBlock(this));
       }
-    }
-    if (state == State.PASTE && mouse.down(Mouse.LEFT) && snipTime > 5) {
-      snippet.saveToFile("../saves/snippets/", "testSave");
-      game.snippetTray.snippets = new ArrayList<SnippetButton>();
-      for (final File fileEntry : new File("../saves/snippets").listFiles()) {
-        if (!fileEntry.isDirectory()) {
-          game.snippetTray.snippets.add(new SnippetButton(display, game.snippetTray, fileEntry.getName().replaceAll(".snip", "")));
-        }
-      }
-      // snippet = null;
-      placeTime = 0;
-      // state = State.GAME;
     }
 
     // if (state == State.PASTE && mouse.up(Mouse.LEFT) && grid.mouseOverBlock(this) != null) {
