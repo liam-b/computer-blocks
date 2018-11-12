@@ -24,6 +24,7 @@ public class Game {
   private boolean running = true;
   private long targetFps = 60;
   private int updateCount = 0;
+  private double lastTime = 0;
 
   private Display display;
   private UserInterface ui;
@@ -57,6 +58,7 @@ public class Game {
       update();
       render();
 
+      System.out.println(updateCount / System.nanoTime());
       updateCount += 1;
 
       long delay = (long)optimalTime - (System.nanoTime() - timeNow);
