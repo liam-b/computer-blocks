@@ -72,7 +72,7 @@ public class Game {
   }
 
   private void setup() {
-    grid = new Grid(300, 300, 3);
+    grid = new Grid(400, 400, 3);
     player = new Player(display, this);
     ui = new UserInterface();
     snippetTray = new SnippetTray(display);

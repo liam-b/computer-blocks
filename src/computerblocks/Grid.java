@@ -216,6 +216,6 @@ public class Grid {
 
       updateQueue = nextUpdateQueue;
     }
-    // System.out.println("iters: " + iterations);
+    System.out.println("iters: " + iterations);
   }
 }
