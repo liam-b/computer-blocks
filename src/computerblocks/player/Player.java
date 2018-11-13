@@ -207,7 +207,7 @@ public class Player {
 
   private void updatePaste(Grid grid, Display display) {
     if (state == State.PASTE) snipTime += 1;
-    if (state == State.PASTE && mouse.down(Mouse.LEFT) && grid.mouseOverBlock(this) != null && snipTime > 5) {
+    if (state == State.PASTE && mouse.down(Mouse.LEFT) && grid.mouseOverBlock(this) != null && snipTime > 5 && snippet.layers + selectedLayer <= grid.layers) {
       if (!snipSaveButton.pointOver(mouse.position.x, mouse.position.y)) {
         if (snippet != null) grid.paste(snippet, grid.mouseOverBlock(this));
       }
