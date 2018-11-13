@@ -61,8 +61,12 @@ public class Button extends MenuElement {
 
   public void buttonPress(Player player, MenuController menuController, Grid grid) {
     switch (text) {
-      case "Exit":      System.exit(0);
+      case "Exit":      System.exit(0); break;
+      case "Continue":  player.state = State.GAME;
+                        player.placeTime = 0;
+                        break;
       case "Saves":     menuController.currentMenu = menuController.saveMenu; break;
+      case "Settings":  menuController.currentMenu = menuController.settingsMenu; break;
       case "Credits":   menuController.currentMenu = menuController.creditsMenu; break;
       case "Save":      for (MenuElement i : menuController.saveMenu.elements) {
                           if (i.getClass().getName() == "computerblocks.display.ui.menu.elements.TextField") {

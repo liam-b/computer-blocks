@@ -26,6 +26,9 @@ public class MenuController {
 
     saveMenuElement = new SaveMenu(display);
 
+    settingsMenu = new Menu(display.width/3, display.height*0.7f, null);
+    settingsMenu.addElement(new Label("~~ WORK IN PROGRESS ~~", Color.VIA));
+
     saveMenu = new Menu(display.width/3, display.height*0.7f, "logo.png");
     // saveMenu.addElement(new TextField("Slot 1", Color.UI_BORDER, -0.5f, 0, 0.5f));
     // saveMenu.addElement(new Button("Save", 0.45f, -1, 0.25f, 0));
