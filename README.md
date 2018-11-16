@@ -8,3 +8,5 @@ If you would like any more information it can be accessed from our website https
 Also check out what's coming next at https://trello.com/b/kMgKFAj1/computer-blocks.
 
 build jar with `jar cfm computerblocks.jar manifest.mf $(find . -type f -name "*.class")`
+
+lwjgl-refactor branch

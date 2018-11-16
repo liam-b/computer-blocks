@@ -1,6 +1,6 @@
 cd src/
-javac -cp '.:lib/json.jar' $1.java
+javac -cp '.:lib/*' $1.java
 if [[ $? == 0 ]]; then
-  java -Dsun.java2d.opengl=true -cp '.:lib/json.jar' $1
+  java -cp '.:lib/*:lib/native/macos/*' -XstartOnFirstThread -Djava.library.path=lib/native/macos $1
 fi
 find . -name "*.class" -type f -delete
