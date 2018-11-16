@@ -14,10 +14,10 @@ public class Color {
   public static final Color VIA = new Color("#589EC9");
   public static final Color VIA_CHARGE = new Color("#75bdea");
   public static final Color HIGHLIGHT = new Color("#31c831");
-  public static final Color LABEL = new Color(187f, 87f, 138f);
+  public static final Color LABEL = new Color("#bb578a");
 
   public static final Color UI_BACKGROUND = new Color("#e0e0e0");
-  public static final Color UI_BORDER = new Color(124f, 124f, 124f);
+  public static final Color UI_BORDER = new Color("#7c7c7c");
 
   public java.awt.Color data;
 
