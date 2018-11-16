@@ -1,47 +1,46 @@
 package computerblocks;
 
-import java.util.function.Function;
-
 public abstract class GameLoop {
   public boolean running = true;
 
-  public UpdateThread updateThread;
+  public TickThread tickThread;
   public RenderThread renderThread;
 
   public abstract void start();
-  public abstract void render();
+  public abstract void tick();
   public abstract void update();
+  public abstract void render();
   public abstract void cleanup();
 
-  GameLoop(double fps, double ups) {
-    updateThread = new UpdateThread(this, ups);
-    renderThread = new RenderThread(this, fps);
+  GameLoop(double ticksPerSecond, double framesPerSecond) {
+    tickThread = new TickThread(this, ticksPerSecond);
+    renderThread = new RenderThread(this, framesPerSecond);
 
     start();
-    updateThread.start();
-    renderThread.start();
+    tickThread.start();
+    renderThread.run();
   }
 
-  public final void end() {
-    updateThread.end();
+  public final void destroy() {
+    tickThread.end();
     renderThread.end();
     cleanup();
   }
 }
 
-class UpdateThread extends GameThread {
+class TickThread extends GameThread {
   private GameLoop gameLoop;
-  private double updatesPerSecond;
+  private double ticksPerSecond;
 
-  UpdateThread(GameLoop gameLoop, double updatesPerSecond) {
-    super("update", updatesPerSecond);
+  TickThread(GameLoop gameLoop, double ticksPerSecond) {
+    super("update", ticksPerSecond);
 
     this.gameLoop = gameLoop;
-    this.updatesPerSecond = updatesPerSecond;
+    this.ticksPerSecond = ticksPerSecond;
   }
 
   public void cycle() {
-    gameLoop.update();
+    gameLoop.tick();
   }
 }
 
@@ -57,6 +56,7 @@ class RenderThread extends GameThread {
   }
 
   public void cycle() {
+    gameLoop.update();
     gameLoop.render();
   }
 }

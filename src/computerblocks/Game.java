@@ -1,12 +1,17 @@
 package computerblocks;
 
 public class Game extends GameLoop {
-  public Game() {
-    super(60.0, 60.0);
-  }
+  private Display display;
+
+  public Game() { super(30.0, 60.0); }
 
   public void start() {
     System.out.println("START");
+    display = new Display();
+  }
+
+  public void tick() {
+    System.out.println("TICK");
   }
 
   public void update() {
@@ -15,6 +20,7 @@ public class Game extends GameLoop {
 
   public void render() {
     System.out.println("RENDER");
+    display.draw();
   }
 
   public void cleanup() {
