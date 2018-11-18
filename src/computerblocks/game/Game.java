@@ -8,12 +8,13 @@ import computerblocks.display.*;
 import computerblocks.block.*;
 import computerblocks.position.*;
 import computerblocks.player.Player;
+import computerblocks.player.io.*;
 
 public class Game extends GameLoop {
   private Display display;
   // private UserInterface ui;
 
-  // private Player player;
+  private Player player;
   private Grid grid;
 
   public Game() { super(30.0, 60.0); }
@@ -21,9 +22,9 @@ public class Game extends GameLoop {
   public void start() {
     System.out.println("START");
 
-    display = new Display();
+    display = new Display(1280, 720, "computerblocks");
     grid = new Grid(400, 400, 3);
-    // player = new Player(display, this);
+    player = new Player(display);
     // ui = new UserInterface();
   }
 
@@ -32,7 +33,9 @@ public class Game extends GameLoop {
   }
 
   public void update() {
+    player.updateUserInteraction();
     // player.update(display, grid, menuController, snippetTray);
+    System.out.println(player.mouse.up(Mouse.LEFT));
   }
 
   public void render() {
@@ -42,6 +45,7 @@ public class Game extends GameLoop {
     // player.draw(display, grid, snippetTray);
     // ui.draw(display, player, grid);
 
+    display.color(255, 0, 255);
     display.rect(100, 100, 50, 50);
 
     display.draw();

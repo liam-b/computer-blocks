@@ -13,7 +13,8 @@ import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 import computerblocks.position.*;
-// import computerblocks.player.io.Keyboard;
+import computerblocks.player.*;
+import computerblocks.player.io.*;
 import java.awt.image.BufferStrategy;
 import javax.swing.*;
 import java.awt.*;
@@ -23,12 +24,17 @@ import java.awt.geom.*;
 
 public class Display {
   private long window;
-  public int width = 1280;
-  public int height = 720;
+  public int width;
+  public int height;
+  public String name;
 
   public boolean windowShouldClose = false;
 
-  public Display() {
+  public Display(int width, int height, String name) {
+    this.width = width;
+    this.height = height;
+    this.name = name;
+
     GLFWErrorCallback.createPrint(System.err).set();
     if (!glfwInit()) throw new IllegalStateException("Unable to initialize GLFW");
 
@@ -36,22 +42,11 @@ public class Display {
     glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-    window = glfwCreateWindow(width, height, "computer-blocks", NULL, NULL);
-    if (window == NULL)throw new RuntimeException("Failed to create the GLFW window");
+    window = glfwCreateWindow(width, height, name, NULL, NULL);
+    if (window == NULL) throw new RuntimeException("Failed to create the GLFW window");
     glfwSetWindowSizeLimits(window, 640, 480, GLFW_DONT_CARE, GLFW_DONT_CARE);
 
-    IntBuffer widthBuffer = BufferUtils.createIntBuffer(1);
-    IntBuffer heightBuffer = BufferUtils.createIntBuffer(1);
-    glfwGetWindowSize(window, widthBuffer, heightBuffer);
-    width = widthBuffer.get(0);
-    height = heightBuffer.get(0);
-
-    glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-			if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) glfwSetWindowShouldClose(window, true);
-      if (key == GLFW_KEY_L && action == GLFW_PRESS) glfwSetWindowSize(window, 100, 100);
-		});
-
-    glfwSetWindowSizeCallback(window, this::onResize);
+    glfwSetWindowSizeCallback(window, this::resize);
 
     GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
     glfwSetWindowPos(window,
@@ -70,9 +65,10 @@ public class Display {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     setup();
+    resize(window, width, height);
   }
 
-  public void setup() {
+  private void setup() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0, width, height, 0, 1, 0);
@@ -81,9 +77,15 @@ public class Display {
     glLoadIdentity();
   }
 
+  private void resize(long win, int width, int height) {
+    this.width = width;
+    this.height = height;
+    setup();
+  }
+
   public void clear() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    windowShouldClose = glfwWindowShouldClose(window);
+    windowShouldClose = glfwWindowShouldClose(window); // glfwSetWindowCloseCallback(window, window_close_callback); FIXME: USE THIS INSTEAD
   }
 
   public void draw() {
@@ -98,9 +100,15 @@ public class Display {
 		glfwSetErrorCallback(null).free();
   }
 
+  public void bindCallbacks(Keyboard keyboard, Mouse mouse) {
+    glfwSetKeyCallback(window, keyboard::callback);
+
+    glfwSetCursorPosCallback(window, mouse::positionCallback);
+    glfwSetMouseButtonCallback(window, mouse::buttonCallback);
+  }
+
   public void rect(double x, double y, double width, double height) {
     glBegin(GL_QUADS);
-      glColor3d(1.0, 0.439, 0.439);
       glVertex2d(x, y + height);
       glVertex2d(x + width, y + height);
       glVertex2d(x + width, y);
@@ -108,17 +116,15 @@ public class Display {
     glEnd();
   }
 
-  public void onResize(long win, int width, int height) {
-    this.width = width;
-    this.height = height;
-    setup();
+  public void rect(RealPosition position, double width, double height) {
+    rect(position.x, position.y, width, height);
+  }
+
+  public void color(double r, double g, double b) {
+    glColor3d(r / 255.0, g / 255.0, b / 255.0);
   }
 
   public void color(Color color) {
-    glColor3d((double)color.data.getRed() / 255.0, (double)color.data.getGreen() / 255.0, (double)color.data.getBlue() / 255.0);
-  }
-
-  public void rect(RealPosition position, double width, double height) {
-    rect(position.x, position.y, width, height);
+    color((double)color.data.getRed(), (double)color.data.getGreen(), (double)color.data.getBlue());
   }
 }

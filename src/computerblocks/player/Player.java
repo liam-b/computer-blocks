@@ -7,6 +7,7 @@ import computerblocks.block.*;
 import computerblocks.player.*;
 import computerblocks.display.*;
 import computerblocks.*;
+import computerblocks.player.io.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -23,14 +24,21 @@ public class Player {
   public BlockType selectedType = BlockType.CABLE;
   public Rotation selectedRotation = Rotation.UP;
 
-  // public Keyboard keyboard;
-  // public Mouse mouse;
+  public Keyboard keyboard;
+  public Mouse mouse;
   //
   // public State state = State.GAME;
 
   public Player(Display display) {
-    // this.keyboard = new Keyboard(display);
-    // this.mouse = new Mouse(display);
+    this.keyboard = new Keyboard();
+    this.mouse = new Mouse();
+
+    display.bindCallbacks(keyboard, mouse);
+  }
+
+  public void updateUserInteraction() {
+    keyboard.update();
+    mouse.update();
   }
 
   // public void draw(Display display, Grid grid, SnippetTray snippetTray) {
