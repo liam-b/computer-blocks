@@ -1,4 +1,4 @@
-package computerblocks;
+package computerblocks.game;
 
 public abstract class GameThread implements Runnable {
   private static final double NS = 1000000000.0;
@@ -9,12 +9,13 @@ public abstract class GameThread implements Runnable {
   public long lastTime = System.nanoTime();
   public double delta = 0.0;
   public long cycles = 0;
+  public int cyclesPerSecond = (int)cycles;
   public double target = 60.0;
   public boolean running = true;
 
   public abstract void cycle();
 
-  GameThread(String name, double target) {
+  public GameThread(String name, double target) {
     this.name = name;
     this.target = target;
   }

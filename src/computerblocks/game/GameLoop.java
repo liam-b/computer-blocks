@@ -1,4 +1,4 @@
-package computerblocks;
+package computerblocks.game;
 
 public abstract class GameLoop {
   public boolean running = true;
@@ -58,5 +58,7 @@ class RenderThread extends GameThread {
   public void cycle() {
     gameLoop.update();
     gameLoop.render();
+    try { Thread.sleep(10); }
+    catch (Exception e) {}
   }
 }
