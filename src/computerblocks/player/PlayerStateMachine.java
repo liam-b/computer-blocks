@@ -6,19 +6,34 @@ import computerblocks.player.stateMachine.StateMethod;
 import computerblocks.player.stateMachine.StateMachine;
 
 enum PlayerState {
-  INITIAL
+  SETUP, GAME, MENU
 }
 
 public class PlayerStateMachine extends StateMachine<PlayerState,Game> {
   public PlayerStateMachine(Game game) {
-    // super();
+    super(PlayerState.SETUP, game);
 
-    states.put(PlayerState.INITIAL, new State<Game>(
-      (Game context) -> { System.out.println("enter"); },
-      (Game context) -> { System.out.println("during"); },
-      (Game context) -> { System.out.println("exit"); }
+    setup();
+  }
+
+  public void setup() {
+    add(PlayerState.SETUP, new State<Game>());
+
+    add(PlayerState.GAME, new State<Game>(
+      (Game game) -> { System.out.println("during GAME"); }
     ));
 
-    states.get(PlayerState.INITIAL).enter.method(game);
+    add(PlayerState.MENU, new State<Game>(
+      (Game game) -> { System.out.println("entered MENU"); },
+      (Game game) -> { System.out.println("during MENU"); },
+      (Game game) -> { System.out.println("exited MENU"); }
+    ));
+
+    update();
+    transition(PlayerState.GAME);
+    update();
+    transition(PlayerState.MENU);
+    update();
+    transition(PlayerState.GAME);
   }
 }
