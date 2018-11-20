@@ -1,6 +1,8 @@
 package computerblocks.player.io;
 
-import java.util.HashMap;
+import static org.lwjgl.glfw.GLFW.*;
+
+import computerblocks.display.Display;
 
 enum KeyState {
   NONE, PRE_PRESSED, PRESSED, HELD, PRE_RELEASED, RELEASED;
@@ -9,8 +11,10 @@ enum KeyState {
 public class Keyboard {
   KeyState[] keys;
 
-  public Keyboard() {
+  public Keyboard(Display display) {
     keys = new KeyState[284];
+
+    glfwSetKeyCallback(display.window, this::callback);
   }
 
   public void update() {

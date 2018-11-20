@@ -24,7 +24,7 @@ public class Game extends GameLoop {
 
     display = new Display(1280, 720, "computerblocks");
     grid = new Grid(400, 400, 3);
-    player = new Player(display);
+    player = new Player(display, this);
     // ui = new UserInterface();
   }
 
@@ -35,7 +35,7 @@ public class Game extends GameLoop {
   public void update() {
     player.updateUserInteraction();
     // player.update(display, grid, menuController, snippetTray);
-    System.out.println(player.mouse.up(Mouse.LEFT));
+    // System.out.println(player.mouse.up(Mouse.LEFT));
   }
 
   public void render() {

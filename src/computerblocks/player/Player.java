@@ -4,10 +4,10 @@ import computerblocks.position.*;
 import computerblocks.display.Display;
 import computerblocks.Grid;
 import computerblocks.block.*;
-import computerblocks.player.*;
 import computerblocks.display.*;
 import computerblocks.*;
 import computerblocks.player.io.*;
+import computerblocks.game.Game;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -26,14 +26,17 @@ public class Player {
 
   public Keyboard keyboard;
   public Mouse mouse;
-  //
-  // public State state = State.GAME;
 
-  public Player(Display display) {
-    this.keyboard = new Keyboard();
-    this.mouse = new Mouse();
+  public PlayerStateMachine stateMachine;
 
-    display.bindCallbacks(keyboard, mouse);
+  // public State[] states = new State[1];
+
+  // State inital = new Initial();
+
+  public Player(Display display, Game game) {
+    this.stateMachine = new PlayerStateMachine(game);
+    this.keyboard = new Keyboard(display);
+    this.mouse = new Mouse(display);
   }
 
   public void updateUserInteraction() {
