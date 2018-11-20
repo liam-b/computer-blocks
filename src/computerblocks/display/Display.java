@@ -23,7 +23,7 @@ import java.awt.FontMetrics;
 import java.awt.geom.*;
 
 public class Display {
-  private long window;
+  public long window;
   public int width;
   public int height;
   public String name;
@@ -98,13 +98,6 @@ public class Display {
 		glfwDestroyWindow(window);
 		glfwTerminate();
 		glfwSetErrorCallback(null).free();
-  }
-
-  public void bindCallbacks(Keyboard keyboard, Mouse mouse) {
-    glfwSetKeyCallback(window, keyboard::callback);
-
-    glfwSetCursorPosCallback(window, mouse::positionCallback);
-    glfwSetMouseButtonCallback(window, mouse::buttonCallback);
   }
 
   public void rect(double x, double y, double width, double height) {

@@ -1,8 +1,9 @@
 package computerblocks.player.io;
 
-import java.util.HashMap;
+import static org.lwjgl.glfw.GLFW.*;
 
 import computerblocks.position.RealPosition;
+import computerblocks.display.Display;
 
 enum ButtonState {
   NONE, PRE_PRESSED, PRESSED, HELD, PRE_RELEASED, RELEASED;
@@ -15,9 +16,12 @@ public class Mouse {
   ButtonState[] buttons;
   RealPosition position;
 
-  public Mouse() {
+  public Mouse(Display display) {
     buttons = new ButtonState[8];
     position = new RealPosition(0, 0);
+
+    glfwSetCursorPosCallback(display.window, this::positionCallback);
+    glfwSetMouseButtonCallback(display.window, this::buttonCallback);
   }
 
   public void update() {
