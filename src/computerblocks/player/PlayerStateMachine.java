@@ -4,34 +4,30 @@ import java.lang.reflect.*;
 
 import computerblocks.game.Game;
 import computerblocks.player.stateMachine.State;
-import computerblocks.player.stateMachine.StateMethodCaller;
 import computerblocks.player.stateMachine.StateMachine;
 
 public class PlayerStateMachine extends StateMachine<Game> {
-  PlayerStateMachine(Game game) {
-    super(game, (Class state, String method, Game context) -> {
-      try { state.getMethod(method, Game.class).invoke(null, context); }
-      catch (Exception err) {}
-    });
+  public PlayerStateMachine(Game game) {
+    super(game);
 
-    addState(Initial.class);
-    addState(Thing.class);
+    initStates("GAME", new GAME(), new MENU());
   }
 }
 
-class Initial extends State {
-  public static void enter(Game game) {
-    System.out.println("initial enter");
+class GAME extends State<Game> {
+  public void enter(Game game) {
+    System.out.println("yoet entered GAME");
   }
 
-  public static void update(Game game) {
-    System.out.println("initial update");
+  public void update(Game game) {
+    System.out.println("yoet updated GAME");
   }
 }
 
-class Thing extends State {
-  public static void enter(Game game) {
-    System.out.println("thing enter");
-    game.player.stateMachine.transition("Initial");
+class MENU extends State<Game> {
+  public void enter(Game game) {
+    System.out.println("yoet entered MENU");
+    game.player.stateMachine.transition("GAME");
+    // System.out.println(game.player);
   }
 }

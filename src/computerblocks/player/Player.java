@@ -34,9 +34,9 @@ public class Player {
   // State inital = new Initial();
 
   public Player(Display display, Game game) {
-    this.stateMachine = new PlayerStateMachine(game);
-    this.keyboard = new Keyboard(display);
-    this.mouse = new Mouse(display);
+    stateMachine = new PlayerStateMachine(game);
+    keyboard = new Keyboard(display);
+    mouse = new Mouse(display);
   }
 
   public void updateUserInteraction() {

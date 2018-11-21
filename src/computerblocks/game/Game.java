@@ -25,10 +25,10 @@ public class Game extends GameLoop {
     display = new Display(1280, 720, "computerblocks");
     grid = new Grid(400, 400, 3);
     player = new Player(display, this);
+    // ui = new UserInterface();
 
     player.stateMachine.update();
-    player.stateMachine.transition("Thing");
-    // ui = new UserInterface();
+    player.stateMachine.transition("MENU");
   }
 
   public void tick() {
