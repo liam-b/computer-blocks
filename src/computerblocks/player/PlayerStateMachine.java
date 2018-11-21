@@ -1,39 +1,37 @@
 package computerblocks.player;
 
+import java.lang.reflect.*;
+
 import computerblocks.game.Game;
 import computerblocks.player.stateMachine.State;
-import computerblocks.player.stateMachine.StateMethod;
+import computerblocks.player.stateMachine.StateMethodCaller;
 import computerblocks.player.stateMachine.StateMachine;
 
-enum PlayerState {
-  SETUP, GAME, MENU
+public class PlayerStateMachine extends StateMachine<Game> {
+  PlayerStateMachine(Game game) {
+    super(game, (Class state, String method, Game context) -> {
+      try { state.getMethod(method, Game.class).invoke(null, context); }
+      catch (Exception err) {}
+    });
+
+    addState(Initial.class);
+    addState(Thing.class);
+  }
 }
 
-public class PlayerStateMachine extends StateMachine<PlayerState,Game> {
-  public PlayerStateMachine(Game game) {
-    super(PlayerState.SETUP, game);
-
-    setup();
+class Initial extends State {
+  public static void enter(Game game) {
+    System.out.println("initial enter");
   }
 
-  public void setup() {
-    add(PlayerState.SETUP, new State<Game>());
+  public static void update(Game game) {
+    System.out.println("initial update");
+  }
+}
 
-    add(PlayerState.GAME, new State<Game>(
-      (Game game) -> { System.out.println("during GAME"); }
-    ));
-
-    add(PlayerState.MENU, new State<Game>(
-      (Game game) -> { System.out.println("entered MENU"); },
-      (Game game) -> { System.out.println("during MENU"); },
-      (Game game) -> { System.out.println("exited MENU"); }
-    ));
-
-    update();
-    transition(PlayerState.GAME);
-    update();
-    transition(PlayerState.MENU);
-    update();
-    transition(PlayerState.GAME);
+class Thing extends State {
+  public static void enter(Game game) {
+    System.out.println("thing enter");
+    game.player.stateMachine.transition("Initial");
   }
 }

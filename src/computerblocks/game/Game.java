@@ -14,7 +14,7 @@ public class Game extends GameLoop {
   private Display display;
   // private UserInterface ui;
 
-  private Player player;
+  public Player player;
   private Grid grid;
 
   public Game() { super(30.0, 60.0); }
@@ -25,6 +25,9 @@ public class Game extends GameLoop {
     display = new Display(1280, 720, "computerblocks");
     grid = new Grid(400, 400, 3);
     player = new Player(display, this);
+
+    player.stateMachine.update();
+    player.stateMachine.transition("Thing");
     // ui = new UserInterface();
   }
 

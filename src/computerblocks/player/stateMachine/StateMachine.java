@@ -1,28 +1,39 @@
 package computerblocks.player.stateMachine;
 
 import java.util.HashMap;
+import computerblocks.game.Game;
 
-public class StateMachine<V, K> {
-  private HashMap<V,State<K>> states;
-  public V state;
-  private K context;
+public class StateMachine<T> {
+  public HashMap<String, Class> states = new HashMap<String, Class>();
+  public StateMethodCaller<T> caller;
+  public String state;
+  public T context;
 
-  public StateMachine(V state, K context) {
-    this.state = state;
-    states = new HashMap<V,State<K>>();
+  public StateMachine(T context, StateMethodCaller<T> caller) {
+    this.context = context;
+    this.caller = caller;
   }
 
-  public void add(V newName, State<K> newState) {
-    states.put(newName, newState);
+  public void addState(Class state) {
+    states.put(state.getSimpleName(), state);
+    if (this.state == null) {
+      this.state = state.getSimpleName();
+      call(states.get(this.state), "enter");
+    }
   }
 
   public void update() {
-    states.get(state).during.method(context);
+    call(states.get(state), "update");
   }
 
-  public void transition(V newState) {
-    states.get(state).exit.method(context);
+  public void transition(String newState) {
+    System.out.println("yooo " + newState);
+    call(states.get(state), "exit");
     state = newState;
-    states.get(state).enter.method(context);
+    call(states.get(state), "enter");
+  }
+
+  public void call(Class state, String method) {
+    caller.call(state, method, context);
   }
 }
