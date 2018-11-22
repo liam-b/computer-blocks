@@ -8,11 +8,8 @@ public class StateMachine<T> {
   public String state;
   private T context;
 
-  public StateMachine(T context) {
+  public StateMachine(T context, String initialState, State... newStates) {
     this.context = context;
-  }
-
-  public void initStates(String initialState, State... newStates) {
     for (State newState : newStates) {
       states.put(newState.getClass().getSimpleName(), newState);
     }
@@ -29,5 +26,9 @@ public class StateMachine<T> {
 
   public void update() {
     states.get(state).update(context);
+  }
+
+  public void draw() {
+    states.get(state).draw(context);
   }
 }

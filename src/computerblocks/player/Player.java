@@ -29,10 +29,6 @@ public class Player {
 
   public PlayerStateMachine stateMachine;
 
-  // public State[] states = new State[1];
-
-  // State inital = new Initial();
-
   public Player(Display display, Game game) {
     stateMachine = new PlayerStateMachine(game);
     keyboard = new Keyboard(display);

@@ -28,7 +28,7 @@ public class Game extends GameLoop {
     // ui = new UserInterface();
 
     player.stateMachine.update();
-    player.stateMachine.transition("MENU");
+    // player.stateMachine.transition("MENU");
   }
 
   public void tick() {
