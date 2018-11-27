@@ -6,13 +6,13 @@ import java.io.*;
 import computerblocks.Grid;
 import computerblocks.display.*;
 import computerblocks.block.*;
+import computerblocks.block.types.DecorationalBlock;
 import computerblocks.position.*;
 import computerblocks.player.Player;
 import computerblocks.player.io.*;
 
 public class Game extends GameLoop {
   private Display display;
-  // private UserInterface ui;
 
   public Player player;
   private Grid grid;
@@ -22,13 +22,11 @@ public class Game extends GameLoop {
   public void start() {
     System.out.println("START");
 
-    display = new Display(1280, 720, "computerblocks");
-    grid = new Grid(400, 400, 3);
+    display = new Display(1280, 720, "computerblocks", Color.BACKGROUND);
+    grid = new Grid(300, 300, 3);
     player = new Player(display, this);
-    // ui = new UserInterface();
 
     player.stateMachine.update();
-    // player.stateMachine.transition("MENU");
   }
 
   public void tick() {
@@ -37,19 +35,19 @@ public class Game extends GameLoop {
 
   public void update() {
     player.updateUserInteraction();
-    // player.update(display, grid, menuController, snippetTray);
+    player.update(display, grid);
     // System.out.println(player.mouse.up(Mouse.LEFT));
   }
 
   public void render() {
     display.clear();
 
-    // grid.draw(display, player);
+    grid.draw(display, player);
     // player.draw(display, grid, snippetTray);
     // ui.draw(display, player, grid);
 
-    display.color(255, 0, 255);
-    display.rect(100, 100, 50, 50);
+    // display.color(255, 0, 255);
+    // display.rect(100, 100, 50, 50);
 
     display.draw();
     if (display.windowShouldClose) destroy();

@@ -8,8 +8,10 @@ import computerblocks.display.*;
 import computerblocks.position.*;
 import computerblocks.player.*;
 
-public class FunctionalBlock extends Block {
-  public FunctionalBlock(BlockPosition position) {
+public class DelayBlock extends FunctionalBlock {
+  public boolean tickCharge = false;
+
+  public DelayBlock(BlockPosition position) {
     super(position);
   }
 
@@ -31,7 +33,15 @@ public class FunctionalBlock extends Block {
     surroundingBlocks.remove(updater);
     surroundingBlocks.removeAll(removeQueue);
 
-    charge = inputs.size() != 0;
-    return surroundingBlocks;
+    tickCharge = inputs.size() != 0;
+    return new ArrayList<Block>();
+  }
+
+  public boolean tick() {
+    if (tickCharge != charge) {
+      charge = tickCharge;
+      return true;
+    }
+    return false;
   }
 }

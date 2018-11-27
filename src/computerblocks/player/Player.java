@@ -18,7 +18,7 @@ public class Player {
 
   public RealPosition drawTranslate = new RealPosition(0, 0);
   public RealPosition translate = new RealPosition(50, 0);
-  public double zoom = 3;
+  public double zoom = 3.0;
 
   public int selectedLayer = 0;
   public BlockType selectedType = BlockType.CABLE;
@@ -35,9 +35,25 @@ public class Player {
     mouse = new Mouse(display);
   }
 
+  public void update(Display display, Grid grid) {
+    updateTranslate(grid, display);
+  }
+
   public void updateUserInteraction() {
     keyboard.update();
     mouse.update();
+  }
+
+  private void updateTranslate(Grid grid, Display display) {
+    translate.x += ((keyboard.held('A') ? 1 : 0) - (keyboard.held('D') ? 1 : 0)) * PAN_SPEED * (1 / zoom);
+    translate.y += ((keyboard.held('W') ? 1 : 0) - (keyboard.held('S') ? 1 : 0)) * PAN_SPEED * (1 / zoom);
+
+    zoom += ((keyboard.held('.') ? 1 : 0) - (keyboard.held(',') ? 1 : 0)) * zoom / ZOOM_SPEED;
+    drawTranslate.x = (translate.x - (display.width / 2)) * zoom + (display.width / 2);
+    drawTranslate.y = (translate.y - (display.height / 2)) * zoom + (display.height / 2);
+
+    // if (keyboard.down('[')) selectedLayer = Math.max(0, selectedLayer - 1);
+    // if (keyboard.down(']')) selectedLayer = Math.min(selectedLayer + 1, grid.layers - 1);
   }
 
   // public void draw(Display display, Grid grid, SnippetTray snippetTray) {
