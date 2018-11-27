@@ -50,11 +50,11 @@ public class Display {
 
     GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
     glfwSetWindowPos(window,
-      (vidmode.width() - height) / 2,
-      (vidmode.height() - width) / 2
+      (vidmode.width() - width) / 2,
+      (vidmode.height() - height) / 2
     );
 
-		glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(window);
 		glfwSwapInterval(1);
 		glfwShowWindow(window);
 
@@ -69,6 +69,8 @@ public class Display {
   }
 
   private void setup() {
+    glfwMakeContextCurrent(window);
+    GL.createCapabilities();
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0, width, height, 0, 1, 0);
