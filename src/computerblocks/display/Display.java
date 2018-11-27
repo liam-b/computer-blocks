@@ -30,7 +30,7 @@ public class Display {
 
   public boolean windowShouldClose = false;
 
-  public Display(int width, int height, String name) {
+  public Display(int width, int height, String name, Color clearColor) {
     this.width = width;
     this.height = height;
     this.name = name;
@@ -59,7 +59,7 @@ public class Display {
 		glfwShowWindow(window);
 
     GL.createCapabilities();
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(clearColor.r / 255.0f, clearColor.g / 255.0f, clearColor.b / 255.0f, 0.0f);
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -113,11 +113,11 @@ public class Display {
     rect(position.x, position.y, width, height);
   }
 
-  public void color(double r, double g, double b) {
-    glColor3d(r / 255.0, g / 255.0, b / 255.0);
+  public void color(int r, int g, int b) {
+    glColor3d((double)r / 255.0, (double)g / 255.0, (double)b / 255.0);
   }
 
   public void color(Color color) {
-    color((double)color.data.getRed(), (double)color.data.getGreen(), (double)color.data.getBlue());
+    color(color.r, color.b, color.g);
   }
 }

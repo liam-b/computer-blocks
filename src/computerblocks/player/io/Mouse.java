@@ -13,8 +13,8 @@ public class Mouse {
   public static final int LEFT = 0;
   public static final int RIGHT = 1;
 
-  ButtonState[] buttons;
-  RealPosition position;
+  private ButtonState[] buttons;
+  public RealPosition position;
 
   public Mouse(Display display) {
     buttons = new ButtonState[8];

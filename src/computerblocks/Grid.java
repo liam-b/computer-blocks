@@ -4,17 +4,21 @@ import java.util.ArrayList;
 
 import computerblocks.position.*;
 import computerblocks.display.*;
+import computerblocks.block.*;
+import computerblocks.block.types.*;
+import computerblocks.player.*;
 
 public class Grid {
-  // public Block[][][] blocks;
+  public Block[][][] blocks;
   public int width, height, layers;
+  private Block dummyBlock = new EmptyBlock(new BlockPosition(0, 0, 0));
 
   public Grid(int width, int height, int layers) {
     this.width = width;
     this.height = height;
     this.layers = layers;
 
-    // blocks = new Block[width][height][layers];
+    blocks = new Block[width][height][layers];
   }
 
   // public Grid(Snippet snippet) {
@@ -25,28 +29,28 @@ public class Grid {
   //   blocks = snippet.blocks;
   // }
 
-  // public void draw(Display display, Player player) {
-  //   for (int x = 0; x < width; x++) {
-  //     for (int y = 0; y < height; y++) {
-  //       if (blocks[x][y][player.selectedLayer] != null) {
-  //         blocks[x][y][player.selectedLayer].draw(display, player);
-  //       }
-  //       else {
-  //         dummyBlock.position.x = x;
-  //         dummyBlock.position.y = y;
-  //         dummyBlock.position.l = player.selectedLayer;
-  //         dummyBlock.draw(display, player);
-  //       }
-  //     }
-  //   }
-  //   for (int x = 0; x < width; x++) {
-  //     for (int y = 0; y < height; y++) {
-  //       if (blocks[x][y][player.selectedLayer] != null) {
-  //         if (blocks[x][y][player.selectedLayer].type == BlockType.LABEL && blocks[x][y][player.selectedLayer].mouseOver(player)) blocks[x][y][player.selectedLayer].draw(display, player);
-  //       }
-  //     }
-  //   }
-  // }
+  public void draw(Display display, Player player) {
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        if (blocks[x][y][player.selectedLayer] != null) {
+          blocks[x][y][player.selectedLayer].draw(display, player);
+        }
+        else {
+          dummyBlock.position.x = x;
+          dummyBlock.position.y = y;
+          dummyBlock.position.l = player.selectedLayer;
+          dummyBlock.draw(display, player);
+        }
+      }
+    }
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        if (blocks[x][y][player.selectedLayer] != null) {
+          if (blocks[x][y][player.selectedLayer].type == BlockType.LABEL && blocks[x][y][player.selectedLayer].mouseOver(player)) blocks[x][y][player.selectedLayer].draw(display, player);
+        }
+      }
+    }
+  }
 
   // public void unselect() {
   //   for (int x = 0; x < width; x++) {
@@ -88,15 +92,15 @@ public class Grid {
   //   blocks = snippet.blocks;
   // }
 
-  // public Block blockAt(int x, int y, int l) {
-  //   if (
-  //     x < 0 || x >= width ||
-  //     y < 0 || y >= height ||
-  //     l < 0 || l >= layers
-  //   ) return null;
-  //
-  //   return blocks[x][y][l];
-  // }
+  public Block blockAt(int x, int y, int l) {
+    if (
+      x < 0 || x >= width ||
+      y < 0 || y >= height ||
+      l < 0 || l >= layers
+    ) return null;
+  
+    return blocks[x][y][l];
+  }
 
   // public BlockPosition mouseOverBlock(Player player) {
   //   for (int x = 0; x < width; x++) {
