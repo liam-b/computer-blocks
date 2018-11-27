@@ -1,13 +1,6 @@
-cd ..
-javac.exe -d "bin/" -cp ".;src/lib/json.jar" $(find . -type f -name "*.java")
-
-cd bin/
-java.exe -Dsun.java2d.opengl=true -cp ".;../src/lib/json.jar" Index
-
-printf "\n\n"
-read -p "Press [Enter] key to begin cleanup... "
-
-cd ..
-cd scripts/
-
-# rm $(find . -type f -name "*.class")
+cd src/
+javac.exe -cp '.;lib/*' $(find . -type f -name "*.java")
+if [[ $? == 0 ]]; then
+  java.exe -cp '.;lib/*;lib/native/windows/*' $1
+fi
+find . -name "*.class" -type f -delete
